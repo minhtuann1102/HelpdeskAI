@@ -11,7 +11,7 @@ Step 4 turns the [information architecture](../03-information-architecture/READM
 | [00-decisions.md](00-decisions.md) | Decisions D-15..D-18; defaults DF-22..DF-24 |
 | [01-design-system.md](01-design-system.md) | Design concept, tokens (color, type, space, shape), components, AI visual language, chart rules |
 | [02-screen-notes.md](02-screen-notes.md) | Per screen: purpose, annotated elements, and every state (empty, loading, error, AI error) |
-| [wireframes/index.html](wireframes/index.html) | Gallery: open every screen and switch states and roles |
+| [wireframes/index.html](wireframes/index.html) | Gallery: open every screen and switch states and roles. Open it in a browser from a local clone; GitHub shows `.html` files as source code. |
 | [`../images/`](../images/) | PNG exports by role: `common/`, `customer/`, `staff/`, `admin/` |
 
 **Related:** [README](../../README.md) · [Previous: Information architecture](../03-information-architecture/README.md) · [Master traceability](../traceability/master-traceability.md)

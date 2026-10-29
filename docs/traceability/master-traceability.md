@@ -1,6 +1,6 @@
 # Master Traceability Matrix — Helpdesk AI MVP
 
-> Design status: MVP — updated at every step (last update: Step 3)
+> Design status: MVP — updated at every step (last update: Step 4; wireframes for each screen are listed in [Screen notes and states](../04-uiux/02-screen-notes.md))
 >
 > Implementation status: NOT STARTED
 

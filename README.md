@@ -168,7 +168,7 @@ Source: [Sitemap by Role](docs/03-information-architecture/01-sitemap.md). Scree
 
 ### 2.3 UI wireframes
 
-High-fidelity wireframes in static HTML (Vietnamese UI copy, fictional sample shop "Lá Cọ Home"). AI suggestions are drawn as **dashed violet** and marked "AI"; anything a person confirmed or corrected is **solid**. Only the three core branches are shown here; every screen and state is in the [wireframe gallery](docs/04-uiux/wireframes/index.html).
+High-fidelity wireframes in static HTML (Vietnamese UI copy, fictional sample shop "Lá Cọ Home"). AI suggestions are drawn as **dashed violet** and marked "AI"; anything a person confirmed or corrected is **solid**. Only the three core branches are shown here. Every screen and state is in the wireframe gallery: open `docs/04-uiux/wireframes/index.html` in a browser from a local clone (GitHub shows `.html` files as source code).
 
 #### Submit & track tickets (Customer)
 
