@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Helpdesk AI — UI wireframes</title>
+  <link rel="stylesheet" href="assets/wireframe.css">
+</head>
+<body>
+
+<header class="gallery-head">
+  <h1>Helpdesk AI — UI wireframes</h1>
+  <p>12 screens and their modals for Step 4. Open a screen, then use the dark bar at the top to switch states and roles. Add <code>?shot=1</code> to hide the bar and the yellow annotation numbers. Sample data uses "Lá Cọ Home", a fictional online shop.</p>
+  <p class="small"><span class="chip is-ai">Nhãn</span> dashed violet = suggested by AI · <span class="chip">Nhãn</span> solid = confirmed or corrected by a person</p>
+</header>
+
+<section class="gallery-section" aria-labelledby="g-common">
+  <h2 id="g-common">Common</h2>
+  <div class="gallery">
+    <article class="shot-card">
+      <a href="01-login.html"><img src="../../images/common/01-login.png" alt="SCR-01 Login"></a>
+      <div class="body"><h3><a href="01-login.html">SCR-01 Login</a></h3>
+        <div class="state-links"><a href="01-login.html?state=error">wrong-credentials</a><a href="01-login.html?state=locked">account-locked</a></div></div>
+    </article>
+    <article class="shot-card">
+      <a href="02-register.html"><img src="../../images/common/02-register.png" alt="SCR-02 Register"></a>
+      <div class="body"><h3><a href="02-register.html">SCR-02 Register</a></h3>
+        <div class="state-links"><a href="02-register.html?state=validation-error">validation-error</a></div></div>
+    </article>
+    <article class="shot-card">
+      <a href="40-profile.html"><img src="../../images/staff/40-profile.png" alt="SCR-40 Profile"></a>
+      <div class="body"><h3><a href="40-profile.html">SCR-40 Profile</a></h3>
+        <div class="state-links"><a href="40-profile.html?role=customer">customer</a><a href="40-profile.html?role=admin">admin</a><a href="40-profile.html?state=saved">saved</a><a href="40-profile.html?state=password-error">password-error</a></div></div>
+    </article>
+    <article class="shot-card">
+      <a href="90-access-denied.html"><img src="../../images/common/90-access-denied.png" alt="SCR-90 Access denied"></a>
+      <div class="body"><h3><a href="90-access-denied.html">SCR-90 Access denied</a></h3>
+        <div class="state-links"><a href="90-access-denied.html?role=customer">customer</a></div></div>
+    </article>
+  </div>
+</section>
+
+<section class="gallery-section" aria-labelledby="g-customer">
+  <h2 id="g-customer">Customer portal</h2>
+  <div class="gallery">
+    <article class="shot-card">
+      <a href="10-my-tickets.html"><img src="../../images/customer/10-my-tickets.png" alt="SCR-10 My Tickets"></a>
+      <div class="body"><h3><a href="10-my-tickets.html">SCR-10 My Tickets</a></h3>
+        <div class="state-links"><a href="10-my-tickets.html?state=loading">loading</a><a href="10-my-tickets.html?state=empty">empty</a></div></div>
+    </article>
+    <article class="shot-card">
+      <a href="11-submit-ticket.html"><img src="../../images/customer/11-submit-ticket.png" alt="SCR-11 Submit Ticket"></a>
+      <div class="body"><h3><a href="11-submit-ticket.html">SCR-11 Submit Ticket</a></h3>
+        <div class="state-links"><a href="11-submit-ticket.html?state=validation-error">validation-error</a><a href="11-submit-ticket.html?state=saving">saving</a></div></div>
+    </article>
+    <article class="shot-card">
+      <a href="12-ticket-detail.html"><img src="../../images/customer/12-ticket-detail.png" alt="SCR-12 Ticket Detail"></a>
+      <div class="body"><h3><a href="12-ticket-detail.html">SCR-12 Ticket Detail + SCR-13</a></h3>
+        <div class="state-links"><a href="12-ticket-detail.html?state=just-submitted">just-submitted</a><a href="12-ticket-detail.html?state=resolved">resolved</a><a href="12-ticket-detail.html?state=closed">closed</a><a href="12-ticket-detail.html?state=close-confirm">SCR-13 close-confirm</a></div></div>
+    </article>
+  </div>
+</section>
+
+<section class="gallery-section" aria-labelledby="g-staff">
+  <h2 id="g-staff">Ticket workspace (Staff, Admin)</h2>
+  <div class="gallery">
+    <article class="shot-card">
+      <a href="20-ticket-queue.html"><img src="../../images/staff/20-ticket-queue.png" alt="SCR-20 Ticket Queue"></a>
+      <div class="body"><h3><a href="20-ticket-queue.html">SCR-20 Ticket Queue</a></h3>
+        <div class="state-links"><a href="20-ticket-queue.html?role=admin">admin</a><a href="20-ticket-queue.html?state=loading">loading</a><a href="20-ticket-queue.html?state=empty">empty</a><a href="20-ticket-queue.html?state=empty-filtered">empty-filtered</a></div></div>
+    </article>
+    <article class="shot-card">
+      <a href="21-ticket-handling.html"><img src="../../images/staff/21-ticket-handling.png" alt="SCR-21 Ticket Handling"></a>
+      <div class="body"><h3><a href="21-ticket-handling.html">SCR-21 Ticket Handling + SCR-23</a></h3>
+        <div class="state-links">
+          <a href="21-ticket-handling.html?role=admin">admin</a>
+          <a href="21-ticket-handling.html?state=classification-pending">classification-pending</a>
+          <a href="21-ticket-handling.html?state=unclassified-low-confidence">unclassified-low-confidence</a>
+          <a href="21-ticket-handling.html?state=unclassified-ai-error">unclassified-ai-error</a>
+          <a href="21-ticket-handling.html?state=label-corrected">label-corrected</a>
+          <a href="21-ticket-handling.html?state=summary-loading">summary-loading</a>
+          <a href="21-ticket-handling.html?state=summary-error">summary-error</a>
+          <a href="21-ticket-handling.html?state=summary-outdated">summary-outdated</a>
+          <a href="21-ticket-handling.html?state=rewrite-loading">rewrite-loading</a>
+          <a href="21-ticket-handling.html?state=rewrite-result">rewrite-result</a>
+          <a href="21-ticket-handling.html?state=rewrite-error">rewrite-error</a>
+          <a href="21-ticket-handling.html?state=transfer">SCR-23 transfer</a>
+        </div></div>
+    </article>
+    <article class="shot-card">
+      <a href="22-dashboard.html?role=staff"><img src="../../images/staff/22-dashboard.png" alt="SCR-22 Dashboard"></a>
+      <div class="body"><h3><a href="22-dashboard.html?role=staff">SCR-22 Dashboard</a></h3>
+        <div class="state-links"><a href="22-dashboard.html?role=admin">admin (system-wide)</a><a href="22-dashboard.html?state=empty">empty</a></div></div>
+    </article>
+  </div>
+</section>
+
+<section class="gallery-section" aria-labelledby="g-admin">
+  <h2 id="g-admin">Administration (Admin)</h2>
+  <div class="gallery">
+    <article class="shot-card">
+      <a href="30-categories.html"><img src="../../images/admin/30-categories.png" alt="SCR-30 Categories"></a>
+      <div class="body"><h3><a href="30-categories.html">SCR-30 Categories + SCR-32</a></h3>
+        <div class="state-links"><a href="30-categories.html?state=edit">SCR-32 edit</a><a href="30-categories.html?state=form-error">SCR-32 add with errors</a><a href="30-categories.html?state=hide-confirm">hide-confirm</a></div></div>
+    </article>
+    <article class="shot-card">
+      <a href="31-users.html"><img src="../../images/admin/31-users.png" alt="SCR-31 Users"></a>
+      <div class="body"><h3><a href="31-users.html">SCR-31 Users + SCR-33, SCR-34</a></h3>
+        <div class="state-links"><a href="31-users.html?state=create-staff">SCR-33 create-staff</a><a href="31-users.html?state=lock-confirm">SCR-34 lock-confirm</a><a href="31-users.html?state=empty-filtered">empty-filtered</a></div></div>
+    </article>
+  </div>
+</section>
+
+</body>
+</html>

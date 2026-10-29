@@ -369,7 +369,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .metric .note { color: var(--moss); font-size: var(--fs-xs); }
 .charts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s4); }
 .charts .sheet { display: flex; flex-direction: column; }
-.charts .sheet-body { flex: 1; }
+.charts .sheet-body { flex: 1; align-content: start; }
+.input:disabled { background: var(--sage); color: var(--moss); }
 .hbars { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
 .hbar { display: grid; grid-template-columns: 164px minmax(0, 1fr) 32px; gap: var(--s3); align-items: center; font-size: var(--fs-sm); }
 .hbar .track { height: 10px; border-radius: 2px; background: #f1f4f1; }
@@ -399,8 +400,35 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .pw { position: relative; }
 .pw .icon-btn { position: absolute; right: 3px; top: 3px; }
 
+/* Ticket journey on the login hero: a real sequence, so steps are numbered */
+.journey { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 0; padding: 0; list-style: none; }
+.journey li { display: grid; gap: 6px; color: var(--moss); font-size: 11px; line-height: 1.3; }
+.journey li::before { content: ""; height: 4px; border-radius: 2px; background: var(--line); }
+.journey li.is-done::before { background: var(--pine); }
+.journey li.is-current { color: var(--graphite); font-weight: 600; }
+.journey li.is-current::before { background: var(--amber); }
+
 /* ---------- Centered system page ---------- */
 .center-page { display: grid; place-items: center; min-height: calc(100vh - 60px); padding: var(--s7) var(--s5); }
+
+/* ---------- Shared pages that change layout by role (profile, access denied) ---------- */
+body[data-role="customer"] .shell { grid-template-columns: 1fr; }
+body[data-role="customer"] .page { width: 100%; max-width: 1040px; margin: 0 auto; }
+
+/* ---------- Wireframe gallery (index.html) ---------- */
+.gallery-head { display: grid; gap: var(--s2); max-width: 1200px; margin: 0 auto; padding: var(--s7) var(--s5) var(--s4); }
+.gallery-head h1 { font-size: 30px; font-weight: 600; letter-spacing: -0.02em; }
+.gallery-head p { max-width: 70ch; color: var(--moss); }
+.gallery-section { display: grid; gap: var(--s4); max-width: 1200px; margin: 0 auto; padding: var(--s4) var(--s5) var(--s5); }
+.gallery-section h2 { font-size: var(--fs-lg); font-weight: 600; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--s4); }
+.shot-card { display: grid; align-content: start; overflow: hidden; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-surface); }
+.shot-card img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top left; border-bottom: 1px solid var(--line); }
+.shot-card .body { display: grid; gap: var(--s2); padding: var(--s3) var(--s4) var(--s4); }
+.shot-card h3 { font-size: var(--fs-base); font-weight: 600; }
+.shot-card h3 a { text-decoration: none; }
+.state-links { display: flex; flex-wrap: wrap; gap: 4px; }
+.state-links a { padding: 2px 8px; border: 1px solid var(--line); border-radius: var(--r-chip); color: var(--moss); font-size: var(--fs-xs); text-decoration: none; }
 
 @media (max-width: 1180px) {
   .charts { grid-template-columns: 1fr; }

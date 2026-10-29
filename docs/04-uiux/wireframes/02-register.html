@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-02 Register — Helpdesk AI wireframe</title>
+  <link rel="stylesheet" href="assets/wireframe.css">
+</head>
+<body>
+
+<div class="wf-bar" role="note" aria-label="Wireframe controls">
+  <strong>Wireframe: SCR-02 Register (Customer)</strong>
+  <ul class="wf-states" aria-label="State">
+    <li><a href="02-register.html">default</a></li>
+    <li><a href="02-register.html?state=validation-error">validation-error</a></li>
+  </ul>
+  <span>Sample data: "Lá Cọ Home" is a fictional shop</span>
+</div>
+
+<div class="auth">
+  <aside class="auth-side">
+    <div class="brand" style="padding:0">
+      <span class="brand-mark"><svg class="i"><use href="#i-ticket"></use></svg></span>
+      <span><span class="brand-name">Lá Cọ Home</span><span class="brand-shop">Trung tâm hỗ trợ khách hàng</span></span>
+    </div>
+    <div class="stack" style="gap:var(--s4)">
+      <h2>Tạo tài khoản để gửi yêu cầu hỗ trợ.</h2>
+      <p>Với tài khoản, bạn xem lại mọi yêu cầu đã gửi, biết shop đang xử lý đến đâu và trả lời shop ngay trên từng yêu cầu.</p>
+    </div>
+    <span class="xs" style="color:#9fb7ad">Vận hành bởi Helpdesk AI</span>
+  </aside>
+
+  <main class="auth-main">
+    <form class="auth-form" aria-labelledby="reg-title">
+      <div class="stack" style="gap:6px">
+        <h1 id="reg-title">Đăng ký tài khoản</h1>
+        <p class="small muted">Chỉ mất một phút. Bạn sẽ được đăng nhập ngay sau khi đăng ký.</p>
+      </div>
+
+      <div class="field"><label for="name">Họ và tên</label><input id="name" class="input" value="Nguyễn Thị Hoa" autocomplete="name"></div>
+
+      <div class="field" data-hide="validation-error"><label for="email">Email</label><input id="email" class="input" type="email" value="hoa.nguyen@example.com" autocomplete="email"></div>
+      <div class="field field-error" data-show="validation-error">
+        <label for="email-err">Email</label>
+        <input id="email-err" class="input" type="email" value="hoa.nguyen@example.com" aria-invalid="true">
+        <span class="error-text">Email này đã có tài khoản. <a href="01-login.html">Đăng nhập</a> thay vì đăng ký mới.</span>
+      </div>
+
+      <div class="field"><label for="phone">Số điện thoại <span class="muted">(không bắt buộc)</span></label><input id="phone" class="input" type="tel" value="0901 234 567" autocomplete="tel"></div>
+
+      <div class="form-row">
+        <div class="field"><label for="pw">Mật khẩu</label><input id="pw" class="input" type="password" value="matkhau123" autocomplete="new-password"><span class="hint">Ít nhất 8 ký tự</span></div>
+        <div class="field" data-hide="validation-error"><label for="pw2">Nhập lại mật khẩu</label><input id="pw2" class="input" type="password" value="matkhau123" autocomplete="new-password"></div>
+        <div class="field field-error" data-show="validation-error"><label for="pw2-err">Nhập lại mật khẩu</label><input id="pw2-err" class="input" type="password" value="matkhau12" aria-invalid="true"><span class="error-text">Chưa khớp với mật khẩu.</span></div>
+      </div>
+
+      <button class="btn btn-primary" type="button" style="height:42px">Tạo tài khoản</button>
+      <span class="callout" aria-hidden="true">1</span>
+      <p class="small muted">Đã có tài khoản? <a href="01-login.html">Đăng nhập</a></p>
+    </form>
+  </main>
+</div>
+
+<script src="assets/icons.js"></script>
+<script src="assets/states.js"></script>
+</body>
+</html>

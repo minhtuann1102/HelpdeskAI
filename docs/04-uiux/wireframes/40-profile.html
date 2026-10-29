@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-40 Profile — Helpdesk AI wireframe</title>
+  <link rel="stylesheet" href="assets/wireframe.css">
+</head>
+<body data-default-role="staff">
+
+<div class="wf-bar" role="note" aria-label="Wireframe controls">
+  <strong>Wireframe: SCR-40 Profile (all roles)</strong>
+  <ul class="wf-roles" aria-label="Role">
+    <li><a href="40-profile.html?role=customer">Customer</a></li>
+    <li><a href="40-profile.html?role=staff">Staff</a></li>
+    <li><a href="40-profile.html?role=admin">Admin</a></li>
+  </ul>
+  <ul class="wf-states" aria-label="State">
+    <li><a href="40-profile.html">default</a></li>
+    <li><a href="40-profile.html?state=saved">saved</a></li>
+    <li><a href="40-profile.html?state=password-error">password-error</a></li>
+  </ul>
+  <span>Sample data: fictional people and shop</span>
+</div>
+
+<div class="shell">
+  <aside class="sidebar" data-role="staff admin">
+    <div class="brand">
+      <span class="brand-mark"><svg class="i"><use href="#i-ticket"></use></svg></span>
+      <span><span class="brand-name">Helpdesk AI</span><span class="brand-shop">Lá Cọ Home</span></span>
+    </div>
+    <nav aria-label="Điều hướng chính">
+      <ul class="nav" data-role="staff">
+        <li><a href="20-ticket-queue.html"><svg class="i"><use href="#i-inbox"></use></svg>Hàng đợi của tôi <span class="count">7</span></a></li>
+        <li><a href="22-dashboard.html?role=staff"><svg class="i"><use href="#i-chart"></use></svg>Tổng quan</a></li>
+      </ul>
+      <ul class="nav" data-role="admin">
+        <li><a href="20-ticket-queue.html?role=admin"><svg class="i"><use href="#i-inbox"></use></svg>Tất cả ticket</a></li>
+        <li><a href="22-dashboard.html"><svg class="i"><use href="#i-chart"></use></svg>Tổng quan</a></li>
+        <li><a href="30-categories.html"><svg class="i"><use href="#i-tag"></use></svg>Danh mục</a></li>
+        <li><a href="31-users.html"><svg class="i"><use href="#i-users"></use></svg>Người dùng</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-foot">
+      <span class="avatar" data-role="staff">TB</span>
+      <span class="who" data-role="staff">Trần Bình<small>Nhân viên hỗ trợ</small></span>
+      <span class="avatar" data-role="admin">TL</span>
+      <span class="who" data-role="admin">Phạm Thanh Lam<small>Quản trị viên</small></span>
+      <button class="icon-btn" type="button" aria-label="Đăng xuất"><svg class="i"><use href="#i-logout"></use></svg></button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar" data-role="staff admin">
+      <nav class="crumbs" aria-label="Breadcrumb"><span aria-current="page">Hồ sơ của tôi</span></nav>
+      <span class="avatar avatar-staff" data-role="staff">TB</span>
+      <span class="avatar avatar-admin" data-role="admin">TL</span>
+    </header>
+    <header class="portal-top" data-role="customer">
+      <div class="portal-top-inner">
+        <a class="portal-brand" href="10-my-tickets.html">
+          <span class="brand-mark"><svg class="i"><use href="#i-ticket"></use></svg></span>
+          <span><b>Lá Cọ Home</b><small>Trung tâm hỗ trợ</small></span>
+        </a>
+        <nav class="portal-nav" aria-label="Điều hướng chính"><a href="10-my-tickets.html">Yêu cầu của tôi</a></nav>
+        <div class="portal-right">
+          <a class="btn btn-primary" href="11-submit-ticket.html"><svg class="i i-sm"><use href="#i-plus"></use></svg>Gửi yêu cầu mới</a>
+          <span class="avatar">NH</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <h1>Hồ sơ của tôi</h1>
+          <p>Cập nhật thông tin liên hệ và đổi mật khẩu. Email và vai trò do hệ thống quản lý.</p>
+        </div>
+        <button class="btn btn-quiet" type="button"><svg class="i i-sm"><use href="#i-logout"></use></svg>Đăng xuất</button>
+      </div>
+
+      <div class="toast" data-show="saved" role="status"><svg class="i"><use href="#i-check"></use></svg><span>Đã lưu thông tin tài khoản.</span></div>
+
+      <div class="charts" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+        <form class="sheet" aria-labelledby="acc-title">
+          <div class="sheet-head"><h2 id="acc-title">Thông tin tài khoản</h2><span class="callout" aria-hidden="true">1</span></div>
+          <div class="sheet-body form" style="gap:var(--s4)">
+            <div class="field"><label for="p-name">Họ và tên</label>
+              <input id="p-name" class="input" value="Trần Bình" data-role="staff">
+              <input id="p-name-a" class="input" value="Phạm Thanh Lam" data-role="admin" aria-label="Họ và tên">
+              <input id="p-name-c" class="input" value="Nguyễn Thị Hoa" data-role="customer" aria-label="Họ và tên">
+            </div>
+            <div class="field"><label for="p-phone">Số điện thoại</label><input id="p-phone" class="input" value="0912 345 678"></div>
+            <div class="field"><label for="p-email">Email đăng nhập</label>
+              <input id="p-email" class="input" value="binh.tran@lacohome.example" disabled data-role="staff">
+              <input class="input" value="lam.pham@lacohome.example" disabled data-role="admin" aria-label="Email đăng nhập">
+              <input class="input" value="hoa.nguyen@example.com" disabled data-role="customer" aria-label="Email đăng nhập">
+              <span class="hint">Email dùng để đăng nhập nên không đổi được ở đây.</span>
+            </div>
+            <div class="field"><span class="label">Vai trò</span>
+              <span>
+                <span class="chip chip-plain" data-role="staff">Nhân viên hỗ trợ</span>
+                <span class="chip chip-plain" data-role="admin">Quản trị viên</span>
+                <span class="chip chip-plain" data-role="customer">Khách hàng</span>
+              </span>
+            </div>
+          </div>
+          <div class="sheet-foot"><span></span><button class="btn btn-primary" type="button"><svg class="i i-sm"><use href="#i-check"></use></svg>Lưu thay đổi</button></div>
+        </form>
+
+        <form class="sheet" aria-labelledby="pw-title">
+          <div class="sheet-head"><h2 id="pw-title">Đổi mật khẩu</h2><span class="callout" aria-hidden="true">2</span></div>
+          <div class="sheet-body form" style="gap:var(--s4)">
+            <div class="field" data-hide="password-error"><label for="pw-cur">Mật khẩu hiện tại</label><input id="pw-cur" class="input" type="password" value="matkhau123"></div>
+            <div class="field field-error" data-show="password-error"><label for="pw-cur-e">Mật khẩu hiện tại</label><input id="pw-cur-e" class="input" type="password" value="matkhau12" aria-invalid="true"><span class="error-text">Mật khẩu hiện tại chưa đúng.</span></div>
+            <div class="field"><label for="pw-new">Mật khẩu mới</label><input id="pw-new" class="input" type="password" value="laco2026moi"><span class="hint">Ít nhất 8 ký tự</span></div>
+            <div class="field" data-hide="password-error"><label for="pw-new2">Nhập lại mật khẩu mới</label><input id="pw-new2" class="input" type="password" value="laco2026moi"></div>
+            <div class="field field-error" data-show="password-error"><label for="pw-new2-e">Nhập lại mật khẩu mới</label><input id="pw-new2-e" class="input" type="password" value="laco2026" aria-invalid="true"><span class="error-text">Chưa khớp với mật khẩu mới.</span></div>
+          </div>
+          <div class="sheet-foot"><span>Lần đăng nhập sau sẽ dùng mật khẩu mới.</span><button class="btn btn-primary" type="button"><svg class="i i-sm"><use href="#i-lock"></use></svg>Đổi mật khẩu</button></div>
+        </form>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="assets/icons.js"></script>
+<script src="assets/states.js"></script>
+</body>
+</html>

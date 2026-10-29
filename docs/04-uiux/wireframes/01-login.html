@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-01 Login — Helpdesk AI wireframe</title>
+  <link rel="stylesheet" href="assets/wireframe.css">
+</head>
+<body>
+
+<div class="wf-bar" role="note" aria-label="Wireframe controls">
+  <strong>Wireframe: SCR-01 Login (all roles)</strong>
+  <ul class="wf-states" aria-label="State">
+    <li><a href="01-login.html">default</a></li>
+    <li><a href="01-login.html?state=error">wrong-credentials</a></li>
+    <li><a href="01-login.html?state=locked">account-locked</a></li>
+  </ul>
+  <span>Sample data: "Lá Cọ Home" is a fictional shop</span>
+</div>
+
+<div class="auth">
+  <aside class="auth-side">
+    <div class="brand" style="padding:0">
+      <span class="brand-mark"><svg class="i"><use href="#i-ticket"></use></svg></span>
+      <span><span class="brand-name">Lá Cọ Home</span><span class="brand-shop">Trung tâm hỗ trợ khách hàng</span></span>
+    </div>
+
+    <div class="stack" style="gap:var(--s5)">
+      <h2>Gửi yêu cầu và theo dõi phản hồi của shop ở cùng một nơi.</h2>
+      <div class="slip" aria-hidden="true">
+        <div class="row"><span class="stub"><svg class="i i-sm"><use href="#i-ticket"></use></svg>#1042</span><span class="status status-waiting"><span class="dot"></span>Chờ bạn phản hồi</span></div>
+        <b>Giao sai màu giỏ mây, cần đổi trước thứ Bảy</b>
+        <ol class="journey">
+          <li class="is-done">1. Đã gửi</li>
+          <li class="is-done">2. Shop đang xử lý</li>
+          <li class="is-current">3. Chờ bạn phản hồi</li>
+          <li>4. Đã giải quyết</li>
+        </ol>
+      </div>
+      <p>Mỗi yêu cầu có một người phụ trách và một lịch sử trao đổi đầy đủ, nên bạn không phải kể lại từ đầu.</p>
+    </div>
+
+    <span class="xs" style="color:#9fb7ad">Vận hành bởi Helpdesk AI</span>
+  </aside>
+
+  <main class="auth-main">
+    <form class="auth-form" aria-labelledby="login-title">
+      <div class="stack" style="gap:6px">
+        <h1 id="login-title">Đăng nhập</h1>
+        <p class="small muted">Khách hàng và nhân viên của shop đều đăng nhập tại đây.</p>
+      </div>
+
+      <div class="notice notice-error" data-show="error" role="alert">
+        <svg class="i"><use href="#i-alert"></use></svg>
+        <span>Email hoặc mật khẩu chưa đúng. Kiểm tra lại rồi thử lần nữa.</span>
+      </div>
+      <div class="notice notice-error" data-show="locked" role="alert">
+        <svg class="i"><use href="#i-lock"></use></svg>
+        <span>Tài khoản này đang bị khóa. Hãy liên hệ quản trị viên của shop để được mở lại.</span>
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" class="input" type="email" value="hoa.nguyen@example.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="password">Mật khẩu</label>
+        <div class="pw"><input id="password" class="input" type="password" value="matkhau123" autocomplete="current-password"><button class="icon-btn" type="button" aria-label="Hiện mật khẩu"><svg class="i i-sm"><use href="#i-eye"></use></svg></button></div>
+      </div>
+      <button class="btn btn-primary" type="button" style="height:42px">Đăng nhập</button>
+      <span class="callout" aria-hidden="true">1</span>
+      <p class="small muted">Chưa có tài khoản? <a href="02-register.html">Đăng ký</a></p>
+      <p class="xs muted">Quên mật khẩu? Hãy liên hệ shop để được hỗ trợ.</p>
+    </form>
+  </main>
+</div>
+
+<script src="assets/icons.js"></script>
+<script src="assets/states.js"></script>
+</body>
+</html>

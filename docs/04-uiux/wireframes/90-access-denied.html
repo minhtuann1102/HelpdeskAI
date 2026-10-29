@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-90 Access Denied — Helpdesk AI wireframe</title>
+  <link rel="stylesheet" href="assets/wireframe.css">
+</head>
+<body data-default-role="staff">
+
+<div class="wf-bar" role="note" aria-label="Wireframe controls">
+  <strong>Wireframe: SCR-90 Access Denied</strong>
+  <ul class="wf-roles" aria-label="Role">
+    <li><a href="90-access-denied.html?role=staff">Staff opens /admin/users</a></li>
+    <li><a href="90-access-denied.html?role=customer">Customer opens another customer's ticket</a></li>
+  </ul>
+  <span>Sample data: fictional people and shop</span>
+</div>
+
+<div class="shell">
+  <aside class="sidebar" data-role="staff">
+    <div class="brand">
+      <span class="brand-mark"><svg class="i"><use href="#i-ticket"></use></svg></span>
+      <span><span class="brand-name">Helpdesk AI</span><span class="brand-shop">Lá Cọ Home</span></span>
+    </div>
+    <nav aria-label="Điều hướng chính">
+      <ul class="nav">
+        <li><a href="20-ticket-queue.html"><svg class="i"><use href="#i-inbox"></use></svg>Hàng đợi của tôi <span class="count">7</span></a></li>
+        <li><a href="22-dashboard.html?role=staff"><svg class="i"><use href="#i-chart"></use></svg>Tổng quan</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-foot">
+      <span class="avatar">TB</span>
+      <span class="who">Trần Bình<small>Nhân viên hỗ trợ</small></span>
+      <button class="icon-btn" type="button" aria-label="Đăng xuất"><svg class="i"><use href="#i-logout"></use></svg></button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar" data-role="staff">
+      <nav class="crumbs" aria-label="Breadcrumb"><span aria-current="page">Không có quyền truy cập</span></nav>
+      <span class="avatar avatar-staff">TB</span>
+    </header>
+    <header class="portal-top" data-role="customer">
+      <div class="portal-top-inner">
+        <a class="portal-brand" href="10-my-tickets.html">
+          <span class="brand-mark"><svg class="i"><use href="#i-ticket"></use></svg></span>
+          <span><b>Lá Cọ Home</b><small>Trung tâm hỗ trợ</small></span>
+        </a>
+        <nav class="portal-nav" aria-label="Điều hướng chính"><a href="10-my-tickets.html">Yêu cầu của tôi</a></nav>
+        <div class="portal-right"><span class="avatar">NH</span></div>
+      </div>
+    </header>
+
+    <main class="center-page">
+      <div class="empty" style="padding:0">
+        <span class="empty-icon"><svg class="i"><use href="#i-lock"></use></svg></span>
+        <h1 style="font-size:24px;font-weight:600;letter-spacing:-0.015em">Bạn không có quyền xem trang này</h1>
+        <p data-role="staff">Trang Người dùng chỉ dành cho quản trị viên. Nếu công việc cần đến trang này, hãy liên hệ quản trị viên của shop.</p>
+        <p data-role="customer">Yêu cầu này không thuộc tài khoản của bạn. Bạn chỉ xem được các yêu cầu do chính mình gửi.</p>
+        <a class="btn btn-primary" href="20-ticket-queue.html" data-role="staff">Về hàng đợi của tôi</a>
+        <a class="btn btn-primary" href="10-my-tickets.html" data-role="customer">Về yêu cầu của tôi</a>
+        <span class="callout" aria-hidden="true">1</span>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="assets/icons.js"></script>
+<script src="assets/states.js"></script>
+</body>
+</html>
