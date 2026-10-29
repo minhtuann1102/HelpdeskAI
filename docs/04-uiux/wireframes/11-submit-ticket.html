@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-11 Submit Ticket — Helpdesk AI wireframe</title>
+  <link rel="stylesheet" href="assets/wireframe.css">
+</head>
+<body>
+
+<div class="wf-bar" role="note" aria-label="Wireframe controls">
+  <strong>Wireframe: SCR-11 Submit Ticket (Customer)</strong>
+  <ul class="wf-states" aria-label="State">
+    <li><a href="11-submit-ticket.html">default</a></li>
+    <li><a href="11-submit-ticket.html?state=validation-error">validation-error</a></li>
+    <li><a href="11-submit-ticket.html?state=saving">saving</a></li>
+  </ul>
+  <span>Sample data: "Lá Cọ Home" is a fictional shop</span>
+</div>
+
+<header class="portal-top">
+  <div class="portal-top-inner">
+    <a class="portal-brand" href="10-my-tickets.html">
+      <span class="brand-mark"><svg class="i"><use href="#i-ticket"></use></svg></span>
+      <span><b>Lá Cọ Home</b><small>Trung tâm hỗ trợ</small></span>
+    </a>
+    <nav class="portal-nav" aria-label="Điều hướng chính">
+      <a href="10-my-tickets.html">Yêu cầu của tôi</a>
+    </nav>
+    <div class="portal-right">
+      <a href="40-profile.html?role=customer" aria-label="Tài khoản của Nguyễn Thị Hoa"><span class="avatar">NH</span></a>
+    </div>
+  </div>
+</header>
+
+<main class="portal-main narrow">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="10-my-tickets.html">Yêu cầu của tôi</a><span aria-hidden="true">/</span><span aria-current="page">Gửi yêu cầu mới</span></nav>
+  <div class="page-head">
+    <div>
+      <h1>Gửi yêu cầu hỗ trợ</h1>
+      <p>Mô tả càng cụ thể, shop càng giúp bạn nhanh. Sau khi gửi, bạn theo dõi và trao đổi tiếp ngay trên yêu cầu này.</p>
+    </div>
+  </div>
+
+  <form class="sheet" aria-label="Yêu cầu hỗ trợ">
+    <div class="sheet-body form" style="padding-top:var(--s5)">
+      <div class="notice notice-error" data-show="validation-error" role="alert">
+        <svg class="i"><use href="#i-alert"></use></svg>
+        <span>Còn 2 chỗ cần sửa trước khi gửi: tiêu đề và tệp đính kèm.</span>
+      </div>
+
+      <div class="field" data-hide="validation-error">
+        <label for="title">Tiêu đề</label>
+        <input id="title" class="input" value="Hỏi thời gian giao hàng đi Cần Thơ">
+        <span class="counter">34/200</span>
+      </div>
+      <div class="field field-error" data-show="validation-error">
+        <label for="title-err">Tiêu đề</label>
+        <input id="title-err" class="input" value="" aria-invalid="true" aria-describedby="title-msg">
+        <span id="title-msg" class="error-text">Nhập tiêu đề để shop biết bạn cần hỗ trợ việc gì.</span>
+      </div>
+
+      <div class="field">
+        <label for="category">Chủ đề <span class="muted">(không bắt buộc)</span></label>
+        <select id="category" class="select">
+          <option>Chưa chắc, để shop xếp giúp</option>
+          <option>Đơn hàng</option>
+          <option>Giao hàng</option>
+          <option>Thanh toán &amp; hoàn tiền</option>
+          <option>Đổi trả &amp; bảo hành</option>
+          <option>Tài khoản</option>
+        </select>
+        <span class="hint">Nếu chưa chắc, cứ để như vậy. Hệ thống sẽ tự xếp yêu cầu vào đúng nhóm.</span>
+      </div>
+
+      <div class="field">
+        <label for="desc">Mô tả vấn đề</label>
+        <textarea id="desc" class="textarea" rows="5">Mình ở Cần Thơ, đặt đơn #LC-21007 hôm qua (2 chậu cói size L). Cho mình hỏi khoảng mấy ngày thì nhận được, có kịp trước Chủ nhật không ạ?</textarea>
+        <span class="hint">Nên ghi mã đơn hàng nếu có.</span>
+      </div>
+
+      <div class="field">
+        <span class="label">Tệp đính kèm <span class="muted">(không bắt buộc)</span></span>
+        <div class="dropzone">
+          <svg class="i"><use href="#i-upload"></use></svg>
+          <span><b style="color:var(--graphite)">Kéo thả tệp vào đây</b> hoặc <a href="#">chọn từ máy</a></span>
+          <span class="xs">Ảnh JPG, PNG hoặc PDF. Tối đa 5 tệp, mỗi tệp 10 MB.</span>
+        </div>
+        <div class="file-row">
+          <svg class="i i-sm"><use href="#i-file"></use></svg>don-hang-LC-21007.png<span class="size">820 KB</span>
+          <button class="icon-btn" type="button" aria-label="Bỏ tệp don-hang-LC-21007.png"><svg class="i i-sm"><use href="#i-x"></use></svg></button>
+        </div>
+        <div class="file-row is-error" data-show="validation-error">
+          <svg class="i i-sm t-brick"><use href="#i-alert"></use></svg>
+          <span><b>video-mo-hop.mp4</b><br><span class="error-text">Không nhận tệp video. Chỉ nhận JPG, PNG hoặc PDF.</span></span>
+          <button class="icon-btn" type="button" aria-label="Bỏ tệp video-mo-hop.mp4" style="margin-left:auto"><svg class="i i-sm"><use href="#i-x"></use></svg></button>
+        </div>
+        <div class="file-row is-error" data-show="validation-error">
+          <svg class="i i-sm t-brick"><use href="#i-alert"></use></svg>
+          <span><b>anh-goc-chau-coi.jpg</b><br><span class="error-text">14,2 MB, vượt giới hạn 10 MB. Hãy chụp lại hoặc giảm dung lượng ảnh.</span></span>
+          <button class="icon-btn" type="button" aria-label="Bỏ tệp anh-goc-chau-coi.jpg" style="margin-left:auto"><svg class="i i-sm"><use href="#i-x"></use></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="sheet-foot" style="padding:var(--s4) var(--s5)">
+      <span>Bạn sẽ nhận được mã yêu cầu ngay sau khi gửi.</span>
+      <div class="row">
+        <a class="btn btn-quiet" href="10-my-tickets.html">Hủy</a>
+        <button class="btn btn-primary" type="button" data-hide="saving"><svg class="i i-sm"><use href="#i-send"></use></svg>Gửi yêu cầu</button>
+        <button class="btn btn-primary" type="button" data-show="saving" disabled><span class="spinner" aria-hidden="true"></span>Đang gửi…</button>
+        <span class="callout" aria-hidden="true">1</span>
+      </div>
+    </div>
+  </form>
+</main>
+
+<script src="assets/icons.js"></script>
+<script src="assets/states.js"></script>
+</body>
+</html>

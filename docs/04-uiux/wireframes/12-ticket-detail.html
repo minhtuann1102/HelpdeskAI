@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-12 Ticket Detail — Helpdesk AI wireframe</title>
+  <link rel="stylesheet" href="assets/wireframe.css">
+</head>
+<body>
+
+<div class="wf-bar" role="note" aria-label="Wireframe controls">
+  <strong>Wireframe: SCR-12 Ticket Detail (Customer)</strong>
+  <ul class="wf-states" aria-label="State">
+    <li><a href="12-ticket-detail.html">default (waiting for customer)</a></li>
+    <li><a href="12-ticket-detail.html?state=just-submitted">just-submitted</a></li>
+    <li><a href="12-ticket-detail.html?state=resolved">resolved</a></li>
+    <li><a href="12-ticket-detail.html?state=closed">closed</a></li>
+    <li><a href="12-ticket-detail.html?state=close-confirm">SCR-13 close-confirm</a></li>
+  </ul>
+  <span>Sample data: "Lá Cọ Home" is a fictional shop</span>
+</div>
+
+<header class="portal-top">
+  <div class="portal-top-inner">
+    <a class="portal-brand" href="10-my-tickets.html">
+      <span class="brand-mark"><svg class="i"><use href="#i-ticket"></use></svg></span>
+      <span><b>Lá Cọ Home</b><small>Trung tâm hỗ trợ</small></span>
+    </a>
+    <nav class="portal-nav" aria-label="Điều hướng chính">
+      <a href="10-my-tickets.html" aria-current="page">Yêu cầu của tôi</a>
+    </nav>
+    <div class="portal-right">
+      <a class="btn btn-primary" href="11-submit-ticket.html"><svg class="i i-sm"><use href="#i-plus"></use></svg>Gửi yêu cầu mới</a>
+      <a href="40-profile.html?role=customer" aria-label="Tài khoản của Nguyễn Thị Hoa"><span class="avatar">NH</span></a>
+    </div>
+  </div>
+</header>
+
+<main class="portal-main">
+  <div class="toast" data-show="just-submitted" role="status">
+    <svg class="i"><use href="#i-check"></use></svg>
+    <span>Đã gửi yêu cầu #1042. Shop sẽ trả lời bạn tại đây.</span>
+  </div>
+
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="10-my-tickets.html">Yêu cầu của tôi</a><span aria-hidden="true">/</span><span aria-current="page">#1042</span></nav>
+
+  <div class="stack" style="gap:var(--s3)">
+    <div class="row">
+      <span class="stub"><svg class="i i-sm"><use href="#i-ticket"></use></svg>#1042</span>
+      <span class="status status-waiting" data-hide="just-submitted resolved closed close-confirm"><span class="dot"></span>Chờ bạn phản hồi</span>
+      <span class="status status-new" data-show="just-submitted"><span class="dot"></span>Mới</span>
+      <span class="status status-resolved" data-show="resolved"><span class="dot"></span>Đã giải quyết</span>
+      <span class="status status-closed" data-show="closed"><span class="dot"></span>Đã đóng</span>
+      <span class="status status-waiting" data-show="close-confirm"><span class="dot"></span>Chờ bạn phản hồi</span>
+    </div>
+    <h1 class="ticket-title">Giao sai màu giỏ mây, cần đổi trước thứ Bảy</h1>
+  </div>
+
+  <div class="banner banner-waiting" data-hide="just-submitted resolved closed">
+    <svg class="i"><use href="#i-clock"></use></svg>
+    <span>Shop đang chờ bạn trả lời để xử lý tiếp.</span>
+  </div>
+  <div class="banner banner-resolved" data-show="resolved">
+    <svg class="i"><use href="#i-check"></use></svg>
+    <span>Shop đã đánh dấu yêu cầu này là đã giải quyết. Nếu vẫn cần hỗ trợ, cứ trả lời bên dưới, yêu cầu sẽ được mở lại.</span>
+  </div>
+  <div class="banner banner-closed" data-show="closed">
+    <svg class="i"><use href="#i-lock"></use></svg>
+    <span>Yêu cầu đã đóng nên không trả lời thêm được. Nếu cần hỗ trợ tiếp, hãy gửi yêu cầu mới.</span>
+    <a class="btn btn-sm" href="11-submit-ticket.html">Gửi yêu cầu mới</a>
+  </div>
+
+  <div class="detail-grid">
+    <div class="thread" aria-label="Trao đổi với shop">
+      <div class="day">29/10/2026</div>
+
+      <article class="msg msg-staff">
+        <span class="avatar">NH</span>
+        <div>
+          <div class="msg-meta"><b>Bạn</b>08:14</div>
+          <div class="bubble">
+            Mình đặt giỏ mây size M màu tự nhiên (đơn #LC-20931) mà nhận được màu nâu đậm. Thứ Bảy này là sinh nhật mẹ mình rồi, shop đổi giúp mình với. Lần trước đặt cũng bị giao nhầm một lần rồi đó.
+            <div><span class="file"><svg class="i i-sm"><use href="#i-clip"></use></svg>anh-gio-may.jpg <span class="muted">1,2 MB</span></span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="msg" data-hide="just-submitted">
+        <span class="avatar avatar-staff">TB</span>
+        <div>
+          <div class="msg-meta"><b>Trần Bình</b>Lá Cọ Home, 09:02</div>
+          <div class="bubble">Chào chị Hoa, em xin lỗi vì sự nhầm lẫn này. Chị chụp giúp em tem mã sản phẩm dưới đáy giỏ để kho kiểm tra nhé.</div>
+        </div>
+      </article>
+
+      <article class="msg msg-staff" data-hide="just-submitted">
+        <span class="avatar">NH</span>
+        <div>
+          <div class="msg-meta"><b>Bạn</b>10:31</div>
+          <div class="bubble">tem ghi LC-GM-NAU nha shop. minh can mau tu nhien, thu 6 nhan duoc ko?</div>
+        </div>
+      </article>
+
+      <article class="msg" data-hide="just-submitted">
+        <span class="avatar avatar-staff">TB</span>
+        <div>
+          <div class="msg-meta"><b>Trần Bình</b>Lá Cọ Home, 11:40</div>
+          <div class="bubble">Chào chị Hoa, bên em đã kiểm tra và xác nhận giao nhầm màu. Em sẽ gửi lại cho chị giỏ mây màu tự nhiên. Chị vui lòng giữ lại giỏ đã nhận, shipper sẽ đến lấy sau. Em xin lỗi chị vì sự bất tiện này. Chị xác nhận giúp em địa chỉ nhận hàng vẫn như đơn cũ nhé?</div>
+        </div>
+      </article>
+
+      <article class="msg" data-show="resolved">
+        <span class="avatar avatar-staff">TB</span>
+        <div>
+          <div class="msg-meta"><b>Trần Bình</b>Lá Cọ Home, 30/10 09:15</div>
+          <div class="bubble">Bên em đã gửi giỏ mới màu tự nhiên, mã vận đơn GHN-58210473. Chị kiểm tra giúp em khi nhận nhé.</div>
+        </div>
+      </article>
+
+      <form class="composer" data-hide="closed" aria-label="Trả lời shop">
+        <div class="composer-head">
+          <label for="reply"><b>Trả lời shop</b></label>
+          <span class="hint" data-show="resolved">Trả lời sẽ mở lại yêu cầu</span>
+        </div>
+        <textarea id="reply" class="textarea" placeholder="Nhập câu trả lời của bạn"></textarea>
+        <div class="composer-foot">
+          <span class="hint">Shop nhận được ngay khi bạn bấm Gửi.</span>
+          <button class="btn btn-primary" type="button" disabled><svg class="i i-sm"><use href="#i-send"></use></svg>Gửi</button>
+        </div>
+      </form>
+    </div>
+
+    <aside class="sheet" aria-label="Thông tin yêu cầu">
+      <div class="sheet-body">
+        <dl class="facts-list">
+          <div><dt>Chủ đề</dt><dd data-hide="just-submitted">Đổi trả &amp; bảo hành</dd><dd data-show="just-submitted" class="muted">Đang xếp nhóm</dd></div>
+          <div><dt>Gửi lúc</dt><dd>08:14, 29/10/2026</dd></div>
+          <div><dt>Cập nhật gần nhất</dt><dd data-hide="just-submitted resolved">11:40, 29/10/2026</dd><dd data-show="just-submitted">08:14, 29/10/2026</dd><dd data-show="resolved">09:15, 30/10/2026</dd></div>
+          <div><dt>Tệp đính kèm</dt><dd>anh-gio-may.jpg</dd></div>
+        </dl>
+      </div>
+      <div class="sheet-foot" data-hide="closed">
+        <span>Không cần hỗ trợ nữa?</span>
+        <button class="btn btn-sm" type="button"><svg class="i i-sm"><use href="#i-check"></use></svg>Đóng yêu cầu</button>
+      </div>
+      <span class="callout" aria-hidden="true" style="margin:0 0 var(--s3) var(--s5)">1</span>
+    </aside>
+  </div>
+</main>
+
+<!-- SCR-13 Close ticket confirmation -->
+<div class="scrim" data-show="close-confirm">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="close-title">
+    <div class="modal-head">
+      <div class="stack" style="gap:4px">
+        <h2 id="close-title">Đóng yêu cầu #1042?</h2>
+        <p class="small muted">Sau khi đóng, bạn và shop không trả lời thêm được trong yêu cầu này. Nếu cần hỗ trợ lại, bạn gửi yêu cầu mới.</p>
+      </div>
+      <button class="icon-btn" type="button" aria-label="Đóng hộp thoại"><svg class="i"><use href="#i-x"></use></svg></button>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-quiet" type="button">Giữ yêu cầu</button>
+      <button class="btn btn-primary" type="button">Đóng yêu cầu</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/icons.js"></script>
+<script src="assets/states.js"></script>
+</body>
+</html>

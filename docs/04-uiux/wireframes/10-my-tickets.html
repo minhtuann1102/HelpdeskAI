@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-10 My Tickets — Helpdesk AI wireframe</title>
+  <link rel="stylesheet" href="assets/wireframe.css">
+</head>
+<body>
+
+<div class="wf-bar" role="note" aria-label="Wireframe controls">
+  <strong>Wireframe: SCR-10 My Tickets (Customer)</strong>
+  <ul class="wf-states" aria-label="State">
+    <li><a href="10-my-tickets.html">default</a></li>
+    <li><a href="10-my-tickets.html?state=loading">loading</a></li>
+    <li><a href="10-my-tickets.html?state=empty">empty</a></li>
+  </ul>
+  <span>Sample data: "Lá Cọ Home" is a fictional shop</span>
+</div>
+
+<header class="portal-top">
+  <div class="portal-top-inner">
+    <a class="portal-brand" href="10-my-tickets.html">
+      <span class="brand-mark"><svg class="i"><use href="#i-ticket"></use></svg></span>
+      <span><b>Lá Cọ Home</b><small>Trung tâm hỗ trợ</small></span>
+    </a>
+    <nav class="portal-nav" aria-label="Điều hướng chính">
+      <a href="10-my-tickets.html" aria-current="page">Yêu cầu của tôi</a>
+    </nav>
+    <div class="portal-right">
+      <a class="btn btn-primary" href="11-submit-ticket.html"><svg class="i i-sm"><use href="#i-plus"></use></svg>Gửi yêu cầu mới</a>
+      <a href="40-profile.html?role=customer" aria-label="Tài khoản của Nguyễn Thị Hoa"><span class="avatar">NH</span></a>
+    </div>
+  </div>
+</header>
+
+<main class="portal-main">
+  <div class="page-head">
+    <div>
+      <h1>Yêu cầu hỗ trợ của tôi</h1>
+      <p>Theo dõi các yêu cầu bạn đã gửi và trao đổi với shop ngay trên từng yêu cầu.</p>
+    </div>
+    <span class="callout" aria-hidden="true">1</span>
+  </div>
+
+  <nav class="tabs" aria-label="Lọc theo trạng thái" style="justify-self:start" data-hide="empty">
+    <a href="#" aria-current="true">Tất cả <span class="n">4</span></a>
+    <a href="#">Chờ bạn phản hồi <span class="n">1</span></a>
+    <a href="#">Mới <span class="n">1</span></a>
+    <a href="#">Đã giải quyết <span class="n">1</span></a>
+    <a href="#">Đã đóng <span class="n">1</span></a>
+  </nav>
+
+  <div class="ticket-list" data-hide="empty">
+    <div data-show="loading" aria-busy="true">
+      <div class="ticket-item"><div class="skeleton"><i></i><i></i></div></div>
+      <div class="ticket-item"><div class="skeleton"><i></i><i></i></div></div>
+      <div class="ticket-item"><div class="skeleton"><i></i><i></i></div></div>
+    </div>
+
+    <div data-hide="loading">
+      <a class="ticket-item is-waiting" href="12-ticket-detail.html">
+        <div class="stack" style="gap:6px">
+          <h2>Giao sai màu giỏ mây, cần đổi trước thứ Bảy</h2>
+          <div class="meta"><span>#1042</span><span>Đổi trả &amp; bảo hành</span><span>Shop trả lời lúc 11:40 hôm nay</span></div>
+        </div>
+        <div class="side">
+          <span class="status status-waiting"><span class="dot"></span>Chờ bạn phản hồi</span>
+          <span class="callout" aria-hidden="true">2</span>
+        </div>
+      </a>
+      <a class="ticket-item" href="12-ticket-detail.html?state=just-submitted">
+        <div class="stack" style="gap:6px">
+          <h2>Hỏi thời gian giao hàng đi Cần Thơ</h2>
+          <div class="meta"><span>#1049</span><span>Giao hàng</span><span>Gửi lúc 12:05 hôm nay</span></div>
+        </div>
+        <div class="side"><span class="status status-new"><span class="dot"></span>Mới</span></div>
+      </a>
+      <a class="ticket-item" href="12-ticket-detail.html?state=resolved">
+        <div class="stack" style="gap:6px">
+          <h2>Đã chuyển khoản nhưng đơn vẫn báo chưa thanh toán</h2>
+          <div class="meta"><span>#1021</span><span>Thanh toán &amp; hoàn tiền</span><span>Cập nhật 18/10/2026</span></div>
+        </div>
+        <div class="side"><span class="status status-resolved"><span class="dot"></span>Đã giải quyết</span></div>
+      </a>
+      <a class="ticket-item" href="12-ticket-detail.html?state=closed">
+        <div class="stack" style="gap:6px">
+          <h2>Đổi địa chỉ giao hàng sang công ty</h2>
+          <div class="meta"><span>#1009</span><span>Giao hàng</span><span>Cập nhật 05/10/2026</span></div>
+        </div>
+        <div class="side"><span class="status status-closed"><span class="dot"></span>Đã đóng</span></div>
+      </a>
+    </div>
+  </div>
+
+  <section class="sheet" data-show="empty">
+    <div class="empty">
+      <span class="empty-icon"><svg class="i"><use href="#i-ticket"></use></svg></span>
+      <h2>Bạn chưa gửi yêu cầu nào</h2>
+      <p>Gặp vấn đề với đơn hàng, giao hàng hay thanh toán? Gửi yêu cầu để shop hỗ trợ, bạn sẽ theo dõi được mọi trao đổi tại đây.</p>
+      <a class="btn btn-primary" href="11-submit-ticket.html"><svg class="i i-sm"><use href="#i-plus"></use></svg>Gửi yêu cầu mới</a>
+    </div>
+  </section>
+</main>
+
+<script src="assets/icons.js"></script>
+<script src="assets/states.js"></script>
+</body>
+</html>

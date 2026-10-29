@@ -127,7 +127,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
   height: 36px; padding: 0 14px; border: 1px solid var(--line); border-radius: var(--r-control);
-  background: var(--paper); font-size: var(--fs-sm); font-weight: 500; cursor: pointer; white-space: nowrap;
+  background: var(--paper); font-size: var(--fs-sm); font-weight: 500; cursor: pointer; white-space: nowrap; text-decoration: none;
 }
 .btn-primary { background: var(--pine); border-color: var(--pine); color: #fff; }
 .btn-quiet { border-color: transparent; background: transparent; color: var(--moss); padding: 0 10px; }
@@ -148,7 +148,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .chip-unclassified { border-style: dashed; border-color: var(--moss); background: var(--sage); color: var(--moss); }
 .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex: none; }
 .dot-brick { color: var(--brick); }
-.status { display: inline-flex; align-items: center; gap: 7px; height: 26px; padding: 0 11px; border-radius: 999px; background: var(--sage); font-size: var(--fs-sm); font-weight: 500; }
+.status { display: inline-flex; align-items: center; gap: 7px; height: 26px; padding: 0 11px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); font-size: var(--fs-sm); font-weight: 500; }
 .status-new .dot { color: var(--graphite); }
 .status-progress .dot { color: var(--amber); }
 .status-waiting .dot { background: transparent; border: 2px solid var(--moss); }
