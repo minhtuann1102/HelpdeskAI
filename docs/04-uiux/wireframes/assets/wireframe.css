@@ -132,6 +132,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .btn-primary { background: var(--pine); border-color: var(--pine); color: #fff; }
 .btn-quiet { border-color: transparent; background: transparent; color: var(--moss); padding: 0 10px; }
 .btn-danger { border-color: var(--brick); color: var(--brick); }
+.btn-danger-solid { background: var(--brick); border-color: var(--brick); color: #fff; }
 .btn-sm { height: 30px; padding: 0 10px; font-size: var(--fs-xs); }
 .btn[disabled] { opacity: 0.45; cursor: not-allowed; }
 .icon-btn { display: inline-grid; place-items: center; width: 32px; height: 32px; border: 0; border-radius: var(--r-control); background: transparent; color: var(--moss); cursor: pointer; }

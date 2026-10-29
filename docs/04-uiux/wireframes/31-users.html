@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-31 Users — Helpdesk AI wireframe</title>
+  <link rel="stylesheet" href="assets/wireframe.css">
+</head>
+<body data-default-role="admin">
+
+<div class="wf-bar" role="note" aria-label="Wireframe controls">
+  <strong>Wireframe: SCR-31 Users (Admin)</strong>
+  <ul class="wf-states" aria-label="State">
+    <li><a href="31-users.html">default</a></li>
+    <li><a href="31-users.html?state=create-staff">SCR-33 create-staff</a></li>
+    <li><a href="31-users.html?state=lock-confirm">SCR-34 lock-confirm</a></li>
+    <li><a href="31-users.html?state=empty-filtered">empty-filtered</a></li>
+  </ul>
+  <span>Sample data: fictional people and shop</span>
+</div>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark"><svg class="i"><use href="#i-ticket"></use></svg></span>
+      <span><span class="brand-name">Helpdesk AI</span><span class="brand-shop">Lá Cọ Home</span></span>
+    </div>
+    <nav aria-label="Điều hướng chính">
+      <ul class="nav">
+        <li><a href="20-ticket-queue.html?role=admin"><svg class="i"><use href="#i-inbox"></use></svg>Tất cả ticket</a></li>
+        <li><a href="22-dashboard.html"><svg class="i"><use href="#i-chart"></use></svg>Tổng quan</a></li>
+        <li><a href="30-categories.html"><svg class="i"><use href="#i-tag"></use></svg>Danh mục</a></li>
+        <li><a href="31-users.html" aria-current="page"><svg class="i"><use href="#i-users"></use></svg>Người dùng</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-foot">
+      <span class="avatar">TL</span>
+      <span class="who">Phạm Thanh Lam<small>Quản trị viên</small></span>
+      <button class="icon-btn" type="button" aria-label="Đăng xuất"><svg class="i"><use href="#i-logout"></use></svg></button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><span aria-current="page">Người dùng</span></nav>
+      <a href="40-profile.html?role=admin" aria-label="Hồ sơ"><span class="avatar avatar-admin">TL</span></a>
+    </header>
+
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <h1>Người dùng</h1>
+          <p>Khách hàng tự đăng ký. Tài khoản nhân viên hỗ trợ do bạn tạo và tham gia chia ticket tự động ngay khi tạo.</p>
+        </div>
+        <div class="row">
+          <span class="callout" aria-hidden="true">1</span>
+          <button class="btn btn-primary" type="button"><svg class="i i-sm"><use href="#i-plus"></use></svg>Tạo tài khoản nhân viên</button>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="search">
+          <svg class="i i-sm"><use href="#i-search"></use></svg>
+          <input class="input" type="search" placeholder="Tìm theo tên hoặc email" aria-label="Tìm người dùng" data-hide="empty-filtered">
+          <input class="input" type="search" value="minh khoa" aria-label="Tìm người dùng" data-show="empty-filtered">
+        </div>
+        <select class="select" aria-label="Vai trò"><option>Mọi vai trò</option><option>Khách hàng</option><option>Nhân viên hỗ trợ</option><option>Quản trị viên</option></select>
+        <select class="select" aria-label="Trạng thái"><option>Mọi trạng thái</option><option>Hoạt động</option><option>Đã khóa</option></select>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table" data-hide="empty-filtered">
+          <thead>
+            <tr><th>Người dùng</th><th>Vai trò</th><th>Trạng thái</th><th class="num">Ticket đang mở</th><th>Ngày tạo</th><th></th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="cell-person"><span class="avatar avatar-admin">TL</span><span class="t-title" style="min-width:0"><b>Phạm Thanh Lam</b><span>lam.pham@lacohome.example</span></span></span></td>
+              <td>Quản trị viên</td>
+              <td><span class="chip chip-ok">Hoạt động</span></td>
+              <td class="num muted">—</td>
+              <td class="muted">01/09/2026</td>
+              <td><span class="xs muted">Tài khoản của bạn</span></td>
+            </tr>
+            <tr>
+              <td><span class="cell-person"><span class="avatar avatar-staff">TB</span><span class="t-title" style="min-width:0"><b>Trần Bình</b><span>binh.tran@lacohome.example</span></span></span></td>
+              <td>Nhân viên hỗ trợ</td>
+              <td><span class="chip chip-ok">Hoạt động</span></td>
+              <td class="num">7</td>
+              <td class="muted">03/09/2026</td>
+              <td><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-lock"></use></svg>Khóa</button></td>
+            </tr>
+            <tr>
+              <td><span class="cell-person"><span class="avatar avatar-staff">NA</span><span class="t-title" style="min-width:0"><b>Nguyễn An</b><span>an.nguyen@lacohome.example</span></span></span></td>
+              <td>Nhân viên hỗ trợ</td>
+              <td><span class="chip chip-ok">Hoạt động</span></td>
+              <td class="num">3</td>
+              <td class="muted">03/09/2026</td>
+              <td><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-lock"></use></svg>Khóa</button> <span class="callout" aria-hidden="true">2</span></td>
+            </tr>
+            <tr>
+              <td><span class="cell-person"><span class="avatar avatar-staff">LC</span><span class="t-title" style="min-width:0"><b>Lê Chi</b><span>chi.le@lacohome.example</span></span></span></td>
+              <td>Nhân viên hỗ trợ</td>
+              <td><span class="chip chip-ok">Hoạt động</span></td>
+              <td class="num">2</td>
+              <td class="muted">15/09/2026</td>
+              <td><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-lock"></use></svg>Khóa</button></td>
+            </tr>
+            <tr>
+              <td><span class="cell-person"><span class="avatar">ĐV</span><span class="t-title" style="min-width:0"><b>Đặng Quốc Việt</b><span>viet.dang@lacohome.example</span></span></span></td>
+              <td>Nhân viên hỗ trợ</td>
+              <td><span class="chip chip-locked">Đã khóa</span></td>
+              <td class="num muted">0</td>
+              <td class="muted">03/09/2026</td>
+              <td><button class="btn btn-sm" type="button">Mở khóa</button></td>
+            </tr>
+            <tr>
+              <td><span class="cell-person"><span class="avatar">NH</span><span class="t-title" style="min-width:0"><b>Nguyễn Thị Hoa</b><span>hoa.nguyen@example.com</span></span></span></td>
+              <td>Khách hàng</td>
+              <td><span class="chip chip-ok">Hoạt động</span></td>
+              <td class="num muted">—</td>
+              <td class="muted">12/10/2026</td>
+              <td><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-lock"></use></svg>Khóa</button></td>
+            </tr>
+            <tr>
+              <td><span class="cell-person"><span class="avatar">LT</span><span class="t-title" style="min-width:0"><b>Lê Văn Tâm</b><span>tam.le@example.com</span></span></span></td>
+              <td>Khách hàng</td>
+              <td><span class="chip chip-ok">Hoạt động</span></td>
+              <td class="num muted">—</td>
+              <td class="muted">28/10/2026</td>
+              <td><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-lock"></use></svg>Khóa</button></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="empty" data-show="empty-filtered">
+          <span class="empty-icon"><svg class="i"><use href="#i-search"></use></svg></span>
+          <h2>Không tìm thấy người dùng</h2>
+          <p>Không có ai tên hoặc email chứa "minh khoa". Kiểm tra chính tả hoặc bỏ bớt bộ lọc.</p>
+          <button class="btn" type="button"><svg class="i i-sm"><use href="#i-x"></use></svg>Xóa bộ lọc</button>
+        </div>
+
+        <div class="table-foot" data-hide="empty-filtered"><span>7 người dùng: 1 quản trị viên, 4 nhân viên hỗ trợ, 2 khách hàng</span><span>Trang 1/1</span></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- SCR-33 Create Staff -->
+<div class="scrim" data-show="create-staff">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="create-title">
+    <div class="modal-head">
+      <div class="stack" style="gap:4px">
+        <h2 id="create-title">Tạo tài khoản nhân viên</h2>
+        <p class="small muted">Nhân viên mới tham gia chia ticket tự động ngay sau khi tạo.</p>
+      </div>
+      <button class="icon-btn" type="button" aria-label="Đóng"><svg class="i"><use href="#i-x"></use></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="field"><label for="s-name">Họ và tên</label><input id="s-name" class="input" value="Trịnh Minh Khoa"></div>
+      <div class="field"><label for="s-email">Email đăng nhập</label><input id="s-email" class="input" value="khoa.trinh@lacohome.example"></div>
+      <div class="field">
+        <label for="s-pw">Mật khẩu ban đầu</label>
+        <div class="pw"><input id="s-pw" class="input" type="password" value="lacohome2026"><button class="icon-btn" type="button" aria-label="Hiện mật khẩu"><svg class="i i-sm"><use href="#i-eye"></use></svg></button></div>
+        <span class="hint">Ít nhất 8 ký tự. Gửi cho nhân viên qua kênh riêng; họ tự đổi mật khẩu trong Hồ sơ.</span>
+      </div>
+      <div class="field">
+        <span class="label">Vai trò</span>
+        <span><span class="chip chip-plain">Nhân viên hỗ trợ</span></span>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-quiet" type="button">Hủy</button>
+      <button class="btn btn-primary" type="button"><svg class="i i-sm"><use href="#i-plus"></use></svg>Tạo tài khoản</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCR-34 Lock confirmation -->
+<div class="scrim" data-show="lock-confirm">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="lock-title">
+    <div class="modal-head">
+      <div class="stack" style="gap:4px">
+        <h2 id="lock-title">Khóa tài khoản Nguyễn An?</h2>
+        <p class="small muted">Nguyễn An sẽ bị đăng xuất và không đăng nhập lại được cho đến khi bạn mở khóa.</p>
+      </div>
+      <button class="icon-btn" type="button" aria-label="Đóng"><svg class="i"><use href="#i-x"></use></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="notice notice-neutral">
+        <svg class="i"><use href="#i-swap"></use></svg>
+        <span><b style="color:var(--graphite)">3 ticket đang mở sẽ được chia lại</b> cho nhân viên đang hoạt động có ít ticket nhất. Khi mở khóa, các ticket này không tự quay về.</span>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-quiet" type="button">Hủy</button>
+      <button class="btn btn-danger-solid" type="button"><svg class="i i-sm"><use href="#i-lock"></use></svg>Khóa tài khoản</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/icons.js"></script>
+<script src="assets/states.js"></script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-30 Categories — Helpdesk AI wireframe</title>
+  <link rel="stylesheet" href="assets/wireframe.css">
+</head>
+<body data-default-role="admin">
+
+<div class="wf-bar" role="note" aria-label="Wireframe controls">
+  <strong>Wireframe: SCR-30 Categories (Admin)</strong>
+  <ul class="wf-states" aria-label="State">
+    <li><a href="30-categories.html">default</a></li>
+    <li><a href="30-categories.html?state=edit">SCR-32 edit</a></li>
+    <li><a href="30-categories.html?state=form-error">SCR-32 add with errors</a></li>
+    <li><a href="30-categories.html?state=hide-confirm">hide-confirm</a></li>
+  </ul>
+  <span>Sample data: "Lá Cọ Home" is a fictional shop</span>
+</div>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark"><svg class="i"><use href="#i-ticket"></use></svg></span>
+      <span><span class="brand-name">Helpdesk AI</span><span class="brand-shop">Lá Cọ Home</span></span>
+    </div>
+    <nav aria-label="Điều hướng chính">
+      <ul class="nav">
+        <li><a href="20-ticket-queue.html?role=admin"><svg class="i"><use href="#i-inbox"></use></svg>Tất cả ticket</a></li>
+        <li><a href="22-dashboard.html"><svg class="i"><use href="#i-chart"></use></svg>Tổng quan</a></li>
+        <li><a href="30-categories.html" aria-current="page"><svg class="i"><use href="#i-tag"></use></svg>Danh mục</a></li>
+        <li><a href="31-users.html"><svg class="i"><use href="#i-users"></use></svg>Người dùng</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-foot">
+      <span class="avatar">TL</span>
+      <span class="who">Phạm Thanh Lam<small>Quản trị viên</small></span>
+      <button class="icon-btn" type="button" aria-label="Đăng xuất"><svg class="i"><use href="#i-logout"></use></svg></button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><span aria-current="page">Danh mục</span></nav>
+      <a href="40-profile.html?role=admin" aria-label="Hồ sơ"><span class="avatar avatar-admin">TL</span></a>
+    </header>
+
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <h1>Danh mục ticket</h1>
+          <p>Khách chọn danh mục khi gửi yêu cầu, và AI dùng danh mục đang dùng để phân loại ticket mới.</p>
+        </div>
+        <div class="row">
+          <span class="callout" aria-hidden="true">1</span>
+          <button class="btn btn-primary" type="button"><svg class="i i-sm"><use href="#i-plus"></use></svg>Thêm danh mục</button>
+        </div>
+      </div>
+
+      <div class="notice notice-pencil">
+        <span class="ai-mark">AI</span>
+        <span>AI đọc <b>mô tả</b> của từng danh mục để quyết định xếp ticket vào đâu. Liệt kê các vấn đề khách hay hỏi, dùng đúng từ khách hay dùng, thì AI phân loại chính xác hơn.</span>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr><th>Danh mục và mô tả cho AI</th><th class="num">Ticket 30 ngày</th><th>Trạng thái</th><th></th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="t-title"><b>Đơn hàng</b><span>Đặt hàng, sửa hoặc hủy đơn, tình trạng đơn, mua số lượng lớn, xuất hóa đơn.</span></div></td>
+              <td class="num">14</td>
+              <td><span class="chip chip-ok">Đang dùng</span></td>
+              <td><div class="row" style="justify-content:flex-end"><button class="btn btn-sm" type="button"><svg class="i i-sm"><use href="#i-pencil"></use></svg>Sửa</button><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-eyeoff"></use></svg>Ẩn</button></div></td>
+            </tr>
+            <tr>
+              <td><div class="t-title"><b>Giao hàng</b><span>Thời gian giao, phí ship, đổi địa chỉ nhận, giao trễ, chưa nhận được hàng.</span></div></td>
+              <td class="num">17</td>
+              <td><span class="chip chip-ok">Đang dùng</span></td>
+              <td><div class="row" style="justify-content:flex-end"><button class="btn btn-sm" type="button"><svg class="i i-sm"><use href="#i-pencil"></use></svg>Sửa</button><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-eyeoff"></use></svg>Ẩn</button></div></td>
+            </tr>
+            <tr>
+              <td><div class="t-title"><b>Thanh toán &amp; hoàn tiền</b><span>Lỗi thanh toán, bị trừ tiền hai lần, mã giảm giá không dùng được, yêu cầu hoàn tiền.</span></div></td>
+              <td class="num">9</td>
+              <td><span class="chip chip-ok">Đang dùng</span></td>
+              <td><div class="row" style="justify-content:flex-end"><button class="btn btn-sm" type="button"><svg class="i i-sm"><use href="#i-pencil"></use></svg>Sửa</button><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-eyeoff"></use></svg>Ẩn</button></div></td>
+            </tr>
+            <tr>
+              <td><div class="t-title"><b>Đổi trả &amp; bảo hành</b><span>Giao sai mẫu hoặc sai màu, hàng lỗi, hư hỏng khi vận chuyển, đổi size, bảo hành đồ mây tre.</span></div></td>
+              <td class="num">15</td>
+              <td><span class="chip chip-ok">Đang dùng</span></td>
+              <td><div class="row" style="justify-content:flex-end"><button class="btn btn-sm" type="button"><svg class="i i-sm"><use href="#i-pencil"></use></svg>Sửa</button><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-eyeoff"></use></svg>Ẩn</button></div></td>
+            </tr>
+            <tr>
+              <td><div class="t-title"><b>Tài khoản</b><span>Đăng nhập, quên mật khẩu, không nhận được mã OTP, cập nhật thông tin tài khoản.</span></div></td>
+              <td class="num">5</td>
+              <td><span class="chip chip-ok">Đang dùng</span></td>
+              <td><div class="row" style="justify-content:flex-end"><button class="btn btn-sm" type="button"><svg class="i i-sm"><use href="#i-pencil"></use></svg>Sửa</button><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-eyeoff"></use></svg>Ẩn</button></div></td>
+            </tr>
+            <tr>
+              <td><div class="t-title"><b>Khuyến mãi tháng 9</b><span>Câu hỏi về chương trình giảm giá 9/2026: điều kiện áp dụng, thời hạn, quà tặng kèm.</span></div></td>
+              <td class="num muted">0</td>
+              <td><span class="chip chip-ok">Đang dùng</span></td>
+              <td><div class="row" style="justify-content:flex-end"><button class="btn btn-sm" type="button"><svg class="i i-sm"><use href="#i-pencil"></use></svg>Sửa</button><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-eyeoff"></use></svg>Ẩn</button><span class="callout" aria-hidden="true">2</span></div></td>
+            </tr>
+            <tr>
+              <td><div class="t-title" style="opacity:.6"><b>Quà Tết 2026</b><span>Đặt quà Tết theo bộ, in thiệp, giao trước Tết.</span></div></td>
+              <td class="num muted">0</td>
+              <td><span class="chip chip-plain">Đã ẩn</span></td>
+              <td><div class="row" style="justify-content:flex-end"><button class="btn btn-sm" type="button"><svg class="i i-sm"><use href="#i-eye"></use></svg>Hiện lại</button></div></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="table-foot"><span>6 danh mục đang dùng, 1 đã ẩn</span><span>Danh mục không xóa được, chỉ ẩn, để ticket cũ giữ nguyên nhãn.</span></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- SCR-32 Category form: edit -->
+<div class="scrim" data-show="edit">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="edit-title">
+    <div class="modal-head">
+      <h2 id="edit-title">Sửa danh mục</h2>
+      <button class="icon-btn" type="button" aria-label="Đóng"><svg class="i"><use href="#i-x"></use></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label for="c-name">Tên danh mục</label>
+        <input id="c-name" class="input" value="Giao hàng">
+      </div>
+      <div class="field">
+        <label for="c-desc">Mô tả cho AI</label>
+        <textarea id="c-desc" class="textarea" rows="4">Thời gian giao, phí ship, đổi địa chỉ nhận, giao trễ, chưa nhận được hàng, shipper không liên lạc được.</textarea>
+        <span class="hint">AI dùng mô tả này cho ticket mới từ bây giờ. Ticket cũ giữ nguyên nhãn.</span>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-quiet" type="button">Hủy</button>
+      <button class="btn btn-primary" type="button"><svg class="i i-sm"><use href="#i-check"></use></svg>Lưu thay đổi</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCR-32 Category form: add with errors -->
+<div class="scrim" data-show="form-error">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="add-title">
+    <div class="modal-head">
+      <h2 id="add-title">Thêm danh mục</h2>
+      <button class="icon-btn" type="button" aria-label="Đóng"><svg class="i"><use href="#i-x"></use></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="field field-error">
+        <label for="a-name">Tên danh mục</label>
+        <input id="a-name" class="input" value="giao hàng" aria-invalid="true">
+        <span class="error-text">Đã có danh mục "Giao hàng". Hãy dùng tên khác hoặc sửa danh mục đó.</span>
+      </div>
+      <div class="field field-error">
+        <label for="a-desc">Mô tả cho AI</label>
+        <textarea id="a-desc" class="textarea" rows="4" aria-invalid="true"></textarea>
+        <span class="error-text">Cần có mô tả, vì AI dựa vào mô tả để xếp ticket vào danh mục này.</span>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-quiet" type="button">Hủy</button>
+      <button class="btn btn-primary" type="button"><svg class="i i-sm"><use href="#i-plus"></use></svg>Thêm danh mục</button>
+    </div>
+  </div>
+</div>
+
+<!-- Hide confirmation -->
+<div class="scrim" data-show="hide-confirm">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="hide-title">
+    <div class="modal-head">
+      <div class="stack" style="gap:4px">
+        <h2 id="hide-title">Ẩn danh mục "Khuyến mãi tháng 9"?</h2>
+        <p class="small muted">Khách sẽ không chọn được danh mục này và AI sẽ không xếp ticket mới vào đây. 3 ticket cũ vẫn giữ danh mục này. Bạn có thể hiện lại bất cứ lúc nào.</p>
+      </div>
+      <button class="icon-btn" type="button" aria-label="Đóng"><svg class="i"><use href="#i-x"></use></svg></button>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-quiet" type="button">Hủy</button>
+      <button class="btn btn-primary" type="button"><svg class="i i-sm"><use href="#i-eyeoff"></use></svg>Ẩn danh mục</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/icons.js"></script>
+<script src="assets/states.js"></script>
+</body>
+</html>
