@@ -10,7 +10,7 @@ These decisions refine the original brief. Later steps must follow them.
 
 | ID | Decision | Effect on the brief |
 |---|---|---|
-| D-01 | All documentation is written in English. Technical names (entities, endpoints, fields) are also English. Exception: the product mind map (`docs/mindmap.png`) is drawn in Vietnamese by the user. | Replaces "write in Vietnamese". |
+| D-01 | All documentation is written in English. Technical names (entities, endpoints, fields) are also English. Exceptions: the product mind map (`docs/mindmap.png`) is drawn in Vietnamese by the user, and the UI copy in the wireframes is Vietnamese (Step 4, D-17). | Replaces "write in Vietnamese". |
 | D-02 | The support employee actor is called **Staff** (role code `STAFF`). The word "agent" is not used anywhere, to avoid confusion with AI agents. | Renames the "Agent" actor. |
 | D-03 | **Admin can see everything** and has every Staff permission on tickets (view, reply, change status, edit AI labels, use AI tools, reassign), plus administration (users, categories, system dashboard). | Admin ⊇ Staff. |
 | D-04 | **The system auto-assigns** every new ticket to an active Staff member. Staff must handle the tickets assigned to them. Staff can transfer a ticket to another Staff member. Admin can reassign any ticket. | Replaces "Staff claims/assigns tickets". Algorithm: fewest open tickets (Step 2, D-07). |

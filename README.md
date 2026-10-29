@@ -166,12 +166,47 @@ Login takes each role to its home page: Customer → My Tickets, Staff → Ticke
 
 Source: [Sitemap by Role](docs/03-information-architecture/01-sitemap.md). Screen IDs are listed in [Screen Inventory](docs/03-information-architecture/04-screen-inventory.md), navigation in [Navigation](docs/03-information-architecture/03-navigation.md), user flows in [Primary User Flows](docs/03-information-architecture/05-user-flows.md), and UI and AI states in [UI/UX States and Accessibility](docs/03-information-architecture/06-ui-states-and-accessibility.md).
 
+### 2.3 UI wireframes
+
+High-fidelity wireframes in static HTML (Vietnamese UI copy, fictional sample shop "Lá Cọ Home"). AI suggestions are drawn as **dashed violet** and marked "AI"; anything a person confirmed or corrected is **solid**. Only the three core branches are shown here; every screen and state is in the [wireframe gallery](docs/04-uiux/wireframes/index.html).
+
+#### Submit & track tickets (Customer)
+
+![My Tickets](docs/images/customer/10-my-tickets.png)
+
+![Submit Ticket](docs/images/customer/11-submit-ticket.png)
+
+![Ticket Detail](docs/images/customer/12-ticket-detail.png)
+
+#### Ticket handling (Staff)
+
+![Ticket Queue](docs/images/staff/20-ticket-queue.png)
+
+![Ticket Handling](docs/images/staff/21-ticket-handling.png)
+
+#### AI assistance
+
+Fallback to "Unclassified" when AI fails, so Staff triage manually:
+
+![Unclassified after an AI error](docs/images/staff/21b-ticket-handling-unclassified-ai-error.png)
+
+Reply rewrite shown beside the draft; nothing is sent until Staff click Send:
+
+![Reply rewrite result](docs/images/staff/21c-ticket-handling-rewrite-result.png)
+
+Summary marked outdated after a new message:
+
+![Outdated summary](docs/images/staff/21d-ticket-handling-summary-outdated.png)
+
+Source: [Screen notes and states](docs/04-uiux/02-screen-notes.md) and [Design system](docs/04-uiux/01-design-system.md).
+
 ## Documentation
 
 - Research: [Context and problem](docs/01-research/01-context-and-problem.md), [Goals and metrics](docs/01-research/02-goals-and-metrics.md), [Stakeholders](docs/01-research/03-stakeholders.md), [Similar products](docs/01-research/04-similar-products.md), [MVP scope](docs/01-research/05-scope.md), [Risks](docs/01-research/06-risks.md), [AI vs rule-based](docs/01-research/07-ai-vs-rule-based.md), [Glossary](docs/01-research/08-glossary.md), [Decisions](docs/01-research/00-decisions.md).
 - Requirements: [Actors and use cases](docs/02-usecases-userstories/01-use-cases.md), [Use case specifications](docs/02-usecases-userstories/02-use-case-specifications.md), [User stories (INVEST)](docs/02-usecases-userstories/03-user-stories-invest.md), [Acceptance criteria](docs/02-usecases-userstories/04-acceptance-criteria.md), [MoSCoW](docs/02-usecases-userstories/05-moscow-prioritization.md), [Decisions and defaults](docs/02-usecases-userstories/00-decisions.md).
 - Requirements catalogs: [Business rules](docs/requirements/business-rules.md).
 - UI/UX: [Sitemap](docs/03-information-architecture/01-sitemap.md), [Routes and permissions](docs/03-information-architecture/02-routes-and-permissions.md), [Navigation](docs/03-information-architecture/03-navigation.md), [Screen inventory](docs/03-information-architecture/04-screen-inventory.md), [User flows](docs/03-information-architecture/05-user-flows.md), [UI states and accessibility](docs/03-information-architecture/06-ui-states-and-accessibility.md), [Decisions and defaults](docs/03-information-architecture/00-decisions.md).
+- Wireframes: [Wireframe gallery](docs/04-uiux/wireframes/index.html), [Screen notes and states](docs/04-uiux/02-screen-notes.md), [Design system](docs/04-uiux/01-design-system.md), [Decisions and defaults](docs/04-uiux/00-decisions.md).
 - Traceability: [Master traceability matrix](docs/traceability/master-traceability.md).
 
 ## Project Progress
@@ -184,7 +219,7 @@ Source: [Sitemap by Role](docs/03-information-architecture/01-sitemap.md). Scree
 - [x] Write acceptance criteria (Given/When/Then) and business rules
 - [x] Prioritize the backlog with MoSCoW
 - [x] Design the information architecture, sitemap per role, and user flows
-- [ ] Design the UI/UX wireframes, including AI states (loading, error, Unclassified, outdated summary)
+- [x] Design the UI/UX wireframes, including AI states (loading, error, Unclassified, outdated summary)
 - [ ] Design the ERD (DBML and Mermaid)
 - [ ] Write the API documentation in OpenAPI 3.0 and the cross-check report
 - [ ] Design the C4 model and choose the tech stack and LLM provider
