@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-21 Ticket Handling — Helpdesk AI wireframe</title>
+  <link rel="stylesheet" href="assets/wireframe.css">
+</head>
+<body data-default-role="staff">
+
+<div class="wf-bar" role="note" aria-label="Wireframe controls">
+  <strong>Wireframe: SCR-21 Ticket Handling</strong>
+  <ul class="wf-roles" aria-label="Role">
+    <li><a href="21-ticket-handling.html?role=staff">Staff</a></li>
+    <li><a href="21-ticket-handling.html?role=admin">Admin</a></li>
+  </ul>
+  <ul class="wf-states" aria-label="State">
+    <li><a href="21-ticket-handling.html">default</a></li>
+    <li><a href="21-ticket-handling.html?state=classification-pending">classification-pending</a></li>
+    <li><a href="21-ticket-handling.html?state=unclassified-low-confidence">unclassified-low-confidence</a></li>
+    <li><a href="21-ticket-handling.html?state=unclassified-ai-error">unclassified-ai-error</a></li>
+    <li><a href="21-ticket-handling.html?state=label-corrected">label-corrected</a></li>
+    <li><a href="21-ticket-handling.html?state=summary-loading">summary-loading</a></li>
+    <li><a href="21-ticket-handling.html?state=summary-error">summary-error</a></li>
+    <li><a href="21-ticket-handling.html?state=summary-outdated">summary-outdated</a></li>
+    <li><a href="21-ticket-handling.html?state=rewrite-loading">rewrite-loading</a></li>
+    <li><a href="21-ticket-handling.html?state=rewrite-result">rewrite-result</a></li>
+    <li><a href="21-ticket-handling.html?state=rewrite-error">rewrite-error</a></li>
+    <li><a href="21-ticket-handling.html?state=transfer">SCR-23 transfer</a></li>
+  </ul>
+  <span>Sample data: "Lá Cọ Home" is a fictional shop</span>
+</div>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark"><svg class="i"><use href="#i-ticket"></use></svg></span>
+      <span><span class="brand-name">Helpdesk AI</span><span class="brand-shop">Lá Cọ Home</span></span>
+    </div>
+    <nav aria-label="Điều hướng chính">
+      <ul class="nav" data-role="staff">
+        <li><a href="20-ticket-queue.html" aria-current="page"><svg class="i"><use href="#i-inbox"></use></svg>Hàng đợi của tôi <span class="count">7</span></a></li>
+        <li><a href="22-dashboard.html"><svg class="i"><use href="#i-chart"></use></svg>Tổng quan</a></li>
+      </ul>
+      <ul class="nav" data-role="admin">
+        <li><a href="20-ticket-queue.html?role=admin" aria-current="page"><svg class="i"><use href="#i-inbox"></use></svg>Tất cả ticket <span class="count">2</span></a></li>
+        <li><a href="22-dashboard.html?role=admin"><svg class="i"><use href="#i-chart"></use></svg>Tổng quan</a></li>
+        <li><a href="30-categories.html"><svg class="i"><use href="#i-tag"></use></svg>Danh mục</a></li>
+        <li><a href="31-users.html"><svg class="i"><use href="#i-users"></use></svg>Người dùng</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-foot">
+      <span class="avatar" data-role="staff">TB</span>
+      <span class="who" data-role="staff">Trần Bình<small>Nhân viên hỗ trợ</small></span>
+      <span class="avatar" data-role="admin">TL</span>
+      <span class="who" data-role="admin">Phạm Thanh Lam<small>Quản trị viên</small></span>
+      <button class="icon-btn" type="button" aria-label="Đăng xuất"><svg class="i"><use href="#i-logout"></use></svg></button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="20-ticket-queue.html" data-role="staff">Hàng đợi của tôi</a>
+        <a href="20-ticket-queue.html?role=admin" data-role="admin">Tất cả ticket</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">#1042</span>
+      </nav>
+      <a class="row small" href="40-profile.html" style="text-decoration:none">
+        <span class="avatar avatar-staff" data-role="staff">TB</span>
+        <span class="avatar avatar-admin" data-role="admin">TL</span>
+      </a>
+    </header>
+
+    <main>
+      <!-- Ticket header band -->
+      <section class="ticket-band" aria-labelledby="ticket-title">
+        <div class="row">
+          <span class="stub"><svg class="i i-sm"><use href="#i-ticket"></use></svg>#1042</span>
+          <span class="status status-progress"><span class="dot"></span>Đang xử lý</span>
+          <span class="row xs muted"><svg class="i i-sm"><use href="#i-clock"></use></svg>Tạo lúc 08:14, 29/10/2026</span>
+          <span class="xs muted">Phản hồi đầu tiên sau 48 phút</span>
+        </div>
+        <h1 class="ticket-title" id="ticket-title">Giao sai màu giỏ mây, cần đổi trước thứ Bảy</h1>
+        <div class="people">
+          <div class="person">
+            <span class="avatar avatar-lg">NH</span>
+            <span class="person-text"><b>Nguyễn Thị Hoa</b><span>Khách hàng, hoa.nguyen@example.com</span></span>
+          </div>
+          <div class="person">
+            <span class="avatar avatar-lg avatar-staff">TB</span>
+            <span class="person-text"><b>Trần Bình</b><span>Người xử lý</span></span>
+          </div>
+          <div class="band-actions">
+            <button class="btn" type="button" data-role="staff"><svg class="i i-sm"><use href="#i-swap"></use></svg>Chuyển cho đồng nghiệp</button>
+            <button class="btn" type="button" data-role="admin"><svg class="i i-sm"><use href="#i-swap"></use></svg>Giao lại</button>
+            <span class="callout" aria-hidden="true">6</span>
+            <select id="status" class="select" style="width:auto" aria-label="Đổi trạng thái">
+              <option>Đang xử lý</option>
+              <option>Chờ khách</option>
+              <option>Đã giải quyết</option>
+              <option>Đã đóng</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <div class="ticket-body">
+        <!-- Conversation and reply -->
+        <div class="thread" aria-label="Cuộc trò chuyện">
+          <div class="day">Hôm nay, 29/10/2026</div>
+
+          <article class="msg">
+            <span class="avatar">NH</span>
+            <div>
+              <div class="msg-meta"><b>Nguyễn Thị Hoa</b>08:14</div>
+              <div class="bubble">
+                Mình đặt giỏ mây size M màu tự nhiên (đơn #LC-20931) mà nhận được màu nâu đậm. Thứ Bảy này là sinh nhật mẹ mình rồi, shop đổi giúp mình với. Lần trước đặt cũng bị giao nhầm một lần rồi đó.
+                <div><span class="file"><svg class="i i-sm"><use href="#i-clip"></use></svg>anh-gio-may.jpg <span class="muted">1,2 MB</span></span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="msg msg-staff">
+            <span class="avatar avatar-staff">TB</span>
+            <div>
+              <div class="msg-meta"><b>Trần Bình</b>09:02</div>
+              <div class="bubble">Chào chị Hoa, em xin lỗi vì sự nhầm lẫn này. Chị chụp giúp em tem mã sản phẩm dưới đáy giỏ để kho kiểm tra nhé.</div>
+            </div>
+          </article>
+
+          <article class="msg">
+            <span class="avatar">NH</span>
+            <div>
+              <div class="msg-meta"><b>Nguyễn Thị Hoa</b>10:31</div>
+              <div class="bubble">tem ghi LC-GM-NAU nha shop. minh can mau tu nhien, thu 6 nhan duoc ko?</div>
+            </div>
+          </article>
+
+          <article class="msg msg-new" data-show="summary-outdated">
+            <span class="avatar">NH</span>
+            <div>
+              <div class="msg-meta"><b>Nguyễn Thị Hoa</b>11:02, tin nhắn mới</div>
+              <div class="bubble">Shop ơi có ai xem giúp chưa vậy?</div>
+            </div>
+          </article>
+
+          <!-- Composer: normal and rewrite-error -->
+          <form class="composer" data-hide="rewrite-loading rewrite-result" aria-label="Trả lời khách">
+            <div class="composer-head">
+              <label for="reply"><b>Trả lời Nguyễn Thị Hoa</b></label>
+              <span class="hint">Khách chỉ nhận được khi bạn bấm Gửi</span>
+            </div>
+            <div class="notice notice-error" data-show="rewrite-error" role="alert" style="margin:var(--s3) var(--s4) 0">
+              <svg class="i"><use href="#i-alert"></use></svg>
+              <span>Không viết lại được vì AI không phản hồi trong 20 giây. Bản nháp vẫn giữ nguyên, bạn có thể gửi ngay hoặc thử lại.</span>
+            </div>
+            <textarea id="reply" class="textarea">da kiem tra, ben em giao nham mau. em gui lai gio mau tu nhien cho chi, gio cu chi giu lai shipper lay sau</textarea>
+            <div class="composer-foot">
+              <div class="row">
+                <button class="btn btn-ai" type="button"><span class="ai-mark">AI</span>Viết lại bằng AI</button>
+                <span class="callout" aria-hidden="true">4</span>
+              </div>
+              <div class="row">
+                <span class="callout" aria-hidden="true">5</span>
+                <button class="btn" type="button">Gửi và chờ khách</button>
+                <button class="btn btn-primary" type="button"><svg class="i i-sm"><use href="#i-send"></use></svg>Gửi</button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Composer: rewrite-loading -->
+          <form class="composer" data-show="rewrite-loading" aria-label="Trả lời khách" aria-busy="true">
+            <div class="composer-head">
+              <label for="reply-busy"><b>Trả lời Nguyễn Thị Hoa</b></label>
+              <span class="hint">AI đang viết lại, tối đa 20 giây</span>
+            </div>
+            <textarea id="reply-busy" class="textarea" readonly>da kiem tra, ben em giao nham mau. em gui lai gio mau tu nhien cho chi, gio cu chi giu lai shipper lay sau</textarea>
+            <div class="composer-foot">
+              <button class="btn btn-ai" type="button" disabled><span class="spinner" aria-hidden="true"></span>Đang viết lại…</button>
+              <div class="row">
+                <button class="btn" type="button" disabled>Gửi và chờ khách</button>
+                <button class="btn btn-primary" type="button" disabled><svg class="i i-sm"><use href="#i-send"></use></svg>Gửi</button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Composer: rewrite-result -->
+          <form class="composer" data-show="rewrite-result" aria-label="So sánh bản viết lại">
+            <div class="composer-head">
+              <b>Trả lời Nguyễn Thị Hoa</b>
+              <span class="hint">Chưa gửi gì cho khách</span>
+            </div>
+            <div class="compare">
+              <div class="compare-col">
+                <h3><svg class="i i-sm"><use href="#i-pen"></use></svg>Bản nháp của bạn</h3>
+                <p>da kiem tra, ben em giao nham mau. em gui lai gio mau tu nhien cho chi, gio cu chi giu lai shipper lay sau</p>
+              </div>
+              <div class="compare-col is-ai">
+                <h3><span class="ai-mark">AI</span>Bản viết lại</h3>
+                <p>Chào chị Hoa, bên em đã kiểm tra và xác nhận giao nhầm màu. Em sẽ gửi lại cho chị giỏ mây màu tự nhiên. Chị vui lòng giữ lại giỏ đã nhận, shipper sẽ đến lấy sau. Em xin lỗi chị vì sự bất tiện này.</p>
+              </div>
+            </div>
+            <div class="composer-foot">
+              <span class="hint">AI giữ nguyên ý của bạn, không thêm hứa hẹn, ngày giờ hay số tiền mới.</span>
+              <div class="row">
+                <span class="callout" aria-hidden="true">4</span>
+                <button class="btn btn-quiet" type="button">Bỏ qua</button>
+                <button class="btn btn-ai-solid" type="button"><svg class="i i-sm"><use href="#i-check"></use></svg>Dùng bản này</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- The pencil margin: AI assistance -->
+        <aside class="rail" aria-label="Hỗ trợ của AI">
+
+          <section class="sheet" aria-labelledby="labels-title">
+            <div class="sheet-head">
+              <h2 id="labels-title">Phân loại</h2>
+              <span class="row">
+                <span class="rail-tag" data-hide="classification-pending unclassified-low-confidence unclassified-ai-error label-corrected"><span class="ai-mark">AI</span>đề xuất lúc 08:14</span>
+                <span class="callout" aria-hidden="true">1</span>
+              </span>
+            </div>
+
+            <!-- Labels set by AI (or corrected by a person) -->
+            <div data-hide="classification-pending unclassified-low-confidence unclassified-ai-error">
+              <div class="sheet-body stack" style="gap:var(--s4)">
+                <div class="labels">
+                  <div class="label-row">
+                    <span>Danh mục</span>
+                    <span data-hide="label-corrected"><span class="chip is-ai">Đổi trả &amp; bảo hành</span></span>
+                    <span data-show="label-corrected"><span class="chip">Giao hàng</span><span class="sub">Trần Bình đã sửa. AI đề xuất: Đổi trả &amp; bảo hành</span></span>
+                  </div>
+                  <div class="label-row">
+                    <span>Độ ưu tiên</span>
+                    <span><span class="chip is-ai"><span class="meter" data-level="3" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Cao</span><span class="sub"><svg class="i i-sm" style="vertical-align:-3px"><use href="#i-arrowup"></use></svg> Nâng từ Trung bình vì khách bức xúc</span></span>
+                  </div>
+                  <div class="label-row">
+                    <span>Cảm xúc</span>
+                    <span><span class="chip is-ai"><span class="dot dot-brick"></span>Bức xúc</span></span>
+                  </div>
+                </div>
+                <div class="confidence">
+                  <span>Độ tin cậy</span>
+                  <span class="bar" aria-hidden="true"><i style="width:86%"></i></span>
+                  <span class="strong" style="color:var(--graphite)">0,86 <span class="callout" aria-hidden="true">2</span></span>
+                </div>
+                <p class="pencil-note">Khách nhận sai màu và cần đổi trước thứ Bảy; nhắc lại lần giao nhầm trước nên giọng bức xúc.</p>
+              </div>
+              <div class="sheet-foot">
+                <span>Sửa nhãn nếu AI phân loại sai</span>
+                <button class="btn btn-sm" type="button"><svg class="i i-sm"><use href="#i-pencil"></use></svg>Sửa nhãn</button>
+              </div>
+            </div>
+
+            <!-- classification-pending -->
+            <div class="sheet-body" data-show="classification-pending">
+              <div class="notice notice-pencil" role="status">
+                <span class="spinner t-pencil" aria-hidden="true"></span>
+                <span>AI đang phân loại ticket này. Bạn vẫn đọc và trả lời bình thường.</span>
+              </div>
+            </div>
+
+            <!-- Unclassified: manual triage -->
+            <div class="sheet-body stack" data-show="unclassified-low-confidence unclassified-ai-error">
+              <div><span class="chip chip-unclassified">Chưa phân loại</span></div>
+              <div class="notice notice-pencil" data-show="unclassified-low-confidence">
+                <svg class="i"><use href="#i-alert"></use></svg>
+                <span>AI chưa chắc chắn nên không gán nhãn. Hãy chọn danh mục và độ ưu tiên.</span>
+              </div>
+              <div class="confidence" data-show="unclassified-low-confidence">
+                <span>Độ tin cậy</span>
+                <span class="bar is-low" aria-hidden="true"><i style="width:42%"></i></span>
+                <span class="strong" style="color:var(--graphite)">0,42</span>
+              </div>
+              <p class="pencil-note" data-show="unclassified-low-confidence">Khách nhắc cả giao hàng lẫn đổi trả, chưa rõ vấn đề chính.</p>
+              <div class="notice notice-neutral" data-show="unclassified-ai-error">
+                <svg class="i"><use href="#i-alert"></use></svg>
+                <span>AI không phản hồi khi ticket được tạo (quá 10 giây). Hãy phân loại thủ công.</span>
+              </div>
+              <div class="field">
+                <label for="t-cat">Danh mục</label>
+                <select id="t-cat" class="select"><option>Chọn danh mục</option><option>Đơn hàng</option><option>Giao hàng</option><option>Thanh toán &amp; hoàn tiền</option><option>Đổi trả &amp; bảo hành</option><option>Tài khoản</option></select>
+              </div>
+              <div class="field">
+                <label for="t-pri">Độ ưu tiên</label>
+                <select id="t-pri" class="select"><option>Chọn độ ưu tiên</option><option>Thấp</option><option>Trung bình</option><option>Cao</option><option>Khẩn cấp</option></select>
+              </div>
+              <div class="field">
+                <label for="t-sen">Cảm xúc <span class="muted">(không bắt buộc)</span></label>
+                <select id="t-sen" class="select"><option>Chưa chọn</option><option>Tích cực</option><option>Trung lập</option><option>Tiêu cực</option><option>Bức xúc</option></select>
+              </div>
+              <div><button class="btn btn-primary" type="button"><svg class="i i-sm"><use href="#i-check"></use></svg>Lưu phân loại</button></div>
+            </div>
+          </section>
+
+          <section class="sheet" aria-labelledby="summary-title">
+            <div class="sheet-head">
+              <h2 id="summary-title">Tóm tắt</h2>
+              <span class="row">
+                <button class="btn btn-ai btn-sm" type="button" data-show="classification-pending"><span class="ai-mark">AI</span>Tóm tắt</button>
+                <button class="btn btn-ai btn-sm" type="button" data-show="summary-loading" disabled><span class="spinner" aria-hidden="true"></span>Đang tóm tắt…</button>
+                <button class="btn btn-ai-solid btn-sm" type="button" data-show="summary-outdated"><span class="ai-mark">AI</span>Tóm tắt lại</button>
+                <span class="callout" aria-hidden="true">3</span>
+              </span>
+            </div>
+
+            <!-- Existing summary: fresh or outdated -->
+            <div data-hide="classification-pending summary-loading summary-error">
+              <div class="sheet-body stack">
+                <div class="notice notice-neutral" data-show="summary-outdated">
+                  <svg class="i"><use href="#i-clock"></use></svg>
+                  <span><b style="color:var(--graphite)">Đã cũ.</b> Khách nhắn thêm lúc 11:02, sau khi bản tóm tắt được tạo.</span>
+                </div>
+                <dl class="summary pencil-note" data-hide="summary-outdated">
+                  <div><dt>Vấn đề</dt><dd>Giao sai màu giỏ mây (đơn #LC-20931); khách cần đúng màu trước thứ Bảy.</dd></div>
+                  <div><dt>Đã làm</dt><dd>Xin ảnh tem sản phẩm; khách đã gửi mã LC-GM-NAU.</dd></div>
+                  <div><dt>Còn tồn</dt><dd>Xác nhận đổi hàng; trả lời khách có nhận được trước thứ Sáu không.</dd></div>
+                </dl>
+                <dl class="summary pencil-note is-stale" data-show="summary-outdated">
+                  <div><dt>Vấn đề</dt><dd>Giao sai màu giỏ mây (đơn #LC-20931); khách cần đúng màu trước thứ Bảy.</dd></div>
+                  <div><dt>Đã làm</dt><dd>Xin ảnh tem sản phẩm; khách đã gửi mã LC-GM-NAU.</dd></div>
+                  <div><dt>Còn tồn</dt><dd>Xác nhận đổi hàng; trả lời khách có nhận được trước thứ Sáu không.</dd></div>
+                </dl>
+              </div>
+              <div class="sheet-foot">
+                <span class="row"><svg class="i i-sm"><use href="#i-clock"></use></svg>Tạo lúc 10:35 từ 3 tin nhắn</span>
+                <button class="btn btn-quiet btn-sm" type="button" data-hide="summary-outdated"><svg class="i i-sm"><use href="#i-refresh"></use></svg>Tóm tắt lại</button>
+              </div>
+            </div>
+
+            <div class="sheet-body" data-show="classification-pending">
+              <p class="small muted">Chưa có tóm tắt. Hữu ích khi cuộc trò chuyện dài hoặc bạn vừa nhận ticket từ đồng nghiệp.</p>
+            </div>
+
+            <div class="sheet-body stack" data-show="summary-loading" role="status" aria-live="polite">
+              <div class="skeleton" aria-hidden="true"><i></i><i></i><i></i></div>
+              <span class="xs muted">AI đang đọc 3 tin nhắn, tối đa 20 giây. Cuộc trò chuyện vẫn đọc được bình thường.</span>
+            </div>
+
+            <div class="sheet-body stack" data-show="summary-error">
+              <div class="notice notice-error" role="alert">
+                <svg class="i"><use href="#i-alert"></use></svg>
+                <span>Không tạo được tóm tắt vì AI không phản hồi trong 20 giây.</span>
+              </div>
+              <div><button class="btn btn-sm" type="button"><svg class="i i-sm"><use href="#i-refresh"></use></svg>Thử lại</button></div>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- SCR-23 Transfer / reassign -->
+<div class="scrim" data-show="transfer">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="transfer-title">
+    <div class="modal-head">
+      <div class="stack" style="gap:4px">
+        <h2 id="transfer-title" data-role="staff">Chuyển ticket #1042</h2>
+        <h2 data-role="admin">Giao lại ticket #1042</h2>
+        <p class="small muted" data-role="staff">Sau khi chuyển, ticket rời khỏi hàng đợi của bạn và bạn không mở được nữa.</p>
+        <p class="small muted" data-role="admin">Chọn nhân viên đang hoạt động hoặc tự nhận ticket.</p>
+      </div>
+      <button class="icon-btn" type="button" aria-label="Đóng"><svg class="i"><use href="#i-x"></use></svg></button>
+    </div>
+    <div class="modal-body" role="radiogroup" aria-label="Người nhận">
+      <label class="choice"><input type="radio" name="to"><span class="avatar avatar-staff">NA</span><span><b class="small">Nguyễn An</b></span><span class="xs muted">3 ticket đang mở</span></label>
+      <label class="choice is-selected"><input type="radio" name="to" checked><span class="avatar avatar-staff">LC</span><span><b class="small">Lê Chi</b></span><span class="xs muted">2 ticket đang mở</span></label>
+      <label class="choice" data-role="admin"><input type="radio" name="to"><span class="avatar avatar-admin">TL</span><span><b class="small">Tôi</b> <span class="xs muted">Phạm Thanh Lam</span></span><span class="xs muted">0 ticket đang mở</span></label>
+      <p class="hint">Trạng thái ticket giữ nguyên sau khi chuyển.</p>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-quiet" type="button">Hủy</button>
+      <button class="btn btn-primary" type="button" data-role="staff"><svg class="i i-sm"><use href="#i-swap"></use></svg>Chuyển cho Lê Chi</button>
+      <button class="btn btn-primary" type="button" data-role="admin"><svg class="i i-sm"><use href="#i-swap"></use></svg>Giao cho Lê Chi</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/icons.js"></script>
+<script src="assets/states.js"></script>
+</body>
+</html>
