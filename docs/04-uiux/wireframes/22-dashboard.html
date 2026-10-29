@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-22 Dashboard — Helpdesk AI wireframe</title>
+  <link rel="stylesheet" href="assets/wireframe.css">
+</head>
+<body data-default-role="admin">
+
+<div class="wf-bar" role="note" aria-label="Wireframe controls">
+  <strong>Wireframe: SCR-22 Dashboard</strong>
+  <ul class="wf-roles" aria-label="Role">
+    <li><a href="22-dashboard.html?role=admin">Admin (system-wide)</a></li>
+    <li><a href="22-dashboard.html?role=staff">Staff (personal)</a></li>
+  </ul>
+  <ul class="wf-states" aria-label="State">
+    <li><a href="22-dashboard.html">default</a></li>
+    <li><a href="22-dashboard.html?state=empty">empty</a></li>
+  </ul>
+  <span>Sample data: "Lá Cọ Home" is a fictional shop</span>
+</div>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark"><svg class="i"><use href="#i-ticket"></use></svg></span>
+      <span><span class="brand-name">Helpdesk AI</span><span class="brand-shop">Lá Cọ Home</span></span>
+    </div>
+    <nav aria-label="Điều hướng chính">
+      <ul class="nav" data-role="staff">
+        <li><a href="20-ticket-queue.html"><svg class="i"><use href="#i-inbox"></use></svg>Hàng đợi của tôi <span class="count">7</span></a></li>
+        <li><a href="22-dashboard.html?role=staff" aria-current="page"><svg class="i"><use href="#i-chart"></use></svg>Tổng quan</a></li>
+      </ul>
+      <ul class="nav" data-role="admin">
+        <li><a href="20-ticket-queue.html?role=admin"><svg class="i"><use href="#i-inbox"></use></svg>Tất cả ticket</a></li>
+        <li><a href="22-dashboard.html" aria-current="page"><svg class="i"><use href="#i-chart"></use></svg>Tổng quan</a></li>
+        <li><a href="30-categories.html"><svg class="i"><use href="#i-tag"></use></svg>Danh mục</a></li>
+        <li><a href="31-users.html"><svg class="i"><use href="#i-users"></use></svg>Người dùng</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-foot">
+      <span class="avatar" data-role="staff">TB</span>
+      <span class="who" data-role="staff">Trần Bình<small>Nhân viên hỗ trợ</small></span>
+      <span class="avatar" data-role="admin">TL</span>
+      <span class="who" data-role="admin">Phạm Thanh Lam<small>Quản trị viên</small></span>
+      <button class="icon-btn" type="button" aria-label="Đăng xuất"><svg class="i"><use href="#i-logout"></use></svg></button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><span aria-current="page">Tổng quan</span></nav>
+      <a href="40-profile.html" aria-label="Hồ sơ">
+        <span class="avatar avatar-staff" data-role="staff">TB</span>
+        <span class="avatar avatar-admin" data-role="admin">TL</span>
+      </a>
+    </header>
+
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <h1 data-role="admin">Tổng quan hỗ trợ</h1>
+          <h1 data-role="staff">Tổng quan của tôi</h1>
+          <p data-role="admin">Số liệu toàn hệ thống, tính theo ngày tạo ticket.</p>
+          <p data-role="staff">Chỉ tính các ticket đang được giao cho bạn, theo ngày tạo ticket.</p>
+        </div>
+        <div class="row">
+          <span class="callout" aria-hidden="true">1</span>
+          <select class="select" style="width:auto" aria-label="Khoảng thời gian">
+            <option>30 ngày qua (01/10 – 30/10/2026)</option>
+            <option>7 ngày qua</option>
+            <option>Tháng này</option>
+            <option>Tùy chọn…</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Headline figures -->
+      <section class="metrics" aria-label="Chỉ số chính">
+        <div class="metric">
+          <span class="label">Ticket trong kỳ</span>
+          <span class="value" data-hide="empty"><span data-role="admin">64</span><span data-role="staff">22</span></span>
+          <span class="value" data-show="empty">0</span>
+          <span class="note" data-hide="empty"><span data-role="admin">6 ticket đang chờ phản hồi đầu tiên</span><span data-role="staff">3 ticket đang chờ bạn phản hồi đầu tiên</span></span>
+          <span class="note" data-show="empty">Chưa có ticket nào được tạo trong khoảng này.</span>
+        </div>
+        <div class="metric">
+          <span class="label">Thời gian phản hồi đầu trung bình <span class="callout" aria-hidden="true">2</span></span>
+          <span class="value" data-hide="empty"><span data-role="admin">2 <small>giờ</small> 14 <small>phút</small></span><span data-role="staff">1 <small>giờ</small> 32 <small>phút</small></span></span>
+          <span class="value" data-show="empty">—</span>
+          <span class="note" data-hide="empty"><span data-role="admin">Tính trên 58 ticket đã có phản hồi. Mục tiêu: dưới 4 giờ.</span><span data-role="staff">Tính trên 19 ticket đã có phản hồi. Mục tiêu: dưới 4 giờ.</span></span>
+          <span class="note" data-show="empty">Sẽ hiện khi có ticket được trả lời.</span>
+        </div>
+        <div class="metric">
+          <span class="label">AI bị sửa nhãn <span class="callout" aria-hidden="true">3</span></span>
+          <span class="value" data-hide="empty"><span data-role="admin">15% <small>9/60 ticket</small></span><span data-role="staff">14% <small>3/21 ticket</small></span></span>
+          <span class="value" data-show="empty">—</span>
+          <div class="ratio" data-hide="empty" data-role="admin" aria-hidden="true" title="9 trong 60 ticket do AI gán nhãn đã bị sửa danh mục hoặc độ ưu tiên">
+            <i class="is-fixed"></i><i class="is-fixed"></i><i class="is-fixed"></i><i class="is-fixed"></i><i class="is-fixed"></i><i class="is-fixed"></i><i class="is-fixed"></i><i class="is-fixed"></i><i class="is-fixed"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          </div>
+          <div class="ratio" data-hide="empty" data-role="staff" aria-hidden="true" title="3 trong 21 ticket do AI gán nhãn đã bị sửa danh mục hoặc độ ưu tiên">
+            <i class="is-fixed"></i><i class="is-fixed"></i><i class="is-fixed"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            <i></i>
+          </div>
+          <span class="note" data-hide="empty">Ô tím là ticket bị người sửa danh mục hoặc độ ưu tiên. <span data-role="admin">Không tính 4 ticket chưa phân loại.</span><span data-role="staff">Không tính 1 ticket chưa phân loại.</span></span>
+          <span class="note" data-show="empty">Sẽ hiện khi AI đã gán nhãn cho ticket.</span>
+        </div>
+      </section>
+
+      <!-- Breakdown charts -->
+      <div class="charts" data-hide="empty">
+        <section class="sheet" aria-labelledby="c-status">
+          <div class="sheet-head"><h2 id="c-status">Theo trạng thái</h2></div>
+          <div class="sheet-body">
+            <ul class="hbars" data-role="admin">
+              <li class="hbar" title="Mới: 6 ticket"><span>Mới</span><span class="track"><span class="fill" style="width:25%"></span></span><span class="val">6</span></li>
+              <li class="hbar" title="Đang xử lý: 9 ticket"><span>Đang xử lý</span><span class="track"><span class="fill" style="width:37.5%"></span></span><span class="val">9</span></li>
+              <li class="hbar" title="Chờ khách: 7 ticket"><span>Chờ khách</span><span class="track"><span class="fill" style="width:29.2%"></span></span><span class="val">7</span></li>
+              <li class="hbar" title="Đã giải quyết: 18 ticket"><span>Đã giải quyết</span><span class="track"><span class="fill" style="width:75%"></span></span><span class="val">18</span></li>
+              <li class="hbar" title="Đã đóng: 24 ticket"><span>Đã đóng</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="val">24</span></li>
+            </ul>
+            <ul class="hbars" data-role="staff">
+              <li class="hbar" title="Mới: 3 ticket"><span>Mới</span><span class="track"><span class="fill" style="width:33.3%"></span></span><span class="val">3</span></li>
+              <li class="hbar" title="Đang xử lý: 2 ticket"><span>Đang xử lý</span><span class="track"><span class="fill" style="width:22.2%"></span></span><span class="val">2</span></li>
+              <li class="hbar" title="Chờ khách: 2 ticket"><span>Chờ khách</span><span class="track"><span class="fill" style="width:22.2%"></span></span><span class="val">2</span></li>
+              <li class="hbar" title="Đã giải quyết: 6 ticket"><span>Đã giải quyết</span><span class="track"><span class="fill" style="width:66.7%"></span></span><span class="val">6</span></li>
+              <li class="hbar" title="Đã đóng: 9 ticket"><span>Đã đóng</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="val">9</span></li>
+            </ul>
+          </div>
+          <div class="sheet-foot"><span>Theo vòng đời ticket</span><a href="#" class="small">Xem dạng bảng</a></div>
+        </section>
+
+        <section class="sheet" aria-labelledby="c-category">
+          <div class="sheet-head"><h2 id="c-category">Theo danh mục</h2></div>
+          <div class="sheet-body">
+            <ul class="hbars" data-role="admin">
+              <li class="hbar" title="Giao hàng: 17 ticket"><span>Giao hàng</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="val">17</span></li>
+              <li class="hbar" title="Đổi trả &amp; bảo hành: 15 ticket"><span>Đổi trả &amp; bảo hành</span><span class="track"><span class="fill" style="width:88.2%"></span></span><span class="val">15</span></li>
+              <li class="hbar" title="Đơn hàng: 14 ticket"><span>Đơn hàng</span><span class="track"><span class="fill" style="width:82.4%"></span></span><span class="val">14</span></li>
+              <li class="hbar" title="Thanh toán &amp; hoàn tiền: 9 ticket"><span>Thanh toán &amp; hoàn tiền</span><span class="track"><span class="fill" style="width:52.9%"></span></span><span class="val">9</span></li>
+              <li class="hbar" title="Tài khoản: 5 ticket"><span>Tài khoản</span><span class="track"><span class="fill" style="width:29.4%"></span></span><span class="val">5</span></li>
+              <li class="hbar is-muted" title="Chưa phân loại: 4 ticket"><span>Chưa phân loại</span><span class="track"><span class="fill" style="width:23.5%"></span></span><span class="val">4</span></li>
+            </ul>
+            <ul class="hbars" data-role="staff">
+              <li class="hbar" title="Giao hàng: 6 ticket"><span>Giao hàng</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="val">6</span></li>
+              <li class="hbar" title="Đổi trả &amp; bảo hành: 6 ticket"><span>Đổi trả &amp; bảo hành</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="val">6</span></li>
+              <li class="hbar" title="Đơn hàng: 4 ticket"><span>Đơn hàng</span><span class="track"><span class="fill" style="width:66.7%"></span></span><span class="val">4</span></li>
+              <li class="hbar" title="Thanh toán &amp; hoàn tiền: 3 ticket"><span>Thanh toán &amp; hoàn tiền</span><span class="track"><span class="fill" style="width:50%"></span></span><span class="val">3</span></li>
+              <li class="hbar" title="Tài khoản: 2 ticket"><span>Tài khoản</span><span class="track"><span class="fill" style="width:33.3%"></span></span><span class="val">2</span></li>
+              <li class="hbar is-muted" title="Chưa phân loại: 1 ticket"><span>Chưa phân loại</span><span class="track"><span class="fill" style="width:16.7%"></span></span><span class="val">1</span></li>
+            </ul>
+          </div>
+          <div class="sheet-foot"><span>Theo nhãn cuối cùng</span><a href="#" class="small">Xem dạng bảng</a></div>
+        </section>
+
+        <section class="sheet" aria-labelledby="c-sentiment">
+          <div class="sheet-head"><h2 id="c-sentiment">Theo cảm xúc của khách</h2></div>
+          <div class="sheet-body">
+            <ul class="hbars" data-role="admin">
+              <li class="hbar" title="Tích cực: 8 ticket"><span>Tích cực</span><span class="track"><span class="fill" style="width:27.6%"></span></span><span class="val">8</span></li>
+              <li class="hbar" title="Trung lập: 29 ticket"><span>Trung lập</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="val">29</span></li>
+              <li class="hbar" title="Tiêu cực: 15 ticket"><span>Tiêu cực</span><span class="track"><span class="fill" style="width:51.7%"></span></span><span class="val">15</span></li>
+              <li class="hbar is-alert" title="Bức xúc: 8 ticket"><span class="row" style="gap:6px"><span class="dot dot-brick"></span>Bức xúc</span><span class="track"><span class="fill" style="width:27.6%"></span></span><span class="val">8</span></li>
+              <li class="hbar is-muted" title="Chưa phân loại: 4 ticket"><span>Chưa phân loại</span><span class="track"><span class="fill" style="width:13.8%"></span></span><span class="val">4</span></li>
+            </ul>
+            <ul class="hbars" data-role="staff">
+              <li class="hbar" title="Tích cực: 3 ticket"><span>Tích cực</span><span class="track"><span class="fill" style="width:30%"></span></span><span class="val">3</span></li>
+              <li class="hbar" title="Trung lập: 10 ticket"><span>Trung lập</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="val">10</span></li>
+              <li class="hbar" title="Tiêu cực: 5 ticket"><span>Tiêu cực</span><span class="track"><span class="fill" style="width:50%"></span></span><span class="val">5</span></li>
+              <li class="hbar is-alert" title="Bức xúc: 3 ticket"><span class="row" style="gap:6px"><span class="dot dot-brick"></span>Bức xúc</span><span class="track"><span class="fill" style="width:30%"></span></span><span class="val">3</span></li>
+              <li class="hbar is-muted" title="Chưa phân loại: 1 ticket"><span>Chưa phân loại</span><span class="track"><span class="fill" style="width:10%"></span></span><span class="val">1</span></li>
+            </ul>
+          </div>
+          <div class="sheet-foot"><span>Sọc chéo: chưa phân loại</span><a href="#" class="small">Xem dạng bảng</a></div>
+        </section>
+      </div>
+
+      <section class="sheet" data-show="empty">
+        <div class="empty">
+          <span class="empty-icon"><svg class="i"><use href="#i-chart"></use></svg></span>
+          <h2>Chưa có số liệu trong 30 ngày qua</h2>
+          <p>Biểu đồ sẽ xuất hiện khi có ticket được tạo trong khoảng thời gian này. Thử chọn khoảng thời gian dài hơn.</p>
+          <button class="btn" type="button">Chọn khoảng khác</button>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script src="assets/icons.js"></script>
+<script src="assets/states.js"></script>
+</body>
+</html>
