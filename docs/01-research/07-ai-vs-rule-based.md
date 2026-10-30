@@ -28,7 +28,7 @@ AI is used **only where language understanding is needed**. Deterministic polici
 | AI output must match the JSON schema, the enums, and the active category list. | Validation rule |
 | An AI error or timeout gives "Unclassified" and ticket creation continues. | Rule |
 | AI never sends a reply. | Design constraint: there is no code path for it |
-| Auto-assignment of new tickets. | Rule (fewest open tickets, D-07; warm-up after leave, D-21) |
+| Auto-assignment of new tickets. | Rule (fewest open tickets, D-07; warm-up after joining, D-21) |
 
 ## Costs of using AI, and how they are handled
 

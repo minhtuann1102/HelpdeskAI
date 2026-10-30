@@ -13,7 +13,7 @@
 | Assignee | The Staff (or Admin) member currently responsible for a ticket. |
 | Auto-assignment | The system picks an assignee when a ticket is created (D-04). |
 | Account status | `Active`, `On leave` (Staff only, set by Admin: D-20), or `Locked`. "Active Staff" means Staff whose status is `Active`; only they receive new tickets and transfers. |
-| Warm-up | The first 4 hours after Admin ends a Staff member's leave. Auto-assignment counts their load as the other active Staff's average, so they receive a fair share of new tickets, not all of them (D-21, DF-27). |
+| Warm-up | The first 4 hours after a Staff member joins auto-assignment: account created, leave ended, or account unlocked. Auto-assignment counts their load as the other active Staff's average, so they receive a fair share of new tickets, not all of them (D-21, DF-27). |
 | Transfer / reassign | Changing the assignee: Staff transfer their own ticket; Admin reassigns any ticket. |
 | AI label | The original category, priority, and sentiment proposed by AI. It is stored and never overwritten. |
 | Final label | The label in effect after any correction by Staff or Admin. |

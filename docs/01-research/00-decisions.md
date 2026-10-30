@@ -35,7 +35,7 @@ These decisions refine the original brief. Later steps must follow them.
 |---|---|---|---|
 | D-19 | **Customers get an email notification** when Staff or Admin reply to their ticket or change its status (US-35, BR-17). The email only tells the customer that something changed and links to the ticket; the conversation stays on the website. | The brief's "no email integration" is read as **no email intake**: tickets and replies still come only from the web form (W-05). Outbound notification emails are added. Changes A-03 and A-04. | User, 2026-10-30 |
 | D-20 | **Staff can be set "On leave" by the Administrator only.** A Staff member on leave gets no new tickets, cannot receive transfers, and their open tickets are redistributed (US-36, BR-18). Staff cannot change their own status. | Narrows R-08 (absence). No change to the brief. | User, 2026-10-30 |
-| D-21 | **Warm-up after leave.** For a short time after Admin ends a Staff member's leave, auto-assignment counts their load as the average of the other active Staff, so they get a fair share of new tickets instead of all of them (BR-03, DF-27). | Refines D-07. No change to the brief. | User, 2026-10-30 |
+| D-21 | **Warm-up whenever a Staff member joins auto-assignment.** For a short time after a Staff account is created, its leave is ended, or it is unlocked, auto-assignment counts that Staff member's load as the average of the other active Staff, so they get a fair share of new tickets instead of all of them. No case may pile new tickets onto one person (BR-03, DF-27). | Refines D-07. No change to the brief. | User, 2026-10-30 |
 
 | ID | Open item | Status |
 |---|---|---|

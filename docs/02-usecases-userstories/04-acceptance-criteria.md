@@ -125,8 +125,8 @@ UC-25 · BR-03
 - **AC-13.4** *Given* no active Staff exists, *when* a ticket is created, *then* it is Unassigned and appears under the Administrator's "Unassigned" filter.
 - **AC-13.5** *Given* the AI call fails, *when* a ticket is created, *then* it is still assigned.
 - **AC-13.6** *Given* a Staff member has tickets that are `Resolved` or `Closed`, *when* the load is counted, *then* those tickets are not counted (DF-01).
-- **AC-13.7** *Given* active Staff B and C each have 6 open tickets, and Staff A's leave was ended 1 hour ago with 0 open tickets, *when* new tickets are created, *then* A's load counts as 6, so the new tickets are shared among A, B, and C (about one in three each) instead of all going to A; 4 hours after End leave, A's actual count is used again (D-21, DF-27).
-- **AC-13.8** *Given* A's leave was just ended and A is the only active Staff, *when* a ticket is created, *then* it is assigned to A; the warm-up never leaves a ticket Unassigned.
+- **AC-13.7** *Given* active Staff B and C each have 6 open tickets, and Staff A joined auto-assignment 1 hour ago with 0 open tickets (new account, leave ended, or unlocked), *when* new tickets are created, *then* A's load counts as 6, so the new tickets are shared among A, B, and C (about one in three each) instead of all going to A; 4 hours after joining, A's actual count is used again (D-21, DF-27).
+- **AC-13.8** *Given* A just joined auto-assignment and A is the only active Staff, *when* a ticket is created, *then* it is assigned to A; the warm-up never leaves a ticket Unassigned.
 
 ### US-14 — AI classification of new tickets
 UC-24 · BR-08, BR-09
@@ -267,7 +267,7 @@ UC-21 · BR-01
 ### US-31 — Create a Staff account
 UC-22 · BR-01, BR-15
 
-- **AC-31.1** *Given* a full name, an unused email, and an initial password of at least 8 characters, *when* I save, *then* an active `STAFF` account is created and joins auto-assignment immediately.
+- **AC-31.1** *Given* a full name, an unused email, and an initial password of at least 8 characters, *when* I save, *then* an active `STAFF` account is created and joins auto-assignment immediately with the 4-hour warm-up of BR-03 (AC-13.7).
 - **AC-31.2** *Given* an email already in use, *when* I save, *then* I see an error.
 - **AC-31.3** *Given* the create form, *when* it is shown, *then* the role is fixed to Staff and cannot be changed (DF-13).
 
@@ -276,7 +276,7 @@ UC-23 · BR-05
 
 - **AC-32.1** *Given* an active user, *when* I lock the account and confirm, *then* its status becomes Locked, the user cannot log in, and any current session ends on its next request.
 - **AC-32.2** *Given* a Staff member with open tickets, *when* I lock the account, *then* each open ticket is reassigned by the auto-assignment rule among the remaining active Staff, or becomes Unassigned if none remain (DF-05).
-- **AC-32.3** *Given* a locked user, *when* I unlock the account, *then* they can log in again, and a Staff member rejoins auto-assignment; tickets moved away are not moved back.
+- **AC-32.3** *Given* a locked user, *when* I unlock the account, *then* they can log in again, and a Staff member rejoins auto-assignment with the 4-hour warm-up of BR-03 (AC-13.7); tickets moved away are not moved back.
 - **AC-32.4** *Given* my own Administrator account, *when* I look for Lock, *then* it is not available.
 
 ### US-36 — Set a Staff member on leave

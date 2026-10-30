@@ -27,7 +27,7 @@ Only rules confirmed by the project documentation are catalogued here. Values ma
 ## BR-03 — Auto-assignment
 
 - **Source:** D-04, D-07, D-21, DF-01..DF-04, DF-27
-- **Related US:** US-07, US-11, US-13, US-32, US-36
+- **Related US:** US-07, US-11, US-13, US-31, US-32, US-36
 - **Related API:** TBD (Step 6), triggered by submit ticket, lock account, set on leave, and customer reply (reopen when the assignee is locked or on leave)
 - **Rule:** When a ticket is created, the system assigns it to the **active `STAFF` user with the fewest open tickets**.
   - Open means `New`, `In Progress`, or `Waiting for Customer`.
@@ -35,7 +35,7 @@ Only rules confirmed by the project documentation are catalogued here. Values ma
   - Admin, locked users, and Staff on leave are never chosen (BR-18).
   - With no active Staff, the ticket stays Unassigned.
   - Assignment does not depend on the AI result.
-  - **Warm-up after leave** (D-21, DF-27): for 4 hours after Admin ends a Staff member's leave, their load counts as the larger of their actual open tickets and the average actual open tickets of the other active Staff. With no other active Staff, their actual count is used. The system stores when each leave ended. This applies to every auto-assignment, including redistribution; manual transfer and reassignment (BR-04) are not limited.
+  - **Warm-up after joining** (D-21, DF-27): for 4 hours after a Staff member joins auto-assignment (Staff account created, leave ended, or Staff account unlocked), their load counts as the larger of their actual open tickets and the average actual open tickets of the other active Staff. With no other active Staff, their actual count is used. The system stores when each Staff member last joined. This applies to every auto-assignment, including redistribution; manual transfer and reassignment (BR-04) are not limited.
 
 ## BR-04 — Transfer and reassignment
 
@@ -55,7 +55,7 @@ Only rules confirmed by the project documentation are catalogued here. Values ma
 - **Related API:** TBD (Step 6)
 - **Rule:**
   - A locked user cannot log in, and any existing session ends on its next request.
-  - Locking a Staff member redistributes their open tickets using BR-03.
+  - Locking a Staff member redistributes their open tickets using BR-03. Unlocking a Staff member starts the warm-up of BR-03 (D-21).
   - A reopened ticket whose assignee is locked or on leave is auto-assigned again.
   - Admin cannot lock their own account.
 

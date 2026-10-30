@@ -1,6 +1,6 @@
 # Master Traceability Matrix — Helpdesk AI MVP
 
-> Design status: MVP — updated at every step (last update: after Step 4, D-19 email notifications, D-20 Staff on leave, D-21 warm-up after leave; wireframes for each screen are listed in [Screen notes and states](../04-uiux/02-screen-notes.md))
+> Design status: MVP — updated at every step (last update: after Step 4, D-19 email notifications, D-20 Staff on leave, D-21 warm-up after joining; wireframes for each screen are listed in [Screen notes and states](../04-uiux/02-screen-notes.md))
 >
 > Implementation status: NOT STARTED
 
@@ -40,8 +40,8 @@ Columns marked TBD are filled in by the step that owns them: Screen (Step 3), Da
 | US-28 | UC-20 | AC-28.1–AC-28.3 | BR-13 | SCR-30, SCR-32 | TBD | TBD | TBD |
 | US-29 | UC-20 | AC-29.1–AC-29.3 | BR-13 | SCR-30 | TBD | TBD | TBD |
 | US-30 | UC-21 | AC-30.1–AC-30.2 | BR-01 | SCR-31 | TBD | TBD | TBD |
-| US-31 | UC-22 | AC-31.1–AC-31.3 | BR-01, BR-15 | SCR-31, SCR-33 | TBD | TBD | TBD |
-| US-32 | UC-23 | AC-32.1–AC-32.4 | BR-05 | SCR-31, SCR-34 | TBD | TBD | TBD |
+| US-31 | UC-22 | AC-31.1–AC-31.3 | BR-01, BR-03, BR-15 | SCR-31, SCR-33 | TBD | TBD | TBD |
+| US-32 | UC-23 | AC-32.1–AC-32.4 | BR-03, BR-05 | SCR-31, SCR-34 | TBD | TBD | TBD |
 | US-33 | UC-19 | AC-33.1–AC-33.5 | BR-10, BR-16 | SCR-22 | TBD | TBD | TBD |
 | US-34 | UC-19 | AC-34.1–AC-34.2 | BR-16 | SCR-22 | TBD | TBD | TBD |
 | US-35 | UC-26 (via UC-13, UC-14) | AC-35.1–AC-35.6 | BR-17 | — (email, links to SCR-12) | Via reply to customer and change status | TBD | TBD |

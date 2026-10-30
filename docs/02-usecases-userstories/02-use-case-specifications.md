@@ -172,7 +172,7 @@
 - **Main flow:** enter full name, email, initial password → system creates an active `STAFF` account
 - **Alternative:** email already in use → error
 - **Permission:** `ADMIN`
-- **Result:** the new Staff joins auto-assignment immediately · **Stories:** US-31
+- **Result:** the new Staff joins auto-assignment immediately, with the warm-up of BR-03 · **Stories:** US-31
 
 ## UC-23 Lock or unlock account
 
@@ -180,7 +180,7 @@
 - **Main flow:** choose Lock or Unlock on a user → confirm → status changes
 - **Alternative:** own account → Lock not available
 - **Permission:** `ADMIN`
-- **Result:** locked users cannot log in; their open tickets are redistributed (BR-05) · **Stories:** US-32
+- **Result:** locked users cannot log in; their open tickets are redistributed; an unlocked Staff member rejoins with the warm-up of BR-03 (BR-05) · **Stories:** US-32
 
 ## UC-24 Classify ticket
 
