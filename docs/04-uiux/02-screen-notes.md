@@ -14,7 +14,7 @@ Shared by all roles; links to Register; no "forgot password" (A-04).
 
 | # | Note |
 |---|---|
-| 1 | One error message for wrong email or password, without revealing which (AC-02.2). |
+| 1 | One error message for wrong email or password, without revealing which (AC-01.2). |
 
 | State | Source | Behavior |
 |---|---|---|
@@ -25,7 +25,7 @@ Shared by all roles; links to Register; no "forgot password" (A-04).
 
 | # | Note |
 |---|---|
-| 1 | Creates a `CUSTOMER` account and logs the customer in (AC-01.1). |
+| 1 | Creates a `CUSTOMER` account and logs the customer in (AC-05.1). |
 
 | State | Source | Behavior |
 |---|---|---|
@@ -36,7 +36,7 @@ Shared by all roles; links to Register; no "forgot password" (A-04).
 | # | Note |
 |---|---|
 | 1 | Full name and phone are editable; email and role are read-only (DF-12). |
-| 2 | Password change needs the current password (AC-05.2). |
+| 2 | Password change needs the current password (AC-04.2). |
 
 | State | Source | Behavior |
 |---|---|---|
@@ -99,7 +99,7 @@ No priority, sentiment, confidence, AI reason, or summary is shown (DF-14).
 | # | Note |
 |---|---|
 | 1 | Order: Unclassified first, then urgent → low, oldest first (DF-15). |
-| 2 | Filters: status tabs, keyword, category (incl. Unclassified), priority, sentiment; Admin also filters by assignee (AC-14.2). |
+| 2 | Filters: status tabs, keyword, category (incl. Unclassified), priority, sentiment; Admin also filters by assignee (AC-11.2). |
 | 3 | Unclassified row: grey left rule and the reason (AI error or low confidence). |
 
 Rows also show the AI states *Classification pending* (#1046), *Priority raised by anger* (#1042, arrow), and *Label corrected* (#1039, solid chip).
@@ -107,20 +107,20 @@ Rows also show the AI states *Classification pending* (#1046), *Priority raised 
 | State | Source | Behavior |
 |---|---|---|
 | `loading` | Initial loading | Skeleton rows; filters stay usable. |
-| `empty` | Empty | "Bạn không có ticket nào đang mở" (AC-13.5). |
-| `empty-filtered` | Empty (filtered) | "Không có ticket khớp bộ lọc" with **Xóa bộ lọc** (AC-14.4). |
+| `empty` | Empty | "Bạn không có ticket nào đang mở" (AC-10.5). |
+| `empty-filtered` | Empty (filtered) | "Không có ticket khớp bộ lọc" with **Xóa bộ lọc** (AC-11.4). |
 
 ### SCR-21 Ticket Handling and SCR-23 — [`21-ticket-handling.html`](wireframes/21-ticket-handling.html) · roles `staff`, `admin` · [PNG](../images/staff/21-ticket-handling.png)
 
 | # | Note |
 |---|---|
-| 1 | AI label panel: category, priority (with "raised because the customer is angry"), sentiment; dashed = AI, solid = corrected (AC-15.2). |
+| 1 | AI label panel: category, priority (with "raised because the customer is angry"), sentiment; dashed = AI, solid = corrected (AC-12.2). |
 | 2 | Confidence bar and the AI's reason. |
-| 3 | Summary: issue / done / pending, generation time, regenerate (AC-20.1). |
-| 4 | **Viết lại bằng AI** in the composer; result shown beside the draft (AC-21.1, AC-21.3). |
-| 5 | Nothing is sent until **Gửi** or **Gửi và chờ khách** (AC-16.3, AC-16.5). |
+| 3 | Summary: issue / done / pending, generation time, regenerate (AC-17.1). |
+| 4 | **Viết lại bằng AI** in the composer; result shown beside the draft (AC-18.1, AC-18.3). |
+| 5 | Nothing is sent until **Gửi** or **Gửi và chờ khách** (AC-13.3, AC-13.5). |
 | 6 | Transfer (Staff) or reassign (Admin) opens SCR-23. |
-| 7 | **Gợi ý trả lời**: a reply grounded in the shop's policies, shown beside the draft like a rewrite (AC-22.1, AC-22.2). Disabled when no active, reviewed article exists (AC-22.11). |
+| 7 | **Gợi ý trả lời**: a reply grounded in the shop's policies, shown beside the draft like a rewrite (AC-29.1, AC-29.2). Disabled when no active, reviewed article exists (AC-29.11). |
 | 8 | Cited passages are quoted in ink (a person wrote them); the suggestion itself stays pencil, with numbered markers that point to each source (BR-21). |
 
 | State | Source | Behavior |
@@ -137,9 +137,9 @@ Rows also show the AI states *Classification pending* (#1046), *Priority raised 
 | `rewrite-result` | Rewrite result | Draft and rewrite side by side; **Dùng bản này** / **Bỏ qua**; "Chưa gửi gì cho khách" ([PNG](../images/staff/21c-ticket-handling-rewrite-result.png)). |
 | `rewrite-error` | Rewrite error or timeout | Inline error; draft unchanged and still sendable. |
 | `suggest-loading` | Suggestion loading | "Đang soạn gợi ý…"; draft read-only; Rewrite and Send disabled. |
-| `suggest-result` | Suggestion result | Draft and suggestion side by side, the two cited passages below, **Dùng bản này** / **Bỏ qua**. The customer asked about Friday, but no policy promises a date, so the suggestion does not (AC-22.3) ([PNG](../images/staff/21f-ticket-handling-suggest-result.png)). |
-| `suggest-no-match` | No relevant policy | Neutral notice "Không tìm thấy chính sách phù hợp…"; draft unchanged (AC-22.8). |
-| `suggest-error` | Suggestion error or timeout | Inline error; draft unchanged and still sendable (AC-22.4). |
+| `suggest-result` | Suggestion result | Draft and suggestion side by side, the two cited passages below, **Dùng bản này** / **Bỏ qua**. The customer asked about Friday, but no policy promises a date, so the suggestion does not (AC-29.3) ([PNG](../images/staff/21f-ticket-handling-suggest-result.png)). |
+| `suggest-no-match` | No relevant policy | Neutral notice "Không tìm thấy chính sách phù hợp…"; draft unchanged (AC-29.8). |
+| `suggest-error` | Suggestion error or timeout | Inline error; draft unchanged and still sendable (AC-29.4). |
 | `transfer` | BR-04 | SCR-23 lists active Staff with open-ticket counts; Admin can choose themselves ([PNG](../images/staff/21e-transfer-ticket.png)). |
 
 ### SCR-22 Dashboard — [`22-dashboard.html`](wireframes/22-dashboard.html) · roles `admin`, `staff` · [PNG admin](../images/admin/22-dashboard.png), [PNG staff](../images/staff/22-dashboard.png)
@@ -147,12 +147,12 @@ Rows also show the AI states *Classification pending* (#1046), *Priority raised 
 | # | Note |
 |---|---|
 | 1 | Date range, default last 30 days by creation date (DF-17). |
-| 2 | Average first response time over tickets with a reply, plus tickets still waiting (AC-28.3). |
+| 2 | Average first response time over tickets with a reply, plus tickets still waiting (AC-19.3). |
 | 3 | Label correction rate with numerator/denominator and a unit grid (BR-10). |
 
 | State | Source | Behavior |
 |---|---|---|
-| `empty` | Empty | Zeros and dashes, one empty-state card, no error (AC-28.5). |
+| `empty` | Empty | Zeros and dashes, one empty-state card, no error (AC-19.5). |
 
 ## Administration
 
@@ -166,7 +166,7 @@ Rows also show the AI states *Classification pending* (#1046), *Priority raised 
 | State | Source | Behavior |
 |---|---|---|
 | `edit` | — | SCR-32 edit form ([PNG](../images/admin/30b-edit-category.png)). |
-| `form-error` | Validation error | Duplicate name (ignoring case) and missing description (AC-23.2, AC-23.3). |
+| `form-error` | Validation error | Duplicate name (ignoring case) and missing description (AC-20.2, AC-20.3). |
 | `hide-confirm` | Destructive confirmation | Names the category and the effect on customers, AI, and old tickets. |
 
 ### SCR-36 Policies and SCR-37 — [`36-policies.html`](wireframes/36-policies.html) · [PNG](../images/admin/36-policies.png)
@@ -175,14 +175,14 @@ The page says up front that customers never see it and that AI uses only active 
 
 | # | Note |
 |---|---|
-| 1 | Add an article: title and body; AI quotes the body word for word (AC-29.1). |
-| 2 | Overdue for review: dashed "Cần xem lại" chip, attention rule, and **Đánh dấu đã xem lại**; suggestions skip it until reviewed (AC-29.6, AC-29.7). |
+| 1 | Add an article: title and body; AI quotes the body word for word (AC-28.1). |
+| 2 | Overdue for review: dashed "Cần xem lại" chip, attention rule, and **Đánh dấu đã xem lại**; suggestions skip it until reviewed (AC-28.6, AC-28.7). |
 
 | State | Source | Behavior |
 |---|---|---|
 | `edit` | — | SCR-37 for the overdue article; saving also counts as reviewed today, and adds a revision only if the title or body changed (BR-20) ([PNG](../images/admin/36b-edit-policy.png)). |
-| `form-error` | Validation error | Duplicate title (ignoring case) and missing body (AC-29.2, AC-29.3). A body that repeats another article's body uses the same pattern under **Nội dung** and names that article (AC-29.4); not drawn. |
-| `hide-confirm` | Destructive confirmation | Names the article and says AI stops using it; the text is kept (AC-29.9). |
+| `form-error` | Validation error | Duplicate title (ignoring case) and missing body (AC-28.2, AC-28.3). A body that repeats another article's body uses the same pattern under **Nội dung** and names that article (AC-28.4); not drawn. |
+| `hide-confirm` | Destructive confirmation | Names the article and says AI stops using it; the text is kept (AC-28.9). |
 | `empty` | Empty | "Chưa có chính sách nào" explains that Staff's **Gợi ý trả lời** stays off until an article exists, with **Thêm chính sách**. |
 
 ### SCR-31 Users, SCR-33, SCR-34 and SCR-35 — [`31-users.html`](wireframes/31-users.html) · [PNG](../images/admin/31-users.png)
@@ -190,7 +190,7 @@ The page says up front that customers never see it and that AI uses only active 
 | # | Note |
 |---|---|
 | 1 | Create Staff only; role fixed (DF-13). |
-| 2 | Lock / unlock; own account cannot be locked (AC-26.4). |
+| 2 | Lock / unlock; own account cannot be locked (AC-23.4). |
 | 3 | "Đang nghỉ" is set and ended only here, by the Administrator; Staff rows only. There is no leave control on SCR-40, so Staff cannot change their own status (AC-27.5). |
 
 | State | Source | Behavior |
@@ -206,6 +206,6 @@ The page says up front that customers never see it and that AI uses only active 
 - **Unauthorized** (session ended): redirect to SCR-01 with the `locked` or a "phiên đăng nhập đã hết" message.
 - **Conflict** (SCR-21, SCR-23): a brick notice above the reply box, "Ticket vừa được cập nhật. Tải lại để xem thay đổi." with **Tải lại**; the draft and the chosen status or labels stay as they were (BR-19).
 - **Lost access while editing** (SCR-21): a neutral notice "Ticket này đã được chuyển cho người khác." with a link back to **Hàng đợi của tôi**; the draft stays in the reply box so it can be copied (BR-19).
-- **Policy changed during suggestion** (SCR-21): same pattern as `suggest-error`, with "Chính sách vừa được cập nhật. Bấm Gợi ý trả lời lại để dùng nội dung mới." and **Thử lại** (AC-22.7).
+- **Policy changed during suggestion** (SCR-21): same pattern as `suggest-error`, with "Chính sách vừa được cập nhật. Bấm Gợi ý trả lời lại để dùng nội dung mới." and **Thử lại** (AC-29.7).
 
 **Related:** [Step index](README.md) · [Design system](01-design-system.md)

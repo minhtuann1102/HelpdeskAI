@@ -47,38 +47,38 @@ These values make the stories testable. They apply unless the user changes them.
 
 ## Story merge (D-27)
 
-After Step 4 the backlog was merged to one story per use case ([D-27](../01-research/00-decisions.md#changes-after-step-4)): 41 stories became 29. All 171 acceptance criteria are kept with the same text and only renumbered. Use this map to read older references.
+After Step 4 the backlog was merged to one story per use case ([D-27](../01-research/00-decisions.md#changes-after-step-4)): 41 stories became 29, and each story now has the number of its use case (US-01 is UC-01, like the reference backlog). All 171 acceptance criteria are kept with the same text and only renumbered. Use this map to read references to the original numbers.
 
-| New story | Old stories | Old → new criteria |
+| New story (= use case) | Original stories | Original → new criteria |
 |---|---|---|
-| US-01 | US-01 | unchanged |
-| US-02 | US-02, US-04 | AC-02.1–AC-02.3 unchanged; AC-04.1–AC-04.5 → AC-02.4–AC-02.8 |
-| US-03 | US-03 | unchanged |
-| US-04 | US-05 | AC-05.n → AC-04.n |
-| US-05 | US-06 | AC-06.n → AC-05.n |
+| US-01 | US-02, US-04 | AC-02.n → AC-01.n; AC-04.1–AC-04.5 → AC-01.4–AC-01.8 |
+| US-02 | US-03 | AC-03.n → AC-02.n |
+| US-03 | US-05 | AC-05.n → AC-03.n |
+| US-04 | US-06 | AC-06.n → AC-04.n |
+| US-05 | US-01 | AC-01.n → AC-05.n |
 | US-06 | US-07, US-08 | AC-07.n → AC-06.n; AC-08.1–AC-08.4 → AC-06.6–AC-06.9 |
 | US-07 | US-09, US-10 | AC-09.n → AC-07.n; AC-10.1–AC-10.3 → AC-07.4–AC-07.6 |
 | US-08 | US-11 | AC-11.n → AC-08.n |
 | US-09 | US-12 | AC-12.n → AC-09.n |
-| US-10 | US-35 | AC-35.n → AC-10.n |
-| US-11 | US-13 | AC-13.n → AC-11.n |
-| US-12 | US-14, US-15, US-16 | AC-14.n → AC-12.n; AC-15.1–AC-15.3 → AC-12.7–AC-12.9; AC-16.1–AC-16.7 → AC-12.10–AC-12.16 |
-| US-13 | US-17 | AC-17.n → AC-13.n |
-| US-14 | US-18 | AC-18.n → AC-14.n |
-| US-15 | US-19 | AC-19.n → AC-15.n |
-| US-16 | US-20 | AC-20.n → AC-16.n |
-| US-17 | US-21 | AC-21.n → AC-17.n |
-| US-18 | US-22, US-23 | AC-22.n → AC-18.n; AC-23.1–AC-23.3 → AC-18.5–AC-18.7 |
-| US-19 | US-24 | AC-24.n → AC-19.n |
-| US-20 | US-25 | AC-25.n → AC-20.n |
-| US-21 | US-26 | AC-26.n → AC-21.n |
-| US-22 | US-40, US-41 | AC-40.n → AC-22.n; AC-41.1–AC-41.4 → AC-22.8–AC-22.11 |
-| US-23 | US-27, US-28, US-29 | AC-27.n → AC-23.n; AC-28.1–AC-28.3 → AC-23.4–AC-23.6; AC-29.1–AC-29.3 → AC-23.7–AC-23.9 |
-| US-24 | US-30 | AC-30.n → AC-24.n |
-| US-25 | US-31 | AC-31.n → AC-25.n |
-| US-26 | US-32 | AC-32.n → AC-26.n |
+| US-10 | US-17 | AC-17.n → AC-10.n |
+| US-11 | US-18 | AC-18.n → AC-11.n |
+| US-12 | US-19 | AC-19.n → AC-12.n |
+| US-13 | US-20 | AC-20.n → AC-13.n |
+| US-14 | US-21 | AC-21.n → AC-14.n |
+| US-15 | US-22, US-23 | AC-22.n → AC-15.n; AC-23.1–AC-23.3 → AC-15.5–AC-15.7 |
+| US-16 | US-24 | AC-24.n → AC-16.n |
+| US-17 | US-25 | AC-25.n → AC-17.n |
+| US-18 | US-26 | AC-26.n → AC-18.n |
+| US-19 | US-33, US-34 | AC-33.n → AC-19.n; AC-34.1–AC-34.2 → AC-19.6–AC-19.7 |
+| US-20 | US-27, US-28, US-29 | AC-27.n → AC-20.n; AC-28.1–AC-28.3 → AC-20.4–AC-20.6; AC-29.1–AC-29.3 → AC-20.7–AC-20.9 |
+| US-21 | US-30 | AC-30.n → AC-21.n |
+| US-22 | US-31 | AC-31.n → AC-22.n |
+| US-23 | US-32 | AC-32.n → AC-23.n |
+| US-24 | US-14, US-15, US-16 | AC-14.n → AC-24.n; AC-15.1–AC-15.3 → AC-24.7–AC-24.9; AC-16.1–AC-16.7 → AC-24.10–AC-24.16 |
+| US-25 | US-13 | AC-13.n → AC-25.n |
+| US-26 | US-35 | AC-35.n → AC-26.n |
 | US-27 | US-36 | AC-36.n → AC-27.n |
-| US-28 | US-33, US-34 | AC-33.n → AC-28.n; AC-34.1–AC-34.2 → AC-28.6–AC-28.7 |
-| US-29 | US-37, US-38, US-39 | AC-37.n → AC-29.n; AC-38.1–AC-38.4 → AC-29.5–AC-29.8; AC-39.1–AC-39.3 → AC-29.9–AC-29.11 |
+| US-28 | US-37, US-38, US-39 | AC-37.n → AC-28.n; AC-38.1–AC-38.4 → AC-28.5–AC-28.8; AC-39.1–AC-39.3 → AC-28.9–AC-28.11 |
+| US-29 | US-40, US-41 | AC-40.n → AC-29.n; AC-41.1–AC-41.4 → AC-29.8–AC-29.11 |
 
 **Related:** [Step index](README.md)

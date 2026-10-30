@@ -24,6 +24,6 @@
 | SCR-40 Profile | ✓ | ✓ | ✓ |
 | Unauthorized | `/403` | `/403` | `/403` |
 
-Unauthorized items are **not rendered** in the navigation. Opening a URL without permission shows SCR-90 Access denied (US-02).
+Unauthorized items are **not rendered** in the navigation. Opening a URL without permission shows SCR-90 Access denied (US-01).
 
 **Related:** [Step index](README.md)

@@ -29,7 +29,7 @@
 | Classification pending | SCR-20, SCR-21 | If the labels are not ready yet, show a "Classifying…" chip instead of empty labels; the ticket is usable. In SCR-20 the ticket sorts with Unclassified at the top. SCR-21 re-checks every 3 s and shows the labels when ready; after 30 s it shows the Unclassified (AI error) state (DF-28). Customers never see it. |
 | Unclassified (low confidence) | SCR-20, SCR-21 | "Unclassified" badge; the label panel shows the confidence and reason and asks for manual triage. |
 | Unclassified (AI error or timeout) | SCR-20, SCR-21 | "Unclassified" badge; the label panel says "AI was unavailable" and asks for manual triage. |
-| Priority raised by anger | SCR-20, SCR-21 | The priority chip shows that it was raised because of angry sentiment (AC-12.9). |
+| Priority raised by anger | SCR-20, SCR-21 | The priority chip shows that it was raised because of angry sentiment (AC-24.9). |
 | Label corrected | SCR-20, SCR-21 | The "AI" marker disappears from the corrected label; the panel still shows the original AI label. |
 | Summary loading | SCR-21 | Spinner in the summary panel; Summarize is disabled; the thread stays readable. |
 | Summary error or timeout | SCR-21 | Inline error with Retry; nothing else on the page changes. |
@@ -37,12 +37,12 @@
 | Rewrite loading | SCR-21 | Spinner on Rewrite; Rewrite and Send are disabled until the result or an error arrives. |
 | Rewrite result | SCR-21 | Rewrite shown next to the original draft with **Use** and **Discard**; nothing is sent. |
 | Rewrite error or timeout | SCR-21 | Inline error; the draft is unchanged and can still be sent. |
-| Suggestion unavailable | SCR-21 | No active, reviewed policy article exists: "Gợi ý trả lời" is disabled with the hint "Chưa có chính sách nào để AI dựa vào" (AC-22.11). |
+| Suggestion unavailable | SCR-21 | No active, reviewed policy article exists: "Gợi ý trả lời" is disabled with the hint "Chưa có chính sách nào để AI dựa vào" (AC-29.11). |
 | Suggestion loading | SCR-21 | Spinner on "Gợi ý trả lời"; Rewrite, Suggest, and Send are disabled until the result or an error arrives. |
 | Suggestion result | SCR-21 | The suggestion next to the draft, with a source chip per cited article that shows its title and quoted passage; **Use** and **Discard**; nothing is sent. |
-| No relevant policy | SCR-21 | Neutral notice "Không tìm thấy chính sách phù hợp"; the draft is unchanged; Staff write the reply themselves (AC-22.8). |
+| No relevant policy | SCR-21 | Neutral notice "Không tìm thấy chính sách phù hợp"; the draft is unchanged; Staff write the reply themselves (AC-29.8). |
 | Suggestion error or timeout | SCR-21 | Inline error with Retry; the draft is unchanged. |
-| Policy changed during suggestion | SCR-21 | Shown like the suggestion error: "Chính sách vừa được cập nhật. Bấm Gợi ý trả lời lại để dùng nội dung mới." with Retry; the draft is unchanged (AC-22.7). |
+| Policy changed during suggestion | SCR-21 | Shown like the suggestion error: "Chính sách vừa được cập nhật. Bấm Gợi ý trả lời lại để dùng nội dung mới." with Retry; the draft is unchanged (AC-29.7). |
 
 ## Responsive and accessibility rules
 
