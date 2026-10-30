@@ -459,4 +459,43 @@ body[data-role="customer"] .page { width: 100%; max-width: 1040px; margin: 0 aut
 .source-head b { color: var(--graphite); font-weight: 600; }
 .source q { color: var(--graphite); }
 .chip-review { border-style: dashed; border-color: var(--moss); background: var(--sage); color: var(--moss); }
+
+/* ---------- Reply deadlines (D-35) ---------- */
+/* Quiet while there is time: graphite time left. Brick only when a reply is due soon (outline)
+   or overdue (wash and a brick row rule). Every mark carries text, never colour alone. */
+.due { display: grid; gap: 3px; justify-items: start; white-space: nowrap; }
+.due-time { display: inline-flex; align-items: center; gap: 6px; font-size: var(--fs-sm); font-variant-numeric: tabular-nums; }
+.due-time > .i { color: var(--moss); }
+.due-none { color: var(--moss); }
+.due-upd { color: var(--moss); font-size: var(--fs-xs); font-variant-numeric: tabular-nums; }
+.sla { display: inline-flex; align-items: center; gap: 5px; height: 22px; padding: 0 8px; border: 1px solid var(--brick); border-radius: var(--r-chip); background: var(--paper); color: var(--brick); font-size: var(--fs-xs); font-weight: 600; }
+.sla .i { width: 13px; height: 13px; }
+.sla-late { background: var(--brick-wash); }
+.sla-paused { border-color: #c4cec8; background: var(--sage); color: var(--moss); font-weight: 500; }
+.row-late td:first-child { box-shadow: inset 3px 0 0 var(--brick); }
+.queue-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); }
+.filter-late { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border: 1px solid var(--brick); border-radius: var(--r-control); background: var(--paper); color: var(--brick); font-size: var(--fs-sm); font-weight: 500; text-decoration: none; }
+.filter-late .n { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px; background: var(--brick); color: #fff; font-size: var(--fs-xs); font-weight: 600; }
+.toolbar .sort { margin-left: auto; }
+.ticket-band .due-head { display: inline-flex; align-items: center; gap: var(--s2); font-size: var(--fs-sm); font-variant-numeric: tabular-nums; }
+
+/* ---------- Confidence bands (D-36) ---------- */
+/* The band is the AI's own certainty, so it is pencil. "AI chưa chắc" asks a person to look. */
+.band { display: inline-grid; place-items: center; height: 20px; margin-left: 6px; padding: 0 7px; border: 1px dashed var(--pencil); border-radius: 4px; background: var(--paper); color: var(--pencil); font-size: 11px; font-weight: 600; }
+.unsure { display: flex; align-items: center; gap: 4px; width: max-content; margin-top: 6px; color: var(--pencil); font-size: 11px; font-weight: 600; }
+.unsure .i { width: 13px; height: 13px; }
+.confirmed { color: var(--moss); font-size: var(--fs-xs); }
+
+/* ---------- Dashboard: replies on time and confidence (D-35, D-36) ---------- */
+.metrics.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.charts.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.hbar .track { position: relative; }
+.target .track::after { content: ""; position: absolute; top: -4px; bottom: -4px; left: 90%; width: 2px; border-radius: 1px; background: var(--graphite); }
+.hbar small { margin-left: 6px; color: var(--moss); font-size: var(--fs-xs); font-variant-numeric: tabular-nums; }
+.hbar.wide { grid-template-columns: 164px minmax(0, 1fr) 44px; }
+.table.compact th, .table.compact td { padding: 10px; }
+.table.compact th:first-child, .table.compact td:first-child { padding-left: var(--s4); }
+.table.compact .t-title { min-width: 210px; }
+.table.compact .num { font-variant-numeric: tabular-nums; }
+@media (max-width: 1180px) { .metrics.four { grid-template-columns: repeat(2, minmax(0, 1fr)); } .charts.two { grid-template-columns: 1fr; } }
 .t-title .excerpt { display: -webkit-box; max-width: 68ch; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; }

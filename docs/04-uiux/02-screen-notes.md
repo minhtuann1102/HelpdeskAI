@@ -98,11 +98,14 @@ No priority, sentiment, confidence, AI reason, or summary is shown (DF-14).
 
 | # | Note |
 |---|---|
-| 1 | Order: Unclassified first, then urgent → low, oldest first (DF-15). |
-| 2 | Filters: status tabs, keyword, category (incl. Unclassified), priority, sentiment; Admin also filters by assignee (AC-11.2). |
+| 1 | Order: Unclassified and Pending first, then the reply due soonest, then the tickets with no running clock, `In Progress` before `Waiting for Customer` (DF-15, BR-22). |
+| 2 | Filters: status tabs, keyword, category (incl. Unclassified), priority, sentiment; Admin also filters by assignee (AC-11.2). Sort: "Xếp theo hạn phản hồi" or "Lâu chưa cập nhật" (AC-10.10). |
 | 3 | Unclassified row: grey left rule and the reason (AI error or low confidence). |
+| 4 | Deadline cell, in working hours: time left; "Sắp trễ, còn …" when at most a quarter of the target is left; "Trễ …" with the time over and a brick row rule; "Tạm dừng"; "Không chờ phản hồi" when the last message is from Staff. The second line is the last update (AC-10.6, AC-10.10). Creation time moved under the title. |
+| 5 | "AI chưa chắc": AI labels in band "Vừa" that no person has set (AC-10.12). |
+| 6 | "Trễ hạn" with the count shows only overdue replies (AC-10.9). |
 
-Rows also show the AI states *Classification pending* (#1046), *Priority raised by anger* (#1042, arrow), and *Label corrected* (#1039, solid chip).
+Rows also show the AI states *Classification pending* (#1046), *Priority raised by anger* (#1042, arrow), and *Label corrected* (#1039, every chip solid), and the deadline states *running* (#1044), *due soon* (#1042), *overdue* (#1040; Admin also #1041), *paused* (Admin, #1038), and *no clock* (#1039, a holding reply from Staff; #1036). Sample time: 12:05 on Thursday 29/10/2026.
 
 | State | Source | Behavior |
 |---|---|---|
@@ -114,22 +117,26 @@ Rows also show the AI states *Classification pending* (#1046), *Priority raised 
 
 | # | Note |
 |---|---|
-| 1 | AI label panel: category, priority (with "raised because the customer is angry"), sentiment; dashed = AI, solid = corrected (AC-12.2). |
-| 2 | Confidence bar and the AI's reason. |
+| 1 | AI label panel: category, priority (with "raised because the customer is angry"), sentiment; dashed = AI, solid = set by a person, corrected or confirmed (AC-12.2, BR-23). |
+| 2 | Confidence bar with its band ("Cao" or "Vừa") and the AI's reason (AC-12.6). |
 | 3 | Summary: issue / done / pending, generation time, regenerate (AC-17.1). |
 | 4 | **Viết lại bằng AI** in the composer; result shown beside the draft (AC-18.1, AC-18.3). |
 | 5 | Nothing is sent until **Gửi** or **Gửi và chờ khách** (AC-13.3, AC-13.5). |
 | 6 | Transfer (Staff) or reassign (Admin) opens SCR-23. |
 | 7 | **Gợi ý trả lời**: a reply grounded in the shop's policies, shown beside the draft like a rewrite (AC-29.1, AC-29.2). Disabled when no active, reviewed article exists (AC-29.11). |
 | 8 | Cited passages are quoted in ink (a person wrote them); the suggestion itself stays pencil, with numbered markers that point to each source (BR-21). |
+| 9 | Reply deadline in the header: "Sắp trễ, còn 26 phút" and "Phản hồi trước 12:31". The customer wrote at 10:31 and the ticket is `high`, so the reply is due 2 working hours later (AC-12.5, DF-31). |
+| 10 | "AI chưa chắc": a pencil notice; **Xác nhận nhãn** keeps the values, records who confirmed, and is not counted as a correction (AC-16.6). |
 
 | State | Source | Behavior |
 |---|---|---|
 | `classification-pending` | Classification pending | "AI đang phân loại…" in the label panel; the ticket is usable; summary not created yet. The page re-checks every 3 s for up to 30 s (DF-28). |
 | `unclassified-low-confidence` | Unclassified (low confidence) | Badge, confidence 0,42 in grey, reason, manual triage form. |
 | `unclassified-ai-error` | Unclassified (AI error or timeout) | Badge, "AI không phản hồi… (quá 10 giây)", manual triage form ([PNG](../images/staff/21b-ticket-handling-unclassified-ai-error.png)). |
-| default | Priority raised by anger | Priority chip "Cao" with the note that it was raised from Medium. |
-| `label-corrected` | Label corrected | Category chip turns solid, with "Trần Bình đã sửa. AI đề xuất: …". |
+| default | Priority raised by anger; reply deadline due soon | Priority chip "Cao" with the note that it was raised from Medium; confidence 0,86 "Cao"; **Xác nhận nhãn** and **Sửa nhãn**. |
+| `labels-uncertain` | Uncertain AI labels | Confidence 0,72 "Vừa"; "AI chưa chắc" next to the AI tag and a pencil notice asking to confirm or correct ([PNG](../images/staff/21g-ticket-handling-labels-uncertain.png)). |
+| `label-corrected` | Label corrected | Every chip turns solid; the category shows "AI đề xuất: …"; the footer says "Trần Bình đã sửa lúc 11:48". |
+| `label-confirmed` | Labels confirmed | Every chip turns solid with the same values; the footer says "Trần Bình đã xác nhận lúc 11:48, không đổi nhãn nào". |
 | `summary-loading` | Summary loading | Skeleton, "tối đa 20 giây", button disabled. |
 | `summary-error` | Summary error or timeout | Inline error with **Thử lại**; nothing else changes. |
 | `summary-outdated` | Summary outdated | New message highlighted; "Đã cũ" notice; greyed summary; **Tóm tắt lại** ([PNG](../images/staff/21d-ticket-handling-summary-outdated.png)). |
@@ -147,8 +154,11 @@ Rows also show the AI states *Classification pending* (#1046), *Priority raised 
 | # | Note |
 |---|---|
 | 1 | Date range, default last 30 days by creation date (DF-17). |
-| 2 | Average first response time over tickets with a reply, plus tickets still waiting (AC-19.3). |
+| 2 | First response time in working hours: the average, with the 90th percentile in the note, plus tickets still waiting (AC-19.3). |
 | 3 | Label correction rate with numerator/denominator and a unit grid (BR-10). |
+| 4 | Replies on time: on time ÷ (on time + late), the 90% target, and a link to the replies overdue now (AC-19.8, AC-19.9). |
+| 5 | Replies on time by priority, each with its count and a target tick at 90% (AC-19.8). |
+| 6 | Correction rate by confidence band; a band with fewer than 20 tickets says "Chưa đủ dữ liệu", and the note says the table can only show whether to raise the threshold (AC-19.10, BR-23). |
 
 | State | Source | Behavior |
 |---|---|---|

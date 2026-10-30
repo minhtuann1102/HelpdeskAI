@@ -104,7 +104,7 @@ UC-10 · BR-02, BR-22, BR-23
 
 **Reply deadlines** · BR-22 · *Should*
 
-- **AC-10.6** *Given* a customer is waiting for a reply (the ticket is new, or the customer wrote after the last Staff or Administrator reply), *when* the queue is shown, *then* the row shows the time left in working hours, for example "còn 1 giờ 20 phút"; "Sắp trễ" when at most a quarter of the target is left; "Trễ hạn · 1 giờ 10 phút" after the deadline; and "Tạm dừng" while the clock is paused (DF-31..DF-33).
+- **AC-10.6** *Given* a customer is waiting for a reply (the ticket is new, or the customer wrote after the last Staff or Administrator reply), *when* the queue is shown, *then* the row shows the time left in working hours, for example "còn 1 giờ 20 phút"; "Sắp trễ, còn 20 phút" when at most a quarter of the target is left; "Trễ 1 giờ 10 phút" after the deadline; and "Tạm dừng" while the clock is paused (DF-31..DF-33).
 - **AC-10.7** *Given* the queue, *when* it is shown, *then* after the Unclassified and `Pending` tickets come the tickets with a running clock, soonest deadline first, so overdue ones lead; then the other open tickets, `In Progress` before `Waiting for Customer`, least recently updated first (DF-15).
 - **AC-10.8** *Given* a `low` ticket due in 20 minutes and an `urgent` ticket due in 50 minutes, *when* the queue is shown, *then* the `low` ticket is above the `urgent` one, and both rows show their time left.
 - **AC-10.9** *Given* some tickets in my queue are overdue, *when* I open it, *then* the toolbar shows "Trễ hạn (n)", and choosing it shows only those tickets.

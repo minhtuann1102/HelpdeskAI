@@ -68,19 +68,23 @@
         <div>
           <h1 data-role="staff">Hàng đợi của tôi</h1>
           <h1 data-role="admin">Tất cả ticket</h1>
-          <p data-role="staff">Ticket mới được chia tự động cho bạn. Ticket chưa phân loại nằm trên cùng, sau đó từ khẩn cấp đến thấp, cũ trước mới sau.</p>
-          <p data-role="admin">Mọi ticket trong hệ thống. Lọc theo người xử lý để xem việc của từng nhân viên hoặc tìm ticket chưa được giao.</p>
+          <p data-role="staff">Ticket mới được chia tự động cho bạn. Ticket chưa phân loại nằm trên cùng, sau đó là phản hồi sắp đến hạn. Hạn tính theo giờ làm việc, <span style="white-space:nowrap">thứ Hai đến thứ Bảy, 8:00–18:00.</span></p>
+          <p data-role="admin">Mọi ticket trong hệ thống, xếp như hàng đợi của nhân viên. Lọc theo người xử lý để xem việc của từng người hoặc tìm ticket chưa được giao.</p>
         </div>
         <span class="callout" aria-hidden="true">1</span>
       </div>
 
       <div class="stack">
-        <nav class="tabs" aria-label="Trạng thái" style="justify-self:start">
-          <a href="#" aria-current="true">Đang mở <span class="n" data-role="staff">7</span><span class="n" data-role="admin">10</span></a>
-          <a href="#">Đã giải quyết</a>
-          <a href="#">Đã đóng</a>
-          <a href="#">Tất cả</a>
-        </nav>
+        <div class="queue-bar">
+          <nav class="tabs" aria-label="Trạng thái">
+            <a href="#" aria-current="true">Đang mở <span class="n" data-role="staff">7</span><span class="n" data-role="admin">10</span></a>
+            <a href="#">Đã giải quyết</a>
+            <a href="#">Đã đóng</a>
+            <a href="#">Tất cả</a>
+          </nav>
+          <a class="filter-late" href="#" data-hide="empty"><svg class="i i-sm"><use href="#i-alert"></use></svg>Trễ hạn <span class="n" data-role="staff">1</span><span class="n" data-role="admin">2</span></a>
+          <span class="callout" aria-hidden="true">6</span>
+        </div>
         <div class="toolbar">
           <div class="search">
             <svg class="i i-sm"><use href="#i-search"></use></svg>
@@ -92,11 +96,12 @@
           <select class="select" aria-label="Cảm xúc"><option>Mọi cảm xúc</option><option>Bức xúc</option><option>Tiêu cực</option><option>Trung lập</option><option>Tích cực</option></select>
           <select class="select" aria-label="Người xử lý" data-role="admin"><option>Mọi người xử lý</option><option>Chưa giao</option><option>Trần Bình</option><option>Nguyễn An</option><option>Lê Chi</option></select>
           <span class="callout" aria-hidden="true">2</span>
+          <select class="select sort" aria-label="Sắp xếp"><option>Xếp theo hạn phản hồi</option><option>Lâu chưa cập nhật</option></select>
         </div>
       </div>
 
       <div class="table-wrap">
-        <table class="table" data-hide="empty empty-filtered">
+        <table class="table compact" data-hide="empty empty-filtered">
           <thead>
             <tr>
               <th>Ticket</th>
@@ -105,7 +110,7 @@
               <th>Cảm xúc</th>
               <th>Trạng thái</th>
               <th data-role="admin">Người xử lý</th>
-              <th>Tạo lúc</th>
+              <th>Hạn phản hồi</th>
             </tr>
           </thead>
 
@@ -117,92 +122,92 @@
           </tbody>
 
           <tbody data-hide="loading">
+            <tr>
+              <td><div class="t-title"><a href="21-ticket-handling.html?state=classification-pending">Đơn hàng chưa thấy giao sau 7 ngày</a><span>#1046 từ Phạm Quỳnh Anh, tạo 11:18</span></div></td>
+              <td colspan="3"><span class="row xs t-pencil"><span class="spinner" aria-hidden="true"></span>AI đang phân loại…</span></td>
+              <td><span class="status status-new"><span class="dot"></span>Mới</span></td>
+              <td data-role="admin"><span class="cell-person"><span class="avatar avatar-staff">TB</span>Trần Bình</span></td>
+              <td><div class="due"><span class="due-time"><svg class="i i-sm"><use href="#i-clock"></use></svg>còn 1 giờ 13 phút</span><span class="due-upd">Cập nhật 11:18</span></div></td>
+            </tr>
             <tr class="row-attention">
-              <td><div class="t-title"><a href="21-ticket-handling.html?state=unclassified-ai-error">Không đăng nhập được tài khoản</a><span>#1047 từ Lê Văn Tâm</span></div></td>
+              <td><div class="t-title"><a href="21-ticket-handling.html?state=unclassified-ai-error">Không đăng nhập được tài khoản</a><span>#1047 từ Lê Văn Tâm, tạo 11:20</span></div></td>
               <td><span class="chip chip-unclassified">Chưa phân loại</span></td>
               <td colspan="2"><span class="xs muted">AI không phản hồi, cần phân loại thủ công</span> <span class="callout" aria-hidden="true">3</span></td>
               <td><span class="status status-new"><span class="dot"></span>Mới</span></td>
               <td data-role="admin"><span class="cell-person"><span class="avatar avatar-staff">TB</span>Trần Bình</span></td>
-              <td class="muted">11:20</td>
+              <td><div class="due"><span class="due-time"><svg class="i i-sm"><use href="#i-clock"></use></svg>còn 1 giờ 15 phút</span><span class="due-upd">Cập nhật 11:20</span></div></td>
             </tr>
-            <tr>
-              <td><div class="t-title"><a href="21-ticket-handling.html?state=classification-pending">Đơn hàng chưa thấy giao sau 7 ngày</a><span>#1046 từ Phạm Quỳnh Anh</span></div></td>
-              <td colspan="3"><span class="row xs t-pencil"><span class="spinner" aria-hidden="true"></span>AI đang phân loại…</span></td>
-              <td><span class="status status-new"><span class="dot"></span>Mới</span></td>
-              <td data-role="admin"><span class="cell-person"><span class="avatar avatar-staff">TB</span>Trần Bình</span></td>
-              <td class="muted">11:18</td>
-            </tr>
-            <tr>
-              <td><div class="t-title"><a href="21-ticket-handling.html?state=label-corrected">Bị trừ tiền 2 lần khi thanh toán</a><span>#1039 từ Đỗ Thu Hà</span></div></td>
-              <td><span class="chip">Thanh toán &amp; hoàn tiền</span></td>
-              <td><span class="chip is-ai"><span class="meter" data-level="3" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Cao</span></td>
-              <td><span class="chip is-ai">Tiêu cực</span></td>
-              <td><span class="status status-waiting"><span class="dot"></span>Chờ khách</span></td>
-              <td data-role="admin"><span class="cell-person"><span class="avatar avatar-staff">TB</span>Trần Bình</span></td>
-              <td class="muted">Hôm qua 16:40</td>
-            </tr>
-            <tr data-role="admin">
-              <td><div class="t-title"><a href="21-ticket-handling.html?role=admin">Không nhận được mã OTP khi đăng nhập</a><span>#1041 từ Trịnh Hải Nam</span></div></td>
+            <tr class="row-late" data-role="admin">
+              <td><div class="t-title"><a href="21-ticket-handling.html?role=admin">Không nhận được mã OTP khi đăng nhập</a><span>#1041 từ Trịnh Hải Nam, tạo 07:50</span></div></td>
               <td><span class="chip is-ai">Tài khoản</span></td>
               <td><span class="chip is-ai"><span class="meter" data-level="3" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Cao</span></td>
               <td><span class="chip is-ai">Tiêu cực</span></td>
               <td><span class="status status-new"><span class="dot"></span>Mới</span></td>
               <td><span class="cell-person"><span class="avatar avatar-staff">LC</span>Lê Chi</span></td>
-              <td class="muted">07:50</td>
+              <td><div class="due"><span class="due-time"><span class="sla sla-late"><svg class="i i-sm"><use href="#i-alert"></use></svg>Trễ 2 giờ 5 phút</span></span><span class="due-upd">Cập nhật 07:50</span></div></td>
             </tr>
-            <tr>
-              <td><div class="t-title"><a href="21-ticket-handling.html">Giao sai màu giỏ mây, cần đổi trước thứ Bảy</a><span>#1042 từ Nguyễn Thị Hoa</span></div></td>
-              <td><span class="chip is-ai">Đổi trả &amp; bảo hành</span></td>
-              <td><span class="chip is-ai"><span class="meter" data-level="3" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Cao <svg class="i i-sm t-brick" aria-label="Nâng mức vì khách bức xúc"><use href="#i-arrowup"></use></svg></span></td>
-              <td><span class="chip is-ai"><span class="dot dot-brick"></span>Bức xúc</span></td>
-              <td><span class="status status-progress"><span class="dot"></span>Đang xử lý</span></td>
-              <td data-role="admin"><span class="cell-person"><span class="avatar avatar-staff">TB</span>Trần Bình</span></td>
-              <td class="muted">08:14</td>
-            </tr>
-            <tr>
-              <td><div class="t-title"><a href="21-ticket-handling.html">Muốn đổi địa chỉ nhận hàng</a><span>#1040 từ Vũ Minh Đức</span></div></td>
+            <tr class="row-late">
+              <td><div class="t-title"><a href="21-ticket-handling.html">Muốn đổi địa chỉ nhận hàng</a><span>#1040 từ Vũ Minh Đức, tạo hôm qua 14:12</span></div></td>
               <td><span class="chip is-ai">Giao hàng</span></td>
               <td><span class="chip is-ai"><span class="meter" data-level="2" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Trung bình</span></td>
               <td><span class="chip is-ai">Trung lập</span></td>
               <td><span class="status status-progress"><span class="dot"></span>Đang xử lý</span></td>
               <td data-role="admin"><span class="cell-person"><span class="avatar avatar-staff">TB</span>Trần Bình</span></td>
-              <td class="muted">Hôm qua 14:12</td>
+              <td><div class="due"><span class="due-time"><span class="sla sla-late"><svg class="i i-sm"><use href="#i-alert"></use></svg>Trễ 1 giờ 35 phút</span> <span class="callout" aria-hidden="true">4</span></span><span class="due-upd">Cập nhật hôm qua 16:30</span></div></td>
+            </tr>
+            <tr>
+              <td><div class="t-title"><a href="21-ticket-handling.html">Giao sai màu giỏ mây, cần đổi trước thứ Bảy</a><span>#1042 từ Nguyễn Thị Hoa, tạo 08:14</span></div></td>
+              <td><span class="chip is-ai">Đổi trả &amp; bảo hành</span></td>
+              <td><span class="chip is-ai"><span class="meter" data-level="3" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Cao <svg class="i i-sm t-brick" aria-label="Nâng mức vì khách bức xúc"><use href="#i-arrowup"></use></svg></span></td>
+              <td><span class="chip is-ai"><span class="dot dot-brick"></span>Bức xúc</span></td>
+              <td><span class="status status-progress"><span class="dot"></span>Đang xử lý</span></td>
+              <td data-role="admin"><span class="cell-person"><span class="avatar avatar-staff">TB</span>Trần Bình</span></td>
+              <td><div class="due"><span class="due-time"><span class="sla"><svg class="i i-sm"><use href="#i-clock"></use></svg>Sắp trễ, còn 26 phút</span></span><span class="due-upd">Cập nhật 10:31</span></div></td>
+            </tr>
+            <tr>
+              <td><div class="t-title"><a href="21-ticket-handling.html?state=labels-uncertain">Hỏi cách đổi size thảm cói</a><span>#1044 từ Hoàng Lan, tạo 10:12</span></div></td>
+              <td><span class="chip is-ai">Đổi trả &amp; bảo hành</span><span class="unsure"><svg class="i"><use href="#i-alert"></use></svg>AI chưa chắc <span class="callout" aria-hidden="true">5</span></span></td>
+              <td><span class="chip is-ai"><span class="meter" data-level="2" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Trung bình</span></td>
+              <td><span class="chip is-ai">Trung lập</span></td>
+              <td><span class="status status-new"><span class="dot"></span>Mới</span></td>
+              <td data-role="admin"><span class="cell-person"><span class="avatar avatar-staff">TB</span>Trần Bình</span></td>
+              <td><div class="due"><span class="due-time"><svg class="i i-sm"><use href="#i-clock"></use></svg>còn 2 giờ 7 phút</span><span class="due-upd">Cập nhật 10:12</span></div></td>
             </tr>
             <tr data-role="admin">
-              <td><div class="t-title"><a href="21-ticket-handling.html?role=admin">Hộp bị móp khi nhận hàng</a><span>#1043 từ Mai Phương</span></div></td>
+              <td><div class="t-title"><a href="21-ticket-handling.html?role=admin">Hộp bị móp khi nhận hàng</a><span>#1043 từ Mai Phương, tạo 27/10 09:30</span></div></td>
               <td><span class="chip is-ai">Đổi trả &amp; bảo hành</span></td>
               <td><span class="chip is-ai"><span class="meter" data-level="2" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Trung bình</span></td>
               <td><span class="chip is-ai">Tiêu cực</span></td>
               <td><span class="status status-progress"><span class="dot"></span>Đang xử lý</span></td>
               <td><span class="cell-person"><span class="avatar avatar-staff">NA</span>Nguyễn An</span></td>
-              <td class="muted">09:30</td>
+              <td><div class="due"><span class="due-time due-none">Không chờ phản hồi</span><span class="due-upd">Cập nhật 27/10 15:20</span></div></td>
             </tr>
             <tr>
-              <td><div class="t-title"><a href="21-ticket-handling.html">Hỏi cách đổi size thảm cói</a><span>#1044 từ Hoàng Lan</span></div></td>
-              <td><span class="chip is-ai">Đổi trả &amp; bảo hành</span></td>
-              <td><span class="chip is-ai"><span class="meter" data-level="2" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Trung bình</span></td>
-              <td><span class="chip is-ai">Trung lập</span></td>
-              <td><span class="status status-new"><span class="dot"></span>Mới</span></td>
+              <td><div class="t-title"><a href="21-ticket-handling.html?state=label-corrected">Bị trừ tiền 2 lần khi thanh toán</a><span>#1039 từ Đỗ Thu Hà, tạo hôm qua 16:40</span></div></td>
+              <td><span class="chip">Thanh toán &amp; hoàn tiền</span></td>
+              <td><span class="chip"><span class="meter" data-level="3" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Cao</span></td>
+              <td><span class="chip">Tiêu cực</span></td>
+              <td><span class="status status-progress"><span class="dot"></span>Đang xử lý</span></td>
               <td data-role="admin"><span class="cell-person"><span class="avatar avatar-staff">TB</span>Trần Bình</span></td>
-              <td class="muted">10:05</td>
+              <td><div class="due"><span class="due-time due-none">Không chờ phản hồi</span><span class="due-upd">Cập nhật hôm qua 16:55</span></div></td>
             </tr>
             <tr data-role="admin">
-              <td><div class="t-title"><a href="21-ticket-handling.html?role=admin">Xuất hóa đơn VAT cho đơn sỉ</a><span>#1038 từ Công ty Mộc Việt</span></div></td>
+              <td><div class="t-title"><a href="21-ticket-handling.html?role=admin">Xuất hóa đơn VAT cho đơn sỉ</a><span>#1038 từ Công ty Mộc Việt, tạo 26/10 16:20</span></div></td>
               <td><span class="chip is-ai">Đơn hàng</span></td>
               <td><span class="chip is-ai"><span class="meter" data-level="1" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Thấp</span></td>
               <td><span class="chip is-ai">Trung lập</span></td>
               <td><span class="status status-waiting"><span class="dot"></span>Chờ khách</span></td>
               <td><span class="cell-person"><span class="avatar avatar-staff">NA</span>Nguyễn An</span></td>
-              <td class="muted">26/10</td>
+              <td><div class="due"><span class="due-time"><span class="sla sla-paused"><svg class="i i-sm"><use href="#i-pause"></use></svg>Tạm dừng, còn 5 giờ</span></span><span class="due-upd">Cập nhật 26/10 17:05</span></div></td>
             </tr>
             <tr>
-              <td><div class="t-title"><a href="21-ticket-handling.html">Hàng đẹp lắm, shop có bán sỉ không?</a><span>#1036 từ Bùi Gia Huy</span></div></td>
+              <td><div class="t-title"><a href="21-ticket-handling.html">Hàng đẹp lắm, shop có bán sỉ không?</a><span>#1036 từ Bùi Gia Huy, tạo 27/10 09:15</span></div></td>
               <td><span class="chip is-ai">Đơn hàng</span></td>
               <td><span class="chip is-ai"><span class="meter" data-level="1" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Thấp</span></td>
               <td><span class="chip is-ai">Tích cực</span></td>
               <td><span class="status status-waiting"><span class="dot"></span>Chờ khách</span></td>
               <td data-role="admin"><span class="cell-person"><span class="avatar avatar-staff">TB</span>Trần Bình</span></td>
-              <td class="muted">27/10</td>
+              <td><div class="due"><span class="due-time due-none">Không chờ phản hồi</span><span class="due-upd">Cập nhật 27/10 09:40</span></div></td>
             </tr>
           </tbody>
         </table>
@@ -211,7 +216,7 @@
           <span class="empty-icon"><svg class="i"><use href="#i-inbox"></use></svg></span>
           <h2 data-role="staff">Bạn không có ticket nào đang mở</h2>
           <h2 data-role="admin">Chưa có ticket nào đang mở</h2>
-          <p>Ticket mới được chia tự động và sẽ xuất hiện ở đây, xếp theo mức độ ưu tiên.</p>
+          <p>Ticket mới được chia tự động và sẽ xuất hiện ở đây, phản hồi sắp đến hạn nằm trên cùng.</p>
           <a class="btn" href="#">Xem ticket đã giải quyết</a>
         </div>
 
@@ -223,8 +228,8 @@
         </div>
 
         <div class="table-foot" data-hide="loading empty empty-filtered">
-          <span data-role="staff">7 ticket đang mở</span>
-          <span data-role="admin">10 ticket đang mở, 0 ticket chưa giao</span>
+          <span data-role="staff">7 ticket đang mở, 1 phản hồi trễ hạn</span>
+          <span data-role="admin">10 ticket đang mở, 0 ticket chưa giao, 2 phản hồi trễ hạn</span>
           <span class="row"><span class="chip is-ai" style="height:22px">Nhãn</span> do AI đề xuất, chưa ai sửa <span class="chip" style="height:22px">Nhãn</span> đã được người xác nhận hoặc sửa</span>
         </div>
       </div>

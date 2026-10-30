@@ -11,7 +11,7 @@ Source of truth: [`wireframes/assets/wireframe.css`](wireframes/assets/wireframe
 Staff spend the day in a queue and must always know **what AI suggested** and **what a person decided**. The interface borrows from a paper support slip with margin notes:
 
 - **Pencil** — anything proposed by AI is drawn with a **dashed violet** line: AI labels, the AI reason, the summary, the rewrite, and the whole AI column of the ticket page (the "pencil margin").
-- **Ink** — anything a person confirmed or corrected is **solid** and neutral. When Staff correct a label, its chip changes from dashed violet to solid grey.
+- **Ink** — anything a person confirmed or corrected is **solid** and neutral. When Staff correct or confirm the labels, every label chip changes from dashed violet to solid grey (BR-23).
 
 This is the one bold element. Everything else stays quiet: neutral surfaces, borders instead of shadows, one font family.
 
@@ -29,7 +29,7 @@ This is the one bold element. Everything else stays quiet: neutral surfaces, bor
 | `--moss` | `#5e6e68` | Secondary text, "Unclassified" |
 | `--line` | `#d3dcd6` | Borders |
 | `--pencil` / `--pencil-wash` | `#6a3fc9` / `#f1ecfc` | **AI only** — never used for anything a person did |
-| `--brick` / `--brick-wash` | `#b3261e` / `#fbeceb` | Urgent priority, angry sentiment, errors, destructive actions |
+| `--brick` / `--brick-wash` | `#b3261e` / `#fbeceb` | Urgent priority, angry sentiment, errors, destructive actions, replies due soon or overdue |
 | `--amber` | `#b26a00` | Status "In progress"; customer "waiting for your reply" |
 | `--leaf` | `#2f7d4f` | Status "Resolved", active accounts |
 | `--note` | `#f2b300` | Wireframe annotations only (yellow numbers), never product UI |
@@ -66,13 +66,18 @@ Spacing steps: 4, 8, 12, 16, 20, 28, 40 px. Radius follows hierarchy: surfaces 1
 | Priority meter | 1–4 bars plus the word; `urgent` bars are brick. Never color alone. |
 | Status pill | Dot + text: New (graphite dot), In progress (amber), Waiting (hollow ring), Resolved (leaf), Closed (muted). |
 | Account status chip | "Hoạt động" (leaf), "Đang nghỉ" (neutral sage with a clock icon; amber stays reserved for ticket progress), "Đã khóa" (brick). |
-| Confidence bar | Violet fill with the value (`0,86`); grey fill when below the threshold. |
+| Confidence bar | Violet fill with the value (`0,86`) and its band; grey fill when below the threshold. |
+| Confidence band | Small dashed violet tag, "Cao" or "Vừa", after the value: the band is the AI's own certainty, so it is pencil (D-36). |
+| "AI chưa chắc" | Violet text with an alert icon under the row's first AI label; in the label panel, a pencil notice and **Xác nhận nhãn** next to **Sửa nhãn**. |
+| **Deadline cell** (queue) | Quiet while there is time: the time left in graphite with a clock icon. "Sắp trễ, còn …" is a brick outline chip; "Trễ …" is a brick-wash chip, and the row gets a brick left rule; "Tạm dừng, còn …" is a sage chip; "Không chờ phản hồi" is moss. A second line shows the last update (D-35). |
+| Deadline in the ticket header | The same chip, followed by "Phản hồi trước 12:31". |
+| "Trễ hạn" filter | Brick outline button with the count, next to the status tabs. |
 | Pencil note | Dashed violet left rule for AI-written text (reason, summary). |
 | **Citation** | A small violet numbered marker inside a suggestion, and below it a quoted policy passage with a solid graphite left rule: the source is ink because a person wrote it (D-25). |
 | Review chip | Dashed grey "Cần xem lại" with a clock icon, like Unclassified: both wait for a person. |
 | Message bubbles | Customer left on white; Staff right on pine-soft (the customer's own messages are on the right in the portal). |
 | Composer | Card with header, borderless textarea, footer toolbar: AI rewrite left, Send / Send and wait right. |
-| Tables | Light header, 12 px rows, attention rows (Unclassified) with a left rule. |
+| Tables | Light header, 12 px rows, attention rows with a left rule: moss for Unclassified, brick for an overdue reply. The ticket queue uses 10 px cell padding so the admin view fits seven columns at 1440 px. |
 | Empty state | Round icon, one-line title, guidance, one action. |
 | Notices | Error (brick wash), AI (pencil wash), neutral (sage). |
 | Modals | Title + consequence sentence, quiet cancel, one primary action named by its effect ("Khóa tài khoản", not "OK"). |
@@ -90,6 +95,8 @@ Spacing steps: 4, 8, 12, 16, 20, 28, 40 px. Radius follows hierarchy: surfaces 1
 - Counts by status, category, and sentiment are **single-series horizontal bars** in pine, each bar labeled with its value; categories are text labels, so no categorical palette is needed.
 - "Unclassified" uses a hatched texture; "Angry" uses brick plus a dot and its label.
 - Bars have rounded data ends, recessive tracks, and native tooltips (`title`); each chart offers "Xem dạng bảng" (table view).
+- Replies on time by priority are pine bars with a short graphite tick at the 90% target (G-10); the label shows the count ("34/40").
+- The correction rate by confidence band is a small table, not a chart: two rows, and a band with fewer than 20 tickets says "Chưa đủ dữ liệu" (DF-34).
 - The palette checker of the `dataviz` skill passes contrast for pine, brick, and violet; its lightness/chroma failures for pine apply to multi-series categorical palettes only, which these charts do not use.
 
 ## Accessibility and responsiveness

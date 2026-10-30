@@ -19,7 +19,9 @@
     <li><a href="21-ticket-handling.html?state=classification-pending">classification-pending</a></li>
     <li><a href="21-ticket-handling.html?state=unclassified-low-confidence">unclassified-low-confidence</a></li>
     <li><a href="21-ticket-handling.html?state=unclassified-ai-error">unclassified-ai-error</a></li>
+    <li><a href="21-ticket-handling.html?state=labels-uncertain">labels-uncertain</a></li>
     <li><a href="21-ticket-handling.html?state=label-corrected">label-corrected</a></li>
+    <li><a href="21-ticket-handling.html?state=label-confirmed">label-confirmed</a></li>
     <li><a href="21-ticket-handling.html?state=summary-loading">summary-loading</a></li>
     <li><a href="21-ticket-handling.html?state=summary-error">summary-error</a></li>
     <li><a href="21-ticket-handling.html?state=summary-outdated">summary-outdated</a></li>
@@ -83,6 +85,7 @@
         <div class="row">
           <span class="stub"><svg class="i i-sm"><use href="#i-ticket"></use></svg>#1042</span>
           <span class="status status-progress"><span class="dot"></span>Đang xử lý</span>
+          <span class="due-head"><span class="sla"><svg class="i i-sm"><use href="#i-clock"></use></svg>Sắp trễ, còn 26 phút</span>Phản hồi trước 12:31 <span class="callout" aria-hidden="true">9</span></span>
           <span class="row xs muted"><svg class="i i-sm"><use href="#i-clock"></use></svg>Tạo lúc 08:14, 29/10/2026</span>
           <span class="xs muted">Phản hồi đầu tiên sau 48 phút</span>
         </div>
@@ -292,7 +295,8 @@
             <div class="sheet-head">
               <h2 id="labels-title">Phân loại</h2>
               <span class="row">
-                <span class="rail-tag" data-hide="classification-pending unclassified-low-confidence unclassified-ai-error label-corrected"><span class="ai-mark">AI</span>đề xuất lúc 08:14</span>
+                <span class="rail-tag" data-hide="classification-pending unclassified-low-confidence unclassified-ai-error label-corrected label-confirmed labels-uncertain"><span class="ai-mark">AI</span>đề xuất lúc 08:14</span>
+                <span class="rail-tag" data-show="labels-uncertain"><span class="ai-mark">AI</span>chưa chắc, đề xuất lúc 08:14</span>
                 <span class="callout" aria-hidden="true">1</span>
               </span>
             </div>
@@ -300,30 +304,51 @@
             <!-- Labels set by AI (or corrected by a person) -->
             <div data-hide="classification-pending unclassified-low-confidence unclassified-ai-error">
               <div class="sheet-body stack" style="gap:var(--s4)">
+                <div class="notice notice-pencil" data-show="labels-uncertain">
+                  <svg class="i"><use href="#i-alert"></use></svg>
+                  <span>AI chưa chắc về các nhãn này. Kiểm tra lại: nếu đúng, bấm <b>Xác nhận nhãn</b>; nếu sai, sửa nhãn. <span class="callout" aria-hidden="true">10</span></span>
+                </div>
                 <div class="labels">
                   <div class="label-row">
                     <span>Danh mục</span>
-                    <span data-hide="label-corrected"><span class="chip is-ai">Đổi trả &amp; bảo hành</span></span>
-                    <span data-show="label-corrected"><span class="chip">Giao hàng</span><span class="sub">Trần Bình đã sửa. AI đề xuất: Đổi trả &amp; bảo hành</span></span>
+                    <span data-hide="label-corrected label-confirmed"><span class="chip is-ai">Đổi trả &amp; bảo hành</span></span>
+                    <span data-show="label-corrected"><span class="chip">Giao hàng</span><span class="sub">AI đề xuất: Đổi trả &amp; bảo hành</span></span>
+                    <span data-show="label-confirmed"><span class="chip">Đổi trả &amp; bảo hành</span></span>
                   </div>
                   <div class="label-row">
                     <span>Độ ưu tiên</span>
-                    <span><span class="chip is-ai"><span class="meter" data-level="3" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Cao</span><span class="sub"><svg class="i i-sm" style="vertical-align:-3px"><use href="#i-arrowup"></use></svg> Nâng từ Trung bình vì khách bức xúc</span></span>
+                    <span><span class="chip is-ai" data-hide="label-corrected label-confirmed"><span class="meter" data-level="3" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Cao</span><span class="chip" data-show="label-corrected label-confirmed"><span class="meter" data-level="3" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Cao</span><span class="sub"><svg class="i i-sm" style="vertical-align:-3px"><use href="#i-arrowup"></use></svg> Nâng từ Trung bình vì khách bức xúc</span></span>
                   </div>
                   <div class="label-row">
                     <span>Cảm xúc</span>
-                    <span><span class="chip is-ai"><span class="dot dot-brick"></span>Bức xúc</span></span>
+                    <span><span class="chip is-ai" data-hide="label-corrected label-confirmed"><span class="dot dot-brick"></span>Bức xúc</span><span class="chip" data-show="label-corrected label-confirmed"><span class="dot dot-brick"></span>Bức xúc</span></span>
                   </div>
                 </div>
-                <div class="confidence">
+                <div class="confidence" data-hide="labels-uncertain">
                   <span>Độ tin cậy</span>
                   <span class="bar" aria-hidden="true"><i style="width:86%"></i></span>
-                  <span class="strong" style="color:var(--graphite)">0,86 <span class="callout" aria-hidden="true">2</span></span>
+                  <span class="strong" style="color:var(--graphite)">0,86<span class="band">Cao</span> <span class="callout" aria-hidden="true">2</span></span>
                 </div>
-                <p class="pencil-note">Khách nhận sai màu và cần đổi trước thứ Bảy; nhắc lại lần giao nhầm trước nên giọng bức xúc.</p>
+                <div class="confidence" data-show="labels-uncertain">
+                  <span>Độ tin cậy</span>
+                  <span class="bar" aria-hidden="true"><i style="width:72%"></i></span>
+                  <span class="strong" style="color:var(--graphite)">0,72<span class="band">Vừa</span></span>
+                </div>
+                <p class="pencil-note" data-hide="labels-uncertain">Khách nhận sai màu và cần đổi trước thứ Bảy; nhắc lại lần giao nhầm trước nên giọng bức xúc.</p>
+                <p class="pencil-note" data-show="labels-uncertain">Khách muốn đổi màu giỏ, nhưng tin nhắn cũng nhắc lần giao nhầm trước; chưa rõ là đổi trả hay khiếu nại giao hàng.</p>
               </div>
-              <div class="sheet-foot">
-                <span>Sửa nhãn nếu AI phân loại sai</span>
+              <div class="sheet-foot" data-hide="label-corrected label-confirmed">
+                <span class="row">
+                  <button class="btn btn-sm" type="button"><svg class="i i-sm"><use href="#i-check"></use></svg>Xác nhận nhãn</button>
+                  <button class="btn btn-sm" type="button"><svg class="i i-sm"><use href="#i-pencil"></use></svg>Sửa nhãn</button>
+                </span>
+              </div>
+              <div class="sheet-foot" data-show="label-corrected">
+                <span>Trần Bình đã sửa lúc 11:48</span>
+                <button class="btn btn-sm" type="button"><svg class="i i-sm"><use href="#i-pencil"></use></svg>Sửa nhãn</button>
+              </div>
+              <div class="sheet-foot" data-show="label-confirmed">
+                <span>Trần Bình đã xác nhận lúc 11:48, không đổi nhãn nào</span>
                 <button class="btn btn-sm" type="button"><svg class="i i-sm"><use href="#i-pencil"></use></svg>Sửa nhãn</button>
               </div>
             </div>

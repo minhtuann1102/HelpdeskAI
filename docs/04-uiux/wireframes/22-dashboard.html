@@ -63,8 +63,8 @@
         <div>
           <h1 data-role="admin">Tổng quan hỗ trợ</h1>
           <h1 data-role="staff">Tổng quan của tôi</h1>
-          <p data-role="admin">Số liệu toàn hệ thống, tính theo ngày tạo ticket.</p>
-          <p data-role="staff">Chỉ tính các ticket đang được giao cho bạn, theo ngày tạo ticket.</p>
+          <p data-role="admin">Số liệu toàn hệ thống, tính theo ngày tạo ticket. Thời gian phản hồi tính theo giờ làm việc.</p>
+          <p data-role="staff">Chỉ tính các ticket đang được giao cho bạn, theo ngày tạo ticket. Thời gian phản hồi tính theo giờ làm việc.</p>
         </div>
         <div class="row">
           <span class="callout" aria-hidden="true">1</span>
@@ -78,7 +78,7 @@
       </div>
 
       <!-- Headline figures -->
-      <section class="metrics" aria-label="Chỉ số chính">
+      <section class="metrics four" aria-label="Chỉ số chính">
         <div class="metric">
           <span class="label">Ticket trong kỳ</span>
           <span class="value" data-hide="empty"><span data-role="admin">64</span><span data-role="staff">22</span></span>
@@ -87,11 +87,18 @@
           <span class="note" data-show="empty">Chưa có ticket nào được tạo trong khoảng này.</span>
         </div>
         <div class="metric">
-          <span class="label">Thời gian phản hồi đầu trung bình <span class="callout" aria-hidden="true">2</span></span>
+          <span class="label">Phản hồi đầu, trung bình <span class="callout" aria-hidden="true">2</span></span>
           <span class="value" data-hide="empty"><span data-role="admin">2 <small>giờ</small> 14 <small>phút</small></span><span data-role="staff">1 <small>giờ</small> 32 <small>phút</small></span></span>
           <span class="value" data-show="empty">—</span>
-          <span class="note" data-hide="empty"><span data-role="admin">Tính trên 58 ticket đã có phản hồi. Mục tiêu: dưới 4 giờ.</span><span data-role="staff">Tính trên 19 ticket đã có phản hồi. Mục tiêu: dưới 4 giờ.</span></span>
+          <span class="note" data-hide="empty"><span data-role="admin">90% ticket được phản hồi trong 5 giờ 40 phút. Tính theo giờ làm việc trên 58 ticket. Mục tiêu: dưới 4 giờ.</span><span data-role="staff">90% ticket được phản hồi trong 3 giờ 50 phút. Tính theo giờ làm việc trên 19 ticket. Mục tiêu: dưới 4 giờ.</span></span>
           <span class="note" data-show="empty">Sẽ hiện khi có ticket được trả lời.</span>
+        </div>
+        <div class="metric">
+          <span class="label">Phản hồi đúng hạn <span class="callout" aria-hidden="true">4</span></span>
+          <span class="value" data-hide="empty"><span data-role="admin">88% <small>122/139</small></span><span data-role="staff">89% <small>41/46</small></span></span>
+          <span class="value" data-show="empty">—</span>
+          <span class="note" data-hide="empty">Mục tiêu: từ 90%. <a href="20-ticket-queue.html?role=admin" class="t-brick" data-role="admin">2 phản hồi đang trễ hạn</a><a href="20-ticket-queue.html" class="t-brick" data-role="staff">1 phản hồi đang trễ hạn</a></span>
+          <span class="note" data-show="empty">Sẽ hiện khi có phản hồi đến hạn.</span>
         </div>
         <div class="metric">
           <span class="label">AI bị sửa nhãn <span class="callout" aria-hidden="true">3</span></span>
@@ -176,6 +183,46 @@
             </ul>
           </div>
           <div class="sheet-foot"><span>Sọc chéo: chưa phân loại</span><a href="#" class="small">Xem dạng bảng</a></div>
+        </section>
+      </div>
+
+      <!-- Replies on time and AI confidence (D-35, D-36) -->
+      <div class="charts two" data-hide="empty">
+        <section class="sheet" aria-labelledby="c-ontime">
+          <div class="sheet-head"><h2 id="c-ontime">Phản hồi đúng hạn theo độ ưu tiên</h2><span class="callout" aria-hidden="true">5</span></div>
+          <div class="sheet-body">
+            <ul class="hbars" data-role="admin">
+              <li class="hbar wide target" title="Khẩn cấp: 11/12 phản hồi đúng hạn, hạn 1 giờ"><span>Khẩn cấp<small>11/12</small></span><span class="track"><span class="fill" style="width:92%"></span></span><span class="val">92%</span></li>
+              <li class="hbar wide target" title="Cao: 34/40 phản hồi đúng hạn, hạn 2 giờ"><span>Cao<small>34/40</small></span><span class="track"><span class="fill" style="width:85%"></span></span><span class="val">85%</span></li>
+              <li class="hbar wide target" title="Trung bình: 52/58 phản hồi đúng hạn, hạn 4 giờ"><span>Trung bình<small>52/58</small></span><span class="track"><span class="fill" style="width:90%"></span></span><span class="val">90%</span></li>
+              <li class="hbar wide target" title="Thấp: 25/29 phản hồi đúng hạn, hạn 8 giờ"><span>Thấp<small>25/29</small></span><span class="track"><span class="fill" style="width:86%"></span></span><span class="val">86%</span></li>
+            </ul>
+            <ul class="hbars" data-role="staff">
+              <li class="hbar wide target" title="Khẩn cấp: 4/4 phản hồi đúng hạn, hạn 1 giờ"><span>Khẩn cấp<small>4/4</small></span><span class="track"><span class="fill" style="width:100%"></span></span><span class="val">100%</span></li>
+              <li class="hbar wide target" title="Cao: 12/14 phản hồi đúng hạn, hạn 2 giờ"><span>Cao<small>12/14</small></span><span class="track"><span class="fill" style="width:86%"></span></span><span class="val">86%</span></li>
+              <li class="hbar wide target" title="Trung bình: 17/19 phản hồi đúng hạn, hạn 4 giờ"><span>Trung bình<small>17/19</small></span><span class="track"><span class="fill" style="width:89%"></span></span><span class="val">89%</span></li>
+              <li class="hbar wide target" title="Thấp: 8/9 phản hồi đúng hạn, hạn 8 giờ"><span>Thấp<small>8/9</small></span><span class="track"><span class="fill" style="width:89%"></span></span><span class="val">89%</span></li>
+            </ul>
+          </div>
+          <div class="sheet-foot"><span>Vạch đen: mục tiêu 90%. Không tính ticket đóng trước hạn.</span><a href="#" class="small">Xem dạng bảng</a></div>
+        </section>
+
+        <section class="sheet" aria-labelledby="c-band">
+          <div class="sheet-head"><h2 id="c-band">AI bị sửa nhãn theo độ tin cậy</h2><span class="callout" aria-hidden="true">6</span></div>
+          <div class="sheet-body">
+            <table class="table compact">
+              <thead><tr><th>Độ tin cậy AI tự báo</th><th class="num">Ticket</th><th class="num">Bị sửa</th><th class="num">Tỷ lệ bị sửa</th></tr></thead>
+              <tbody data-role="admin">
+                <tr><td><span class="band" style="margin-left:0">Cao</span> <span class="xs muted">từ 0,85</span></td><td class="num">41</td><td class="num">3</td><td class="num strong">7%</td></tr>
+                <tr><td><span class="band" style="margin-left:0">Vừa</span> <span class="xs muted">0,60 đến dưới 0,85</span></td><td class="num">19</td><td class="num">6</td><td class="num muted">Chưa đủ dữ liệu</td></tr>
+              </tbody>
+              <tbody data-role="staff">
+                <tr><td><span class="band" style="margin-left:0">Cao</span> <span class="xs muted">từ 0,85</span></td><td class="num">15</td><td class="num">1</td><td class="num muted">Chưa đủ dữ liệu</td></tr>
+                <tr><td><span class="band" style="margin-left:0">Vừa</span> <span class="xs muted">0,60 đến dưới 0,85</span></td><td class="num">6</td><td class="num">2</td><td class="num muted">Chưa đủ dữ liệu</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sheet-foot"><span>Cần ít nhất 20 ticket ở một mức mới tính tỷ lệ. Dưới 0,60 AI không gán nhãn, nên bảng chỉ cho biết có nên nâng ngưỡng hay không.</span></div>
         </section>
       </div>
 
