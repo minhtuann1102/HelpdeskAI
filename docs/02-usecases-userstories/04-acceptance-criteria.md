@@ -243,6 +243,24 @@ UC-18 · BR-12
 - **AC-26.4** *Given* an empty draft, *when* I look at the Rewrite button, *then* it is disabled.
 - **AC-26.5** *Given* the AI errors or does not answer within 20 s, *when* I click Rewrite, *then* I see an error and my draft is unchanged.
 
+### US-40 — Suggest a reply from the shop's policies
+UC-29 · BR-20, BR-21
+
+- **AC-40.1** *Given* a ticket I can act on that is not `Closed`, *when* I click "Gợi ý trả lời", *then* within 20 s I see a suggested reply next to my current draft, with the title and quoted passage of each article it cites.
+- **AC-40.2** *Given* a suggestion is shown, *when* I choose "Dùng bản này", *then* it replaces the text in the reply box; "Bỏ qua" keeps my draft; nothing is sent until I click Send (US-20).
+- **AC-40.3** *Given* the fixed test set of 10 sample tickets that each have a matching article, *when* each gets a suggestion, *then* no suggestion contains a fact, date, amount, or commitment that is not in an article it cites.
+- **AC-40.4** *Given* the AI errors or does not answer within 20 s, *when* I click "Gợi ý trả lời", *then* I see an error with Retry, and my draft is unchanged.
+- **AC-40.5** *Given* a suggestion was created, *when* the customer views the ticket, *then* no suggestion or citation is visible (DF-14), and the ticket version is unchanged (BR-19).
+- **AC-40.6** *Given* a suggestion is shown, *when* it is shown and when I choose "Dùng bản này", *then* the system records the time, the ticket, the cited articles, and whether it was accepted (G-09).
+
+### US-41 — No suggestion when no policy fits
+UC-29 · BR-21
+
+- **AC-41.1** *Given* no active, reviewed article is relevant to the ticket, *when* I click "Gợi ý trả lời", *then* I see "Không tìm thấy chính sách phù hợp" and no suggested text.
+- **AC-41.2** *Given* the AI output cites no article it was given, or cites a hidden or overdue article, *when* it is processed, *then* it is discarded and I see the same message as AC-41.1.
+- **AC-41.3** *Given* the fixed test set also has 5 tickets with no relevant article, *when* each is run, *then* none produces a suggestion.
+- **AC-41.4** *Given* there is no active, reviewed article at all, *when* I look at "Gợi ý trả lời", *then* it is disabled with the hint "Chưa có chính sách nào để AI dựa vào".
+
 ## Category management (M-06)
 
 ### US-27 — Add a category
@@ -316,5 +334,28 @@ UC-19 · BR-16
 
 - **AC-34.1** *Given* I am Staff, *when* I open the dashboard, *then* every metric is calculated only from tickets currently assigned to me.
 - **AC-34.2** *Given* I am Staff, *when* I use the dashboard, *then* I cannot see system-wide numbers or other Staff members' numbers.
+
+## Policy knowledge base (M-09)
+
+### US-37 — Add a policy article
+UC-28 · BR-20
+
+- **AC-37.1** *Given* a unique title (up to 150 characters, ignoring case) and a body (up to 5,000 characters), *when* I save, *then* the article is active, its last-reviewed date is today, and suggestions can use it.
+- **AC-37.2** *Given* a title that already exists (ignoring case), *when* I save, *then* I see an error and nothing is saved.
+- **AC-37.3** *Given* an empty title or body, *when* I save, *then* each empty field shows an error and nothing is saved.
+
+### US-38 — Edit a policy article and mark it reviewed
+UC-28 · BR-20
+
+- **AC-38.1** *Given* an existing article, *when* I change its title or body and save, *then* the next suggestion uses the new text and its last-reviewed date becomes today.
+- **AC-38.2** *Given* an article that is still correct, *when* I choose "Đánh dấu đã xem lại", *then* its last-reviewed date becomes today without other changes.
+- **AC-38.3** *Given* an article last reviewed more than 180 days ago, *when* the list is shown, *then* it carries a "Cần xem lại" chip, and suggestions do not use it until it is reviewed (DF-29).
+
+### US-39 — Hide or show a policy article
+UC-28 · BR-20
+
+- **AC-39.1** *Given* an active article, *when* I hide it, *then* suggestions never use it, its text is kept, and the list shows it as hidden.
+- **AC-39.2** *Given* a hidden article, *when* I show it again, *then* suggestions can use it again, unless it is overdue for review.
+- **AC-39.3** *Given* any article, *when* I look for a delete action, *then* none exists.
 
 **Related:** [Step index](README.md)

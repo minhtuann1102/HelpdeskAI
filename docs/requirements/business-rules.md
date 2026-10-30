@@ -19,7 +19,7 @@ Only rules confirmed by the project documentation are catalogued here. Values ma
 - **Related US:** US-04, US-09, US-10, US-17, US-18, US-19
 - **Related API:** TBD (Step 6)
 - **Rule:**
-  - A Customer sees only their own tickets and never sees priority, sentiment, confidence, AI reason, or the summary.
+  - A Customer sees only their own tickets and never sees priority, sentiment, confidence, AI reason, the summary, reply suggestions, or policy articles.
   - A Staff member sees and acts only on tickets **currently assigned to them**. After a transfer, the previous assignee loses access.
   - Admin sees and acts on all tickets, including Unassigned ones.
   - The server enforces these rules on every request.
@@ -247,10 +247,40 @@ stateDiagram-v2
 - **Related US:** US-20, US-21, US-22, US-23, US-24
 - **Related API:** TBD (Step 6), every ticket action by Staff or Admin
 - **Rule:**
-  - Each ticket has a **version**. It changes on any new message (customer or Staff), status change, label change, assignee change (including redistribution), and the classification result. Creating or regenerating a summary does not change it.
+  - Each ticket has a **version**. It changes on any new message (customer or Staff), status change, label change, assignee change (including redistribution), and the classification result. Creating or regenerating a summary, or creating a reply suggestion, does not change it.
   - A **status change, label correction, transfer, or reassignment** carries the version the user saw. If the ticket changed since then, nothing is saved and the user sees "Ticket vừa được cập nhật. Tải lại để xem thay đổi."
   - "Send and wait for customer" is checked as a whole: on a conflict, neither the reply nor the status change is saved, and the draft stays in the reply box.
   - Plain replies, the customer's Close, and automatic transitions (T2, T4, T6) are not version-checked. A reply is still rejected when the ticket is `Closed` or the sender no longer has access (BR-02).
   - **Lost access while writing:** if the ticket was transferred away, the reply is rejected, the draft stays in the box so it can be copied, and the page links back to the queue.
   - After every successful action, the page uses the new version returned by the server.
-  - Only tickets have versions. Categories and users have a single editor, the Administrator (DF-13). [Use cases and user stories](../02-usecases-userstories/README.md) · [Master traceability](../traceability/master-traceability.md)
+  - Only tickets have versions. Categories and users have a single editor, the Administrator (DF-13).
+
+## BR-20 — Policy articles
+
+- **Source:** D-25, DF-29, A-07
+- **Related US:** US-37, US-38, US-39, US-40
+- **Related API:** TBD (Step 6)
+- **Rule:**
+  - An article has a title (required, unique ignoring case, up to 150 characters), a body (required, up to 5,000 characters), an active or hidden state, and a last-reviewed date.
+  - Creating or editing an article, or choosing "Đánh dấu đã xem lại", sets the last-reviewed date to today.
+  - An article is **overdue** 180 days after its last review. Overdue and hidden articles are never given to AI; the list marks overdue ones "Cần xem lại".
+  - Articles are never deleted, only hidden.
+  - Only Admin manages articles. Staff see them only as citations inside a suggestion; customers never see them.
+  - Article text is passed to the LLM as data, never as instructions (R-03).
+
+## BR-21 — AI reply suggestion
+
+- **Source:** D-25, DF-09, DF-29
+- **Related US:** US-20, US-40, US-41
+- **Related API:** TBD (Step 6)
+- **Rule:**
+  1. Runs only when Staff or Admin click "Gợi ý trả lời" on a ticket they can act on that is not `Closed`. The button is disabled when no active, reviewed article exists.
+  2. Input: the ticket description and replies, and at most 3 of the most relevant active, reviewed articles, each with its ID. How the articles are found is a Step 7 decision.
+  3. Output: the reply text, the IDs of the articles it relies on, and the quoted passage from each.
+  4. The output is valid only if it cites at least one article it was given. Citing none, or citing an unknown, hidden, or overdue article, makes it invalid. Invalid output and "no relevant article" both show "Không tìm thấy chính sách phù hợp" and no text.
+  5. The reply may state facts, dates, amounts, or commitments **only if they appear in a cited article**.
+  6. The suggestion is shown next to the draft with its citations. "Dùng bản này" puts it in the reply box; **nothing is sent without an explicit Send click.** A later Rewrite follows BR-12 and keeps the facts already in the draft.
+  7. The timeout is 20 s. An error leaves the draft unchanged; there is no automatic retry.
+  8. Each suggestion is logged (time, user, ticket, cited articles, accepted or not) for G-09. It does not change the ticket version (BR-19), and customers never see it (DF-14).
+
+**Related:** [Use cases and user stories](../02-usecases-userstories/README.md) · [Master traceability](../traceability/master-traceability.md)

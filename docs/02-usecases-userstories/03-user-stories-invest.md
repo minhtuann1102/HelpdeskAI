@@ -13,7 +13,7 @@ Each requirement is small enough to implement and test independently. Cross-cutt
 | Independent | Each story produces a demonstrable outcome and names only unavoidable prerequisites (login, ticket creation, categories). |
 | Negotiable | Layout and implementation details may change while the stated outcome and permissions stay fixed. |
 | Valuable | Every story names the user benefit. System behaviours (US-13..US-16) are written for the role that benefits from them. |
-| Estimable | Inputs, limits, roles, and failure cases are explicit (DF-01..DF-18, DF-25..DF-28), and every story has a size. |
+| Estimable | Inputs, limits, roles, and failure cases are explicit (DF-01..DF-18, DF-25..DF-29), and every story has a size. |
 | Small | Each story targets one capability. Sizes: **S** = a simple screen or rule; **M** = a screen with several rules; **L** = AI integration or cross-cutting logic. |
 | Testable | Every story has Given/When/Then acceptance criteria in [Acceptance criteria](04-acceptance-criteria.md). |
 
@@ -57,6 +57,11 @@ Each requirement is small enough to implement and test independently. Cross-cutt
 | US-34 | As Staff, I want to see the same metrics for my own tickets, so that I can track my workload and response time. | Self-management | US-33 | Should | S |
 | US-35 | As a Customer, I want an email when Staff reply to my ticket or change its status, so that I know there is an update without checking the website. | Timely updates | US-20, US-21 | Should | S |
 | US-36 | As Administrator, I want to set a Staff member on leave and back, so that no new tickets go to someone who is away and their open tickets are handled by others. | Coverage during absence | US-13, US-30 | Should | M |
+| US-37 | As Administrator, I want to add a policy article with a title and body, so that AI can ground reply suggestions in the shop's real policies. | Grounded answers | US-02 | Should | S |
+| US-38 | As Administrator, I want to edit a policy article and mark it reviewed, so that suggestions never rely on an outdated policy. | Up-to-date answers | US-37 | Should | S |
+| US-39 | As Administrator, I want to hide or show a policy article, so that a policy no longer in force stops being used without losing its text. | Clean policy list | US-37 | Should | S |
+| US-40 | As Staff, I want AI to suggest a reply from the shop's policies with its sources shown, so that I answer policy questions quickly and correctly. | Faster, consistent answers | US-19, US-37 | Should | L |
+| US-41 | As Staff, I want no suggestion when no policy fits, so that I never send an answer the shop's policies do not support. | Safe AI | US-40 | Should | S |
 
 ## Per-story INVEST review
 
@@ -82,12 +87,16 @@ Each requirement is small enough to implement and test independently. Cross-cutt
 | US-34 | PASS | PASS | PASS | PASS | PASS | PASS | Small because it reuses US-33 with a filter. |
 | US-35 | PASS | PASS | PASS | PASS | PASS | PASS | Added after Step 4 (D-19). Testable with a mocked Email Service; the email content is fixed by DF-25. |
 | US-36 | PASS | PASS | PASS | PASS | PASS | PASS | Added after Step 4 (D-20). Reuses the redistribution of US-32; only the Administrator can set it. |
+| US-37..US-39 | PASS | PASS | PASS | PASS | PASS | PASS | Added after Step 4 (D-25). Same shape as categories (US-27..US-29). |
+| US-40 | PASS | PASS | PASS | PASS | PASS | PASS | Added after Step 4 (D-25). Largest new story (L); testable with a mocked LLM and a fixed test set (AC-40.3). |
+| US-41 | PASS | PASS | PASS | PASS | PASS | PASS | Split from US-40 so the no-match behaviour is tested on its own, like US-16. |
 
 ## Cross-cutting acceptance constraints
 
 - Only `CUSTOMER`, `STAFF`, and `ADMIN` exist.
 - The server, not the browser, enforces visibility (BR-02) and status transitions (BR-06).
-- AI never blocks ticket creation and never sends a reply (BR-08, BR-12).
+- AI never blocks ticket creation and never sends a reply (BR-08, BR-12, BR-21).
+- A reply suggestion states facts only from the policy articles it cites (BR-21).
 - AI output is validated before it is used (BR-08).
 - Customers never see internal AI data (DF-14).
 - Attachments are validated on the server and never sent to the LLM (BR-14).

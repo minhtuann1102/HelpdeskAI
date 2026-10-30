@@ -99,7 +99,7 @@
 
 ## UC-13 Reply to customer
 
-- **Actor:** Staff, Administrator · **Includes:** UC-26 · **Extended by:** UC-18
+- **Actor:** Staff, Administrator · **Includes:** UC-26 · **Extended by:** UC-18, UC-29
 - **Main flow:** write a reply → Send (or "Send and wait for customer") → reply joins the conversation; the first reply moves `New` to `In Progress` (D-10) → system runs UC-26
 - **Alternative:** ticket `Closed` → no reply possible
 - **Permission:** Staff: assigned to me; Administrator: all tickets
@@ -213,5 +213,21 @@
 - **Alternative:** target is not Staff, or not `Active` when setting leave → action not available; no other active Staff → the redistributed tickets become Unassigned (DF-04)
 - **Permission:** `ADMIN` only; Staff cannot change their own status
 - **Result:** no new tickets or transfers reach a Staff member who is away (BR-18) · **Stories:** US-36
+
+## UC-28 Manage policy articles
+
+- **Actor:** Administrator
+- **Main flow:** open Policies → add an article (title, body), edit it, mark it reviewed, or hide/show it
+- **Alternative:** duplicate title or empty field → error; an article overdue for review is shown as "Cần xem lại" and not used until reviewed
+- **Permission:** `ADMIN`
+- **Result:** active, reviewed articles ground reply suggestions (BR-20) · **Stories:** US-37, US-38, US-39
+
+## UC-29 Suggest reply from policies
+
+- **Actor:** Staff, Administrator; LLM Provider · **Extends:** UC-13
+- **Main flow:** click "Gợi ý trả lời" → system picks at most 3 of the most relevant active, reviewed articles → sends the ticket conversation and those articles to the LLM → validates the citations → shows the suggestion next to the draft with the cited passages → user uses, edits, or discards it → user sends manually (UC-13)
+- **Alternative:** no relevant article, or the output cites none of the articles given → "Không tìm thấy chính sách phù hợp", no text; AI error or timeout → error, the draft unchanged; no active, reviewed article at all → the button is disabled
+- **Permission:** Staff: assigned to me; Administrator: all tickets
+- **Result:** a draft grounded in cited policies; nothing is sent automatically (BR-21) · **Stories:** US-40, US-41
 
 **Related:** [Step index](README.md)
