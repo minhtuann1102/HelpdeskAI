@@ -18,7 +18,7 @@ Related sources of truth: [helpdesk_ai.dbml](helpdesk_ai.dbml), [ER diagram](02-
 | `tickets` | Tickets | The request, its status, its assignee (NULL = Unassigned), the [labels](#labels-on-a-ticket), `first_response_at`, and `version` for concurrent changes (BR-19). |
 | `ticket_messages` | Tickets | Replies after the description, by the customer, the assignee, or Admin (BR-07). |
 | `ticket_attachments` | Tickets | Metadata of files added at submission: name, storage key, type (jpg, png, pdf), size up to 10 MB (BR-14). The file itself is stored outside the database (Step 7). |
-| `response_clocks` | Tickets | One row per reply a customer waited for: when it started, the working minutes spent paused, and, once ended, the result with the deadline and priority of that moment (D-37, BR-22). At most one open clock per ticket (partial unique index). |
+| `response_clocks` | Tickets | One row per reply a customer waited for: when it started, the working minutes spent paused, and, once ended, the result with the deadline, priority, and assignee of that moment (D-37, BR-22). At most one open clock per ticket (partial unique index). |
 | `ticket_summaries` | AI | The latest summary of a ticket and the newest reply it covered (BR-11). Regenerating replaces the row. |
 | `ai_requests` | AI | One row per LLM call: feature, ticket, who asked, model, outcome, latency, tokens (D-32). |
 | `email_notifications` | Notifications | Outbox of customer emails: ticket, recipient, the reply and/or new status, send status, error (D-31, BR-17). |
@@ -70,6 +70,7 @@ These are computed when read, never stored (D-34).
 | Ticket counts on the dashboard | Group by `status`, `category_id`, and `sentiment`; NULL is the Unclassified group | BR-16 |
 | First response time | Working minutes from `created_at` to `first_response_at`, over tickets that have it: the average and the 90th percentile; tickets without it are counted apart | BR-16, G-03 |
 | Replies on time | `response_clocks` that ended in the range: `ON_TIME` ÷ (`ON_TIME` + `LATE`), overall and grouped by `priority` | BR-16, G-10 |
+| Dashboard by Staff member | Per person: open tickets and overdue now from `tickets.assignee_id`; replies on time from `response_clocks` grouped by `assignee_id`; first response time grouped by the author of each ticket's first Staff or Admin message in `ticket_messages`. A Staff member's own dashboard uses the same grouping | BR-16, D-38 |
 | Label correction rate | Denominator: tickets with `classification_status = CLASSIFIED`. Numerator: those where (`customer_category_id` is NULL and `category_id ≠ ai_category_id`) or `priority ≠ ai_priority`. A confirmation keeps the values, so it never counts. Also split by confidence band, with the rate hidden below 20 tickets | BR-10, BR-23 |
 | Fallback rate | Share of tickets that are effectively `UNCLASSIFIED` | G-05 |
 | AI latency | 95th percentile of `ai_requests.latency_ms` per feature | G-06 |
@@ -83,7 +84,7 @@ These are computed when read, never stored (D-34).
 | `app_users.last_assigned_at` | The MVP keeps no assignment history, so the time of the last assignment exists only here (DF-02). |
 | `policy_articles.title` | A copy of the current revision's title, so a unique index can enforce "unique ignoring case" (BR-20). It is written in the same transaction as the revision. |
 | `response_clocks.paused_minutes` | The pause intervals are not kept anywhere else (no status history), so the working minutes spent paused exist only here (BR-22 rule 2). |
-| `response_clocks.due_at`, `outcome`, `priority` of an ended clock | The working hours, targets, and the ticket's priority can change later, but a reply that was on time must stay on time (BR-22 rule 10). A running clock stores none of them. |
+| `response_clocks.due_at`, `outcome`, `priority`, `assignee_id` of an ended clock | The working hours, targets, the ticket's priority, and its assignee can change later, but a reply that was on time must stay on time, and for the same person (BR-22 rule 10, D-38). There is no assignment history, so who held the ticket when the clock ended exists only here. A running clock stores none of them. |
 
 ## Transaction boundaries
 
@@ -93,10 +94,10 @@ The LLM call never runs inside a database transaction, so no lock is held for up
 |---|---|---|
 | Submit ticket | `tickets` row, `ticket_attachments` rows, and the `FIRST` response clock. Files are stored first and removed if the insert fails. | Auto-assignment; classification |
 | Auto-assignment (new ticket, redistribution, reopen) | Take one assignment lock, read the loads, set `assignee_id`, `assigned_at`, `version`, and the Staff member's `last_assigned_at` | — |
-| Staff or Admin reply | `ticket_messages` row; ticket `version`, `updated_at`, and, on the first reply, `first_response_at` and `NEW → IN_PROGRESS`; the open response clock ends (`ON_TIME` or `LATE`, with `due_at`, `priority`, and the reply); one `email_notifications` row | Send the email |
+| Staff or Admin reply | `ticket_messages` row; ticket `version`, `updated_at`, and, on the first reply, `first_response_at` and `NEW → IN_PROGRESS`; the open response clock ends (`ON_TIME` or `LATE`, with `due_at`, `priority`, `assignee_id`, and the reply); one `email_notifications` row | Send the email |
 | "Send and wait for customer" | Reply, status change (version-checked), and **one** email row. On a conflict nothing is saved (BR-19) | Send the email |
 | Customer reply | `ticket_messages` row, the ticket `version` and `updated_at`, and the automatic T4 or T6. A `NEXT` response clock starts if none is open; a paused one resumes with T4 or T6. If the reply reopens the ticket (T6) and the assignee is locked or on leave, auto-assignment runs in the same transaction (BR-05) | — |
-| Status change | One version-checked update of the ticket, one email row, and the open clock paused (`Waiting for Customer`, `Resolved`), resumed (`In Progress`), or ended (`Closed`: `LATE` if past the deadline, otherwise `CANCELLED`) | Send the email |
+| Status change | One version-checked update of the ticket, one email row, and the open clock paused (`Waiting for Customer`, `Resolved`), resumed (`In Progress`), or ended (`Closed`: `LATE` if past the deadline, otherwise `CANCELLED`, with the same end fields as a reply) | Send the email |
 | Label correction or confirmation, transfer, reassignment | One version-checked update of the ticket. Nothing is written to `response_clocks`: a running deadline is computed when read (D-37) | — |
 | Lock a Staff member or set them on leave | `app_users.status`, the `staff_leaves` row (opened, or closed with `ACCOUNT_LOCKED`), and redistribution of every open ticket | — |
 | Unlock or end leave | `status = ACTIVE`, `assignment_joined_at = now()`, and the open leave closed with `ENDED_BY_ADMIN` | — |

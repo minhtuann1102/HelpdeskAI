@@ -15,7 +15,7 @@
 | M-05 | AI assistance | Classification and sentiment on creation; ticket summary on demand; reply rewrite on demand; reply suggestion grounded in policy articles, with citations, on demand (D-25) (see [Why AI instead of rule-based](07-ai-vs-rule-based.md) and the brief's AI design). |
 | M-06 | Category management | Admin adds, edits, and hides categories (name and description; the description is used as AI context). |
 | M-07 | User management | Admin lists users, creates Staff accounts, locks and unlocks accounts, and sets Staff on leave and back (D-20). |
-| M-08 | Dashboard | **Admin (system-wide):** tickets by status, category, and sentiment; response times in working hours and the share of replies on time (D-35); label correction rate, also by confidence band (D-36). **Staff (personal, D-05):** the same metrics limited to tickets assigned to them. |
+| M-08 | Dashboard | **Admin (system-wide):** tickets by status, category, and sentiment; response times in working hours and the share of replies on time (D-35); label correction rate, also by confidence band (D-36); a table by Staff member with open and overdue tickets, replies on time, and first response time (D-38). **Staff (personal, D-05):** the same metrics limited to tickets assigned to them. |
 | M-09 | Policy knowledge base (internal) | Admin adds, edits, and hides policy articles (title, body); each article has a last-reviewed date. Articles only ground reply suggestions; customers never see them (D-25). |
 
 **Ticket lifecycle:** `New → In Progress → Waiting for Customer → Resolved → Closed`. Allowed transitions and who may trigger them: [BR-06](../requirements/business-rules.md#br-06--ticket-status-transitions).

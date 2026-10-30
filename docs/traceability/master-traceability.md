@@ -1,6 +1,6 @@
 # Master Traceability Matrix — Helpdesk AI MVP
 
-> Design status: MVP — updated at every step (last update: during Step 5, D-35 reply deadlines (SLA), D-36 confidence bands, and D-37 response clocks added BR-22, BR-23, G-10, and `response_clocks`; before that, Step 5 filled the Database column with the tables of the [ERD](../05-database/02-er-diagram.md); earlier, after Step 4, D-19 email notifications, D-20 Staff on leave, D-21 warm-up after joining, D-22..D-24 classification status, concurrent changes, leave history, D-25 policy knowledge base and reply suggestions, D-26 policy revisions, D-27 one story per use case; wireframes for each screen are listed in [Screen notes and states](../04-uiux/02-screen-notes.md))
+> Design status: MVP — updated at every step (last update: during Step 5, D-35 reply deadlines (SLA), D-36 confidence bands, D-37 response clocks, and D-38 the dashboard by Staff member added BR-22, BR-23, G-10, and `response_clocks`; before that, Step 5 filled the Database column with the tables of the [ERD](../05-database/02-er-diagram.md); earlier, after Step 4, D-19 email notifications, D-20 Staff on leave, D-21 warm-up after joining, D-22..D-24 classification status, concurrent changes, leave history, D-25 policy knowledge base and reply suggestions, D-26 policy revisions, D-27 one story per use case; wireframes for each screen are listed in [Screen notes and states](../04-uiux/02-screen-notes.md))
 >
 > Implementation status: NOT STARTED
 
@@ -28,7 +28,7 @@ Columns marked TBD are filled in by the step that owns them: Screen (Step 3), Da
 | US-16 | UC-16 | AC-16.1–AC-16.6 | BR-09, BR-10, BR-19, BR-22, BR-23 | SCR-21 | TBD | `tickets` | TBD |
 | US-17 | UC-17 | AC-17.1–AC-17.5 | BR-11 | SCR-21 | TBD | `ticket_summaries`, `ai_requests` | TBD |
 | US-18 | UC-18 | AC-18.1–AC-18.5 | BR-12 | SCR-21 | TBD | `ai_requests` | TBD |
-| US-19 | UC-19 | AC-19.1–AC-19.10 | BR-10, BR-16, BR-22, BR-23 | SCR-22 | TBD | `tickets`, `response_clocks` | TBD |
+| US-19 | UC-19 | AC-19.1–AC-19.13 | BR-10, BR-16, BR-22, BR-23 | SCR-22 | TBD | `tickets`, `response_clocks`, `ticket_messages`, `app_users` | TBD |
 | US-20 | UC-20 | AC-20.1–AC-20.9 | BR-13 | SCR-30, SCR-32 | TBD | `categories` | TBD |
 | US-21 | UC-21 | AC-21.1–AC-21.2 | BR-01 | SCR-31 | TBD | `app_users` | TBD |
 | US-22 | UC-22 | AC-22.1–AC-22.3 | BR-01, BR-03, BR-15 | SCR-31, SCR-33 | TBD | `app_users` | TBD |
@@ -53,7 +53,7 @@ Links the measurable goals of [Goals and success metrics](../01-research/02-goal
 | G-05 Low fallback rate | US-24 | AC-19.2 (Unclassified group) |
 | G-06 Fast catch-up and drafting | US-17, US-18, US-29 | AC-17.1, AC-18.5, AC-29.1 |
 | G-07 Humans stay in control | US-13, US-18, US-29 | AC-13.5, AC-18.3, AC-29.2 |
-| G-08 Management has data | US-19 | AC-19.1–AC-19.5, AC-19.8–AC-19.10 |
+| G-08 Management has data | US-19 | AC-19.1–AC-19.5, AC-19.8–AC-19.11 |
 | G-09 Grounded reply suggestions | US-28, US-29 | AC-29.3, AC-29.6, AC-29.10 |
 | G-10 Replies on time | US-10, US-13, US-14 | AC-19.8 (BR-22) |
 

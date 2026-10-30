@@ -97,6 +97,7 @@ Spacing steps: 4, 8, 12, 16, 20, 28, 40 px. Radius follows hierarchy: surfaces 1
 - Bars have rounded data ends, recessive tracks, and native tooltips (`title`); each chart offers "Xem dạng bảng" (table view).
 - Replies on time by priority are pine bars with a short graphite tick at the 90% target (G-10); the label shows the count ("34/40").
 - The correction rate by confidence band is a small table, not a chart: two rows, and a band with fewer than 20 tickets says "Chưa đủ dữ liệu" (DF-34).
+- The table by Staff member (Admin) is ordered by given name and never ranked: no bars, no colour for good or bad, and each rate shows its counts. Only an overdue count is brick, as a link to the queue (D-38).
 - The palette checker of the `dataviz` skill passes contrast for pine, brick, and violet; its lightness/chroma failures for pine apply to multi-series categorical palettes only, which these charts do not use.
 
 ## Accessibility and responsiveness

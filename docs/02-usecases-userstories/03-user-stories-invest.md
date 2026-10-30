@@ -39,7 +39,7 @@ Each requirement is small enough to implement and test independently. Cross-cutt
 | US-16 | As Staff, I want to correct the category, priority, or sentiment, or confirm them when they are right, so that wrong AI labels do not mislead the queue, the reply deadlines, or the reports. | Accurate data | US-12, US-24 | Must | S |
 | US-17 | As Staff, I want a short AI summary of a long ticket, so that I can catch up in seconds, especially after a transfer. | Faster catch-up | US-12 | Must | M |
 | US-18 | As Staff, I want AI to polish my draft reply, so that customers get polite and clear answers without me spending time on wording. | Consistent reply quality | US-13 | Must | M |
-| US-19 | As Administrator, I want a dashboard of ticket volume, response time, replies on time, and AI quality, and as Staff, I want the same metrics for my own tickets, so that support is managed with data and I can track my own workload. | Data-driven management | US-13, US-16, US-24 | Should | L |
+| US-19 | As Administrator, I want a dashboard of ticket volume, response time, replies on time, and AI quality, overall and for each Staff member, and as Staff, I want the same metrics for my own tickets, so that support is managed with data and I can track my own workload. | Data-driven management | US-13, US-16, US-24 | Should | L |
 | US-20 | As Administrator, I want to add, edit, and hide categories with a description, so that customers can choose them and AI classifies tickets into the categories in use, without losing old tickets. | Configurable triage | US-01 | Must | M |
 | US-21 | As Administrator, I want to see all user accounts, so that I can manage access. | Access overview | US-01 | Should | S |
 | US-22 | As Administrator, I want to create Staff accounts, so that new support employees can start handling tickets. | Onboarding | US-01 | Must | S |
@@ -67,7 +67,7 @@ Each requirement is small enough to implement and test independently. Cross-cutt
 | US-15 | PASS | PASS | PASS | PASS | PASS | PASS | Staff transfer and Administrator reassignment have separate criteria because permissions differ. |
 | US-16 | PASS | PASS | PASS | PASS | PASS | PASS | Correction counting is defined by BR-10; a confirmation is not a correction (BR-23). |
 | US-17, US-18 | PASS | PASS | PASS | PASS | PASS | PASS | Rewrite quality is checked with a fixed test set (AC-18.2). |
-| US-19 | PASS | PASS | PASS | PASS | PASS | PASS | Metric definitions in BR-10, BR-16, BR-22, and BR-23. The personal view reuses the same metrics with a filter. |
+| US-19 | PASS | PASS | PASS | PASS | PASS | PASS | Metric definitions in BR-10, BR-16, BR-22, and BR-23. The personal view reuses the same metrics with a filter, and its figures equal the person's row in the Administrator's table by Staff member (D-38). |
 | US-20 | PASS | PASS | PASS | PASS | PASS | PASS | Administration only. Hide or show is a *Should* part (AC-20.7–AC-20.9). |
 | US-21..US-23 | PASS | PASS | PASS | PASS | PASS | PASS | Administration only. |
 | US-24 | PASS | PASS | PASS | PASS | PASS | PASS | Largest story (L); testable with a mocked LLM. The angry rule and the fallback keep their own criteria (AC-24.7–AC-24.16), so each is still tested on its own. |

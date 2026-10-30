@@ -103,7 +103,7 @@ For detailed actors and the use case diagram, see [Actors and Use Cases](docs/02
 | AI summary, AI reply rewrite, and AI reply suggestion | No | Assigned to me | All tickets |
 | Transfer / reassign tickets | No | Transfer own | Reassign any |
 | See priority, sentiment, confidence and its band, AI reason, reply deadlines | No | Yes | Yes |
-| Dashboard | No | Personal | System-wide |
+| Dashboard | No | Personal | System-wide and by Staff member |
 | Manage categories | No | No | Yes |
 | Manage users (create Staff, lock/unlock) | No | No | Yes |
 | Manage policy articles | No | No | Yes |
@@ -145,7 +145,7 @@ flowchart TB
         direction TB
         queue["<b>SCR-20 Ticket Queue</b><br/>• Tickets by reply deadline<br/>• Sắp trễ, Trễ hạn marks<br/>• AI labels, Unclassified badge<br/>• Search and filters"]
         handling["<b>SCR-21 Ticket Handling</b><br/>• Conversation, reply deadline<br/>• AI label panel + edit / confirm<br/>• AI summary<br/>• Reply box + AI rewrite<br/>• AI reply suggestion with citations<br/>• Status, transfer"]
-        dashboard["<b>SCR-22 Dashboard</b><br/>• Tickets by status, category, sentiment<br/>• Response time, replies on time<br/>• AI correction rate by confidence"]
+        dashboard["<b>SCR-22 Dashboard</b><br/>• Tickets by status, category, sentiment<br/>• Response time, replies on time<br/>• AI correction rate by confidence<br/>• Admin: by Staff member"]
         queue --- handling
     end
 

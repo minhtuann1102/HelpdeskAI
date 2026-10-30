@@ -169,6 +169,7 @@ erDiagram
     bigint ended_by_message_id FK
     timestamptz due_at "kept once ended"
     ticket_priority priority "kept once ended"
+    bigint assignee_id FK "kept once ended"
   }
 
   ticket_summaries {
@@ -218,6 +219,7 @@ erDiagram
   tickets ||--o{ response_clocks : ticket_id
   ticket_messages |o--o{ response_clocks : started_by_message_id
   ticket_messages |o--o{ response_clocks : ended_by_message_id
+  app_users |o--o{ response_clocks : assignee_id
 
   tickets ||--o| ticket_summaries : ticket_id
   ticket_messages |o--o{ ticket_summaries : last_message_id

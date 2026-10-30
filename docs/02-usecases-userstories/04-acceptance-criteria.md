@@ -226,7 +226,7 @@ UC-19 · BR-10, BR-16, BR-22, BR-23
 
 **Personal dashboard** (Staff)
 
-- **AC-19.6** *Given* I am Staff, *when* I open the dashboard, *then* every metric is calculated only from tickets currently assigned to me.
+- **AC-19.6** *Given* I am Staff, *when* I open the dashboard, *then* every metric is calculated only from my own tickets: counts from the tickets currently assigned to me, and replies on time and first response time as in AC-19.13.
 - **AC-19.7** *Given* I am Staff, *when* I use the dashboard, *then* I cannot see system-wide numbers or other Staff members' numbers.
 
 **Replies on time and AI confidence** · BR-16, BR-22, BR-23
@@ -234,6 +234,12 @@ UC-19 · BR-10, BR-16, BR-22, BR-23
 - **AC-19.8** *Given* response clocks that ended in the range, *when* it loads, *then* I see the share of replies on time, on time ÷ (on time + late), overall and for each priority, with the counts; clocks cancelled because the ticket was closed before the deadline are left out (G-10).
 - **AC-19.9** *Given* replies that are overdue right now, *when* it loads, *then* I see how many there are, and choosing the number opens the queue filtered to them (AC-10.9).
 - **AC-19.10** *Given* `Classified` tickets in the range, *when* it loads, *then* I see for each confidence band the number of tickets, how many were corrected (BR-10), and the rate; a band with fewer than 20 tickets shows "Chưa đủ dữ liệu" instead of a rate (DF-34).
+
+**By Staff member** (Administrator) · BR-16, D-38
+
+- **AC-19.11** *Given* I am Administrator, *when* the dashboard loads, *then* I see one row per person who held tickets in the range or holds open tickets now, ordered by name and not ranked: open tickets and overdue replies right now, the share of replies on time in the range with its counts, and the average first response time in working hours with its number of tickets.
+- **AC-19.12** *Given* Staff A held a ticket for 3 working hours and then transferred it to Staff B, who replied after the deadline, *when* the dashboard is calculated, *then* the late reply counts for B, who held the ticket when the clock ended, and B's first response time includes A's 3 hours.
+- **AC-19.13** *Given* I am Staff, *when* I open my dashboard, *then* my replies on time and first response time are worked out like my row in the Administrator's table, so both show the same numbers.
 
 ## US-20 — Manage categories
 UC-20 · BR-13

@@ -210,7 +210,7 @@ Each transition can also pause, resume, or end the response clock (BR-22).
 
 ## BR-16 — Dashboard metrics
 
-- **Source:** brief (dashboard), D-08, D-35, D-36, DF-17
+- **Source:** brief (dashboard), D-08, D-35, D-36, D-38, DF-17
 - **Related US:** US-19
 - **Related API:** TBD (Step 6)
 - **Rule:**
@@ -220,7 +220,8 @@ Each transition can also pause, resume, or end the response clock (BR-22).
   - **Replies on time (G-10):** over the response clocks that ended in the range: on time ÷ (on time + late), overall and for each priority, with the counts. Cancelled clocks are left out (BR-22).
   - **Overdue now:** the number of running clocks past their deadline, linked to the queue filtered to them.
   - **Label correction rate:** see BR-10, also by confidence band (BR-23).
-  - **Scope:** Admin sees all tickets. Staff see only the tickets currently assigned to them.
+  - **By Staff member** (Admin only, D-38): one row per person who held tickets in the range or holds open tickets now, ordered by name and never ranked: open tickets and overdue replies right now; replies on time in the range, counted for whoever held the ticket when the clock ended; and the average first response time, counted for whoever sent the first reply. Every rate shows its counts.
+  - **Scope:** Admin sees all tickets. Staff see only their own numbers: counts from the tickets currently assigned to them, and replies on time and first response time counted for them as in the table by Staff member, so both show the same figures.
 
 ## BR-17 — Customer email notifications
 
@@ -304,7 +305,7 @@ Each transition can also pause, resume, or end the response clock (BR-22).
   1. **Response clock.** A ticket has at most one open clock. It starts when the ticket is created (first response) or when the customer writes while no clock is open (next response). Further customer messages do not restart it.
   2. **Counting.** The clock counts working time (DF-32), and only while the ticket is `New` or `In Progress`. Setting `Waiting for Customer` or `Resolved` while it is open pauses it and keeps the time already used; when the ticket returns to `In Progress` (customer reply or manual), it resumes. It never restarts from zero.
   3. **Deadline.** The reply is due when the counted time reaches the target of the ticket's current final priority (DF-31). A ticket without a priority (`Pending` or Unclassified) uses the `high` target. When the priority changes, the deadline is recalculated from when the clock started, never from now.
-  4. **End.** A reply by the assignee or Admin ends the clock: **on time** before the deadline, **late** after it. Closing the ticket also ends it: late if the deadline had passed, otherwise **cancelled**, which is left out of the on-time share (G-10).
+  4. **End.** A reply by the assignee or Admin ends the clock: **on time** before the deadline, **late** after it. Closing the ticket also ends it: late if the deadline had passed, otherwise **cancelled**, which is left out of the on-time share (G-10). The result counts for whoever held the ticket when the clock ended (BR-16).
   5. **Marks** (DF-33). A running clock shows the time left; "Sắp trễ" when at most a quarter of the target is left; "Trễ hạn" after the deadline. A paused clock shows "Tạm dừng".
   6. **Queue order** (DF-15). Unclassified and `Pending` tickets first, oldest first. Then tickets with a running clock, soonest deadline first, so overdue ones lead; ties go to the higher priority, then the older ticket. Then the other open tickets: `In Progress` before `Waiting for Customer`, least recently updated first.
   7. **No running clock.** When the last message is from Staff, no clock runs. Each queue row shows when the ticket last changed, and the queue can be sorted by it ("Lâu chưa cập nhật"), so such a ticket still surfaces.

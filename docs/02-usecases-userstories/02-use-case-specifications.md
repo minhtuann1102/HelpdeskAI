@@ -148,9 +148,9 @@
 ## UC-19 View dashboard
 
 - **Actor:** Staff (personal), Administrator (system-wide)
-- **Main flow:** open the dashboard → choose a date range → see the metrics (BR-16)
+- **Main flow:** open the dashboard → choose a date range → see the metrics (BR-16); the Administrator also sees a table by Staff member (D-38)
 - **Permission:** Staff: own tickets; Administrator: all tickets
-- **Result:** volume, response time, replies on time, and AI quality figures (BR-16) · **Stories:** US-19
+- **Result:** volume, response time, replies on time, and AI quality figures, overall and, for the Administrator, by Staff member (BR-16) · **Stories:** US-19
 
 ## UC-20 Manage categories
 

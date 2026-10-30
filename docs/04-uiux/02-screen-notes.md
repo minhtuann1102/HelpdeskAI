@@ -159,6 +159,7 @@ Rows also show the AI states *Classification pending* (#1046), *Priority raised 
 | 4 | Replies on time: on time ÷ (on time + late), the 90% target, and a link to the replies overdue now (AC-19.8, AC-19.9). |
 | 5 | Replies on time by priority, each with its count and a target tick at 90% (AC-19.8). |
 | 6 | Correction rate by confidence band; a band with fewer than 20 tickets says "Chưa đủ dữ liệu", and the note says the table can only show whether to raise the threshold (AC-19.10, BR-23). |
+| 7 | Admin only: table by Staff member, ordered by given name and not ranked; open and overdue now (the overdue count links to the queue), replies on time with counts, first response time with its number of tickets. The rows add up to the totals above (AC-19.11, D-38). |
 
 | State | Source | Behavior |
 |---|---|---|

@@ -304,10 +304,12 @@ Table response_clocks {
   ended_by_message_id bigint [note: 'The Staff or Admin reply that ended it; NULL when closing the ticket ended it']
   due_at timestamptz [note: 'Only once ended: the deadline in force then. A running deadline is computed when read (BR-22 rule 10)']
   priority ticket_priority [note: 'Only once ended: the final priority then, for the on-time share by priority; NULL = none yet, the high target applied']
+  assignee_id bigint [note: 'Only once ended: who held the ticket then; the result counts for them (BR-16, D-38). NULL if the ticket was Unassigned']
 
   indexes {
     ticket_id [name: 'ix_response_clocks_ticket']
     ended_at [name: 'ix_response_clocks_ended']
+    (assignee_id, ended_at) [name: 'ix_response_clocks_assignee']
   }
 
   checks {
@@ -490,6 +492,7 @@ Ref: ticket_attachments.ticket_id > tickets.id
 Ref: response_clocks.ticket_id > tickets.id
 Ref: response_clocks.started_by_message_id > ticket_messages.id
 Ref: response_clocks.ended_by_message_id > ticket_messages.id
+Ref: response_clocks.assignee_id > app_users.id
 
 Ref: tickets.id - ticket_summaries.ticket_id
 Ref: ticket_summaries.last_message_id > ticket_messages.id
