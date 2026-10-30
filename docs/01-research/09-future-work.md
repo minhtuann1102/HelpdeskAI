@@ -12,7 +12,7 @@ AI takes over more of the work one level at a time. Each level keeps the guardra
 
 | Level | What AI does | Who sends the reply | Measured before moving on |
 |---|---|---|---|
-| **MVP** (current) | Classifies new tickets, summarizes, rewrites a Staff draft | Staff, always (G-07) | Label correction rate (G-04) and fallback rate (G-05) during the pilot |
+| **MVP** (current, including Level 1) | Classifies new tickets, summarizes, rewrites a Staff draft, and suggests replies from the shop's policies with citations | Staff, always (G-07) | Label correction rate (G-04), fallback rate (G-05), and suggestion use rate and citation accuracy (G-09) during the pilot |
 | **Level 1** (in the MVP since D-25) | Suggests a reply grounded in the shop's written policies, with citations | Staff, after review | Suggestion use rate and citation accuracy (G-09) |
 | **Level 2** | Answers a fixed list of simple, low-risk questions on its own | AI for those topics; Staff for everything else | Error rate of automatic answers on a sampled review |
 | **Level 3** | Chatbot on the website that answers first and hands over to Staff | AI first, then Staff | Hand-over rate and customer satisfaction |
