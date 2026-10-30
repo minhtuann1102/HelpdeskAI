@@ -40,7 +40,7 @@
 | Suggestion unavailable | SCR-21 | No active, reviewed policy article exists: "Gợi ý trả lời" is disabled with the hint "Chưa có chính sách nào để AI dựa vào" (AC-22.11). |
 | Suggestion loading | SCR-21 | Spinner on "Gợi ý trả lời"; Rewrite, Suggest, and Send are disabled until the result or an error arrives. |
 | Suggestion result | SCR-21 | The suggestion next to the draft, with a source chip per cited article that shows its title and quoted passage; **Use** and **Discard**; nothing is sent. |
-| No relevant policy | SCR-21 | Neutral notice "Không tìm thấy chính sách phù hợp"; the draft is unchanged; Staff write the reply themselves (US-22). |
+| No relevant policy | SCR-21 | Neutral notice "Không tìm thấy chính sách phù hợp"; the draft is unchanged; Staff write the reply themselves (AC-22.8). |
 | Suggestion error or timeout | SCR-21 | Inline error with Retry; the draft is unchanged. |
 | Policy changed during suggestion | SCR-21 | Shown like the suggestion error: "Chính sách vừa được cập nhật. Bấm Gợi ý trả lời lại để dùng nội dung mới." with Retry; the draft is unchanged (AC-22.7). |
 
