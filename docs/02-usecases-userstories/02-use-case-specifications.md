@@ -99,19 +99,19 @@
 
 ## UC-13 Reply to customer
 
-- **Actor:** Staff, Administrator · **Extended by:** UC-18
-- **Main flow:** write a reply → Send (or "Send and wait for customer") → reply joins the conversation; the first reply moves `New` to `In Progress` (D-10)
+- **Actor:** Staff, Administrator · **Includes:** UC-26 · **Extended by:** UC-18
+- **Main flow:** write a reply → Send (or "Send and wait for customer") → reply joins the conversation; the first reply moves `New` to `In Progress` (D-10) → system runs UC-26
 - **Alternative:** ticket `Closed` → no reply possible
 - **Permission:** Staff: assigned to me; Administrator: all tickets
-- **Result:** the customer sees the reply · **Stories:** US-20
+- **Result:** the customer sees the reply and gets one email (BR-17) · **Stories:** US-20, US-35
 
 ## UC-14 Change ticket status
 
-- **Actor:** Staff, Administrator
-- **Main flow:** choose an allowed next status (BR-06) → save
+- **Actor:** Staff, Administrator · **Includes:** UC-26
+- **Main flow:** choose an allowed next status (BR-06) → save → system runs UC-26
 - **Alternative:** disallowed transition → rejected
 - **Permission:** Staff: assigned to me; Administrator: all tickets
-- **Result:** new status visible to the customer · **Stories:** US-21
+- **Result:** new status visible to the customer, who gets one email (BR-17) · **Stories:** US-21, US-35
 
 ## UC-15 Transfer or reassign ticket
 
@@ -197,5 +197,13 @@
 - **Alternative:** no active Staff → Unassigned (DF-04)
 - **Permission:** internal
 - **Result:** the ticket has an owner · **Stories:** US-13, US-32
+
+## UC-26 Notify customer by email
+
+- **Actor:** System; Email Service · **Included by:** UC-13, UC-14
+- **Main flow:** after the reply or status change is saved, build one email (DF-25) → send it to the ticket customer's account email through the Email Service
+- **Alternative:** the action came from the customer, or the customer account is locked → no email; the Email Service fails → the failure is logged, and the reply or status change stays saved
+- **Permission:** internal
+- **Result:** the customer knows the ticket has an update without opening the website · **Stories:** US-35
 
 **Related:** [Step index](README.md)

@@ -20,5 +20,6 @@ Likelihood (L) and impact (I) are rated High (H), Medium (M), or Low (L).
 | R-10 | Mandatory registration discourages customers from submitting. | M | M | Keep the sign-up form minimal and log the customer in right after registering. Accepted as a business requirement. |
 | R-11 | Malicious or oversized attachments. | M | M | Allow-list file types, cap the size, store files outside the web root, serve them only to authorized users, and never send them to the LLM. |
 | R-12 | The one-week schedule slips across nine steps. | M | H | Strict MVP, MoSCoW priorities in Step 2, one step at a time with approval. |
+| R-13 | Notification emails fail or land in spam, and customer email addresses go to a third-party email service. | M | M | Use a transactional email service with a verified sender domain. A failed send is logged and never blocks the reply or status change (BR-17). The website stays the source of truth. The email carries only the ticket number, title, change, and link, never the conversation (DF-25). |
 
 **Related:** [Step index](README.md)

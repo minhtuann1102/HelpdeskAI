@@ -54,6 +54,7 @@
 | US-31 | `SCR-31` Create Staff → `SCR-33` |
 | US-32 | `SCR-31` Lock / Unlock → `SCR-34` |
 | US-33, US-34 | `SCR-22` dashboard (scope by role) |
+| US-35 | No screen (email to the customer); the email link opens `SCR-12` |
 
 ## Screen-to-API mapping
 

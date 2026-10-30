@@ -29,4 +29,14 @@ These decisions refine the original brief. Later steps must follow them.
 | O-06 | Staff visibility: own tickets only, or all tickets? | D-09: own tickets only |
 | O-07 | Is Admin ever auto-assigned? | DF-03: no (default) |
 
+## Changes after Step 4
+
+| ID | Decision | Effect on the brief | Source |
+|---|---|---|---|
+| D-19 | **Customers get an email notification** when Staff or Admin reply to their ticket or change its status (US-35, BR-17). The email only tells the customer that something changed and links to the ticket; the conversation stays on the website. | The brief's "no email integration" is read as **no email intake**: tickets and replies still come only from the web form (W-05). Outbound notification emails are added. Changes A-03 and A-04. | User, 2026-10-30 |
+
+| ID | Open item | Status |
+|---|---|---|
+| O-08 | Confirm with the mentor that "no email integration" in the brief excludes only email intake, not notification emails (D-19). | Pending |
+
 **Related:** [Step index](README.md)

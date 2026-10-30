@@ -10,7 +10,7 @@
 |---|---|---|
 | M-01 | Authentication and authorization | Customer self-registration; login and logout; role-based access (`CUSTOMER`, `STAFF`, `ADMIN`); access denied when the role lacks permission. |
 | M-02 | Personal profile | Update personal information; change password. |
-| M-03 | Submit and track tickets (Customer) | Submit a ticket: title, description, attachments, optional category. List and view own tickets; add follow-up replies; close own ticket. |
+| M-03 | Submit and track tickets (Customer) | Submit a ticket: title, description, attachments, optional category. List and view own tickets; add follow-up replies; close own ticket. Receive an email when Staff reply or change the status (D-19). |
 | M-04 | Ticket handling (Staff, and Admin per D-03) | **Personal queue of auto-assigned tickets** (D-04); transfer a ticket to another Staff member; change status; reply to the customer; search and filter; correct AI labels; AI summary; AI reply rewrite. Admin sees all tickets and can reassign any of them. |
 | M-05 | AI assistance | Classification and sentiment on creation; ticket summary on demand; reply rewrite on demand (see [Why AI instead of rule-based](07-ai-vs-rule-based.md) and the brief's AI design). |
 | M-06 | Category management | Admin adds, edits, and hides categories (name and description; the description is used as AI context). |
@@ -25,7 +25,7 @@
 - Knowledge base.
 - AI reply suggestions using RAG.
 - Duplicate ticket detection.
-- Email and Zalo integration (tickets come only from the web form).
+- Email and Zalo intake: tickets and replies come only from the web form. Outbound notification emails are in scope (D-19).
 - Automatic SLA (timers, escalation, breach alerts).
 - AI sending replies automatically.
 - Chatbots or autonomous AI that act on tickets.
@@ -36,8 +36,8 @@
 |---|---|
 | A-01 | Single business (single-tenant). No multi-company support. |
 | A-02 | Tickets are written mainly in Vietnamese (with or without diacritics), sometimes in English. |
-| A-03 | No email or push notifications. Customers see updates when they open their tickets. This follows from "no email integration". |
-| A-04 | No "forgot password" by email in the MVP, for the same reason. |
+| A-03 | Customers get an email when Staff or Admin reply to their ticket or change its status (D-19, BR-17). There are no push or in-app notifications; Staff see new work in their queue. |
+| A-04 | No "forgot password" by email in the MVP. The email service only sends ticket notifications (D-19). |
 | A-05 | Attachments are stored and shown to Staff but **not sent to the LLM**. |
 | A-06 | Web application only. No native mobile app; the layout must work on phone width. |
 

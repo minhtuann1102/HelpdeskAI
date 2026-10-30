@@ -8,13 +8,13 @@ Step 1 analyses **Helpdesk AI** top-down: context, problem, measurable goals, st
 
 | File | Content |
 |---|---|
-| [00-decisions.md](00-decisions.md) | Decisions D-01..D-06; open items O-01..O-07 and how they were resolved |
+| [00-decisions.md](00-decisions.md) | Decisions D-01..D-06; open items O-01..O-07 and how they were resolved; change D-19 (email notifications) and open item O-08 |
 | [01-context-and-problem.md](01-context-and-problem.md) | Context, problem statement P-01..P-05, product vision |
 | [02-goals-and-metrics.md](02-goals-and-metrics.md) | Measurable goals G-01..G-08 |
 | [03-stakeholders.md](03-stakeholders.md) | Stakeholders and their interests |
 | [04-similar-products.md](04-similar-products.md) | Zendesk, Freshdesk, Zoho Desk; how Helpdesk AI differs |
 | [05-scope.md](05-scope.md) | MVP modules M-01..M-08, out of scope, assumptions A-01..A-06 |
-| [06-risks.md](06-risks.md) | Risks R-01..R-12 and mitigations |
+| [06-risks.md](06-risks.md) | Risks R-01..R-13 and mitigations |
 | [07-ai-vs-rule-based.md](07-ai-vs-rule-based.md) | Where rules break down, where rules stay (hybrid design) |
 | [08-glossary.md](08-glossary.md) | Terms used across the documentation |
 

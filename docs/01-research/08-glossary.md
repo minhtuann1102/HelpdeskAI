@@ -20,5 +20,6 @@
 | Label correction rate | Share of AI-labelled tickets whose final label differs from the AI label. |
 | First response time | Time from ticket creation to the first reply by Staff or Admin. |
 | Stale summary | An AI summary created before the latest message on the ticket. |
+| Email notification | An email sent to the Customer when Staff or Admin reply to their ticket or change its status. It links to the ticket; the conversation stays on the website (D-19, BR-17). |
 
 **Related:** [Step index](README.md)

@@ -1,6 +1,6 @@
 # Helpdesk AI
 
-Helpdesk AI helps small businesses turn scattered customer requests into tracked tickets. Every new ticket is assigned to a Staff member automatically, and AI helps at three points: it classifies new tickets (category, priority, sentiment), summarizes long tickets for Staff, and polishes Staff replies before they are sent. AI never blocks ticket creation and never sends anything to a customer by itself.
+Helpdesk AI helps small businesses turn scattered customer requests into tracked tickets. Every new ticket is assigned to a Staff member automatically, and AI helps at three points: it classifies new tickets (category, priority, sentiment), summarizes long tickets for Staff, and polishes Staff replies before they are sent. AI never blocks ticket creation and never sends anything to a customer by itself. Customers get an email when Staff reply to their ticket or change its status; the conversation itself stays on the website.
 
 Helpdesk AI is a **customer service** help desk (tickets come from external customers), not an internal IT service desk. Examples, wireframes, and sample data use one sample domain: **a small online shop**.
 
@@ -14,7 +14,7 @@ Requirements define what Helpdesk AI must do, who uses it, the value delivered, 
 
 ### 1.2 INVEST requirements
 
-The MVP backlog includes 34 user stories. They cover registration and login, customer tickets, automatic assignment, AI classification, ticket handling with AI summary and rewrite, categories, users, and dashboards. Before a user story is ready for development, it is checked using the INVEST criteria.
+The MVP backlog includes 35 user stories. They cover registration and login, customer tickets, automatic assignment, AI classification, ticket handling with AI summary and rewrite, categories, users, dashboards, and email notifications to customers. Before a user story is ready for development, it is checked using the INVEST criteria.
 
 | Criterion | Meaning in Helpdesk AI |
 |---|---|
@@ -34,9 +34,10 @@ US-17–US-26   Ticket handling with AI summary and rewrite (Staff, Administrato
 US-27–US-29   Category management
 US-30–US-32   User management
 US-33–US-34   Dashboard
+US-35         Email notification of ticket updates (Customer)
 ```
 
-Stories are prioritized with MoSCoW: 22 Must, 12 Should, 0 Could, and 8 Won't (out of scope). The complete backlog and per-story INVEST review are maintained in [User Stories (INVEST)](docs/02-usecases-userstories/03-user-stories-invest.md), the Given/When/Then criteria in [Acceptance Criteria](docs/02-usecases-userstories/04-acceptance-criteria.md), and the priorities in [MoSCoW Prioritization](docs/02-usecases-userstories/05-moscow-prioritization.md).
+Stories are prioritized with MoSCoW: 22 Must, 13 Should, 0 Could, and 8 Won't (out of scope). The complete backlog and per-story INVEST review are maintained in [User Stories (INVEST)](docs/02-usecases-userstories/03-user-stories-invest.md), the Given/When/Then criteria in [Acceptance Criteria](docs/02-usecases-userstories/04-acceptance-criteria.md), and the priorities in [MoSCoW Prioritization](docs/02-usecases-userstories/05-moscow-prioritization.md).
 
 ### 1.3 Use cases
 
@@ -54,16 +55,19 @@ flowchart TB
         customerCases["<b>Customer</b><br/><br/>UC-01 Log in · UC-02 Log out<br/>UC-03 Update Profile · UC-04 Change Password<br/>UC-05 Register<br/>UC-06 Submit Ticket<br/>UC-07 View Own Tickets<br/>UC-08 Reply to Own Ticket<br/>UC-09 Close Own Ticket"]
         staffCases["<b>Staff</b> (tickets assigned to me)<br/><br/>UC-01 Log in · UC-02 Log out<br/>UC-03 Update Profile · UC-04 Change Password<br/>UC-10 View Ticket Queue · UC-11 Search and Filter<br/>UC-12 View Ticket Details · UC-13 Reply to Customer<br/>UC-14 Change Status · UC-15 Transfer Ticket<br/>UC-16 Correct AI Labels<br/>UC-17 Summarize Ticket · UC-18 Rewrite Reply<br/>UC-19 View Personal Dashboard"]
         adminCases["<b>Administrator</b> (all tickets)<br/><br/>UC-01 Log in · UC-02 Log out<br/>UC-03 Update Profile · UC-04 Change Password<br/>UC-10 View Ticket Queue · UC-11 Search and Filter<br/>UC-12 View Ticket Details · UC-13 Reply to Customer<br/>UC-14 Change Status · UC-15 Reassign Any Ticket<br/>UC-16 Correct AI Labels<br/>UC-17 Summarize Ticket · UC-18 Rewrite Reply<br/>UC-19 View System-wide Dashboard<br/>UC-20 Manage Categories<br/>UC-21 View User List · UC-22 Create Staff Account<br/>UC-23 Lock or Unlock Account"]
-        systemCases["<b>System</b> (automatic)<br/><br/>UC-24 Classify Ticket<br/>UC-25 Auto-assign Ticket"]
+        systemCases["<b>System</b> (automatic)<br/><br/>UC-24 Classify Ticket<br/>UC-25 Auto-assign Ticket<br/>UC-26 Notify Customer by Email"]
     end
 
     llm(["LLM Provider"])
+    email(["Email Service"])
 
     customer --> customerCases
     staff --> staffCases
     admin --> adminCases
     customerCases -.->|"UC-06 includes"| systemCases
+    staffCases -.->|"UC-13, UC-14 include UC-26"| systemCases
     systemCases -.->|"classification"| llm
+    systemCases -.->|"notification email"| email
     staffCases -.->|"summary and rewrite"| llm
 
     classDef actor fill:none,stroke:none,color:#111
@@ -72,7 +76,7 @@ flowchart TB
     classDef standard fill:#3a7bd5,color:#fff,stroke:#245fa8
     classDef ai fill:#7b3fbf,color:#fff,stroke:#5a2d8c
     class customer,staff,admin actor
-    class llm external
+    class llm,email external
     class adminCases,staffCases primary
     class customerCases standard
     class systemCases ai
@@ -89,6 +93,7 @@ For detailed actors and the use case diagram, see [Actors and Use Cases](docs/02
 | Register a customer account | Yes | No | No |
 | Log in, log out, update profile, change password | Yes | Yes | Yes |
 | Submit tickets, reply, close own tickets | Own tickets | No | No |
+| Receive an email when Staff reply or change the status | Own tickets | No | No |
 | View ticket queue and details | No | Assigned to me | All tickets |
 | Reply, change status, correct AI labels | No | Assigned to me | All tickets |
 | AI summary and AI reply rewrite | No | Assigned to me | All tickets |

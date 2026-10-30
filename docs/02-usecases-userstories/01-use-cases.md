@@ -12,7 +12,8 @@
 | `STAFF` | Staff | Support employee. Handles the tickets assigned to them. |
 | `ADMIN` | Administrator | Everything Staff can do, on **all** tickets, plus administration (D-03). |
 | — | LLM Provider | External system called for classification, summary, and rewrite. |
-| — | System | Runs automatic behaviour (classification, auto-assignment) triggered by other use cases. |
+| — | Email Service | External system that delivers notification emails to customers (D-19). |
+| — | System | Runs automatic behaviour (classification, auto-assignment, email notification) triggered by other use cases. |
 
 ## Role × use case matrix
 
@@ -40,12 +41,13 @@
 | UC-22 Create Staff account | | | ✓ |
 | UC-23 Lock or unlock account | | | ✓ |
 | UC-24 Classify ticket, UC-25 Auto-assign ticket | System | System | System |
+| UC-26 Notify customer by email | Receives the email | System | System |
 
 Menus and buttons are **not displayed** when the user lacks permission. Unauthorized URL access shows an "Access denied" page.
 
 ## Use case diagram
 
-Every use case is a separate node, grouped by module inside the system boundary. UC-24 and UC-25 have no direct actor; they are triggered by other use cases (see [Included and extending use cases](#included-and-extending-use-cases)).
+Every use case is a separate node, grouped by module inside the system boundary. UC-24, UC-25, and UC-26 have no direct actor; they are triggered by other use cases (see [Included and extending use cases](#included-and-extending-use-cases)).
 
 ```mermaid
 flowchart LR
@@ -95,6 +97,7 @@ flowchart LR
             direction LR
             uc24["UC-24 Classify Ticket"]
             uc25["UC-25 Auto-assign Ticket"]
+            uc26["UC-26 Notify Customer by Email"]
         end
     end
 
@@ -112,7 +115,7 @@ flowchart LR
     classDef usecase fill:#1168bd,color:#fff,stroke:#0b4f9e
     classDef ai fill:#7b3fbf,color:#fff,stroke:#5a2d8c
     class customer,staff,admin actor
-    class uc01,uc02,uc03,uc04,uc05,uc06,uc07,uc08,uc09,uc10,uc11,uc12,uc13,uc14,uc15,uc16,uc19,uc20,uc21,uc22,uc23,uc25 usecase
+    class uc01,uc02,uc03,uc04,uc05,uc06,uc07,uc08,uc09,uc10,uc11,uc12,uc13,uc14,uc15,uc16,uc19,uc20,uc21,uc22,uc23,uc25,uc26 usecase
     class uc17,uc18,uc24 ai
     style left fill:#fff,stroke:#bbb,stroke-dasharray:5 5
     style right fill:#fff,stroke:#bbb,stroke-dasharray:5 5
@@ -130,20 +133,26 @@ flowchart LR
     lock["UC-23 Lock or Unlock Account"]
     rewrite["UC-18 Rewrite Reply"]
     staffReply["UC-13 Reply to Customer"]
+    changeStatus["UC-14 Change Status"]
     summarize["UC-17 Summarize Ticket"]
     classify["UC-24 Classify Ticket"]:::ai
     assign["UC-25 Auto-assign Ticket"]:::shared
+    notify["UC-26 Notify Customer by Email"]:::shared
     llm(["LLM Provider"]):::external
+    email(["Email Service"]):::external
 
     submit -.->|"«include»"| classify
     submit -.->|"«include»"| assign
     lock -.->|"«include» when a Staff with open tickets is locked"| assign
     reply -.->|"«include» when reopening a ticket whose assignee is locked"| assign
     rewrite -.->|"«extend»"| staffReply
+    staffReply -.->|"«include»"| notify
+    changeStatus -.->|"«include»"| notify
 
     classify --> llm
     summarize --> llm
     rewrite --> llm
+    notify --> email
 
     classDef shared fill:#1168bd,color:#fff,stroke:#0b4884
     classDef ai fill:#7b3fbf,color:#fff,stroke:#5a2d8c
@@ -159,6 +168,6 @@ Administrator can perform UC-10..UC-19 on **all** tickets; Staff only on tickets
 | Customer | UC-01 Log in · UC-02 Log out · UC-03 Update profile · UC-04 Change password · UC-05 Register · UC-06 Submit ticket · UC-07 View own tickets · UC-08 Reply to own ticket · UC-09 Close own ticket |
 | Staff | UC-01..UC-04 · UC-10 View ticket queue · UC-11 Search and filter · UC-12 View ticket details · UC-13 Reply to customer · UC-14 Change status · UC-15 Transfer ticket · UC-16 Correct AI labels · UC-17 Summarize ticket · UC-18 Rewrite reply · UC-19 View personal dashboard |
 | Administrator | UC-01..UC-04 · UC-10..UC-19 on all tickets (UC-15 = reassign any ticket, UC-19 = system-wide dashboard) · UC-20 Manage categories · UC-21 View user list · UC-22 Create Staff account · UC-23 Lock or unlock account |
-| System | UC-24 Classify ticket (with LLM Provider) · UC-25 Auto-assign ticket |
+| System | UC-24 Classify ticket (with LLM Provider) · UC-25 Auto-assign ticket · UC-26 Notify customer by email (with Email Service) |
 
 **Related:** [Step index](README.md)

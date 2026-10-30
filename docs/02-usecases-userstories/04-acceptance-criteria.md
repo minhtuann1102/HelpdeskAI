@@ -102,6 +102,16 @@ UC-09 · BR-06
 - **AC-12.1** *Given* my ticket is not `Closed`, *when* I choose Close and confirm, *then* the status becomes `Closed`.
 - **AC-12.2** *Given* a `Closed` ticket, *when* anyone tries to reply or change its status, *then* the action is rejected.
 
+### US-35 — Email notification of ticket updates
+UC-26 · BR-17
+
+- **AC-35.1** *Given* Staff or the Administrator send a reply on my ticket, *when* the reply is saved, *then* I get one email at my account email with the ticket number, title, "new reply", and a link to the ticket, but not the reply text (DF-25).
+- **AC-35.2** *Given* Staff or the Administrator change my ticket's status without replying (for example to `Resolved`), *when* the change is saved, *then* I get one email that names the new status, using the customer wording (DF-22).
+- **AC-35.3** *Given* one action both adds a reply and changes the status ("Send and wait for customer", or the first reply that moves `New` to `In Progress`), *when* it is saved, *then* I get exactly one email.
+- **AC-35.4** *Given* I reply to or close my own ticket, or Staff transfer it or correct its labels, *when* the action is saved, *then* no email is sent.
+- **AC-35.5** *Given* the Email Service fails or times out, *when* Staff send a reply or change the status, *then* the action is saved and shown as usual, and the failure is logged.
+- **AC-35.6** *Given* my account is locked, *when* Staff act on my ticket, *then* no email is sent.
+
 ## Automatic behaviour: assignment and AI classification (M-04, M-05)
 
 US-13..US-16 have **no endpoint of their own**. They run when a ticket is submitted (US-07); US-13 also runs when a Staff account is locked (US-32) or a ticket is reopened (US-11). In the Step 6 cross-check they are traced to those endpoints.

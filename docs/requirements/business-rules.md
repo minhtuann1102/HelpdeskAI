@@ -106,6 +106,7 @@ stateDiagram-v2
   - Staff and Admin can reply to tickets they can act on, unless `Closed`.
   - The **first reply by the assignee or Admin** sets the first response time and triggers T2.
   - Any new message marks an existing summary as outdated (BR-11).
+  - A reply by Staff or Admin sends the customer a notification email (BR-17).
 
 ## BR-08 — AI classification
 
@@ -209,4 +210,15 @@ stateDiagram-v2
   - **Label correction rate:** see BR-10.
   - **Scope:** Admin sees all tickets. Staff see only the tickets currently assigned to them.
 
-**Related:** [Use cases and user stories](../02-usecases-userstories/README.md) · [Master traceability](../traceability/master-traceability.md)
+## BR-17 — Customer email notifications
+
+- **Source:** D-19, DF-25
+- **Related US:** US-35
+- **Related API:** TBD (Step 6), triggered by reply to customer and change status
+- **Rule:**
+  - The customer of a ticket gets an email when Staff or Admin **reply** to it or **change its status** (any transition in BR-06 made by them).
+  - One action sends **at most one email**. A reply that also changes the status ("Send and wait for customer", or the first reply that triggers T2) sends one email.
+  - No email for the customer's own actions, automatic transitions caused by them (T4, T6), transfers, reassignments, or label corrections.
+  - No email when the customer account is locked.
+  - Content follows DF-25: ticket number, title, what changed, and a link to the ticket. The reply text is not included.
+  - Sending happens after the action is saved. A failed send is logged and **never blocks or undoes** the reply or status change. [Use cases and user stories](../02-usecases-userstories/README.md) · [Master traceability](../traceability/master-traceability.md)

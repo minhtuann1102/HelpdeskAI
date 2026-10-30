@@ -41,7 +41,7 @@ flowchart TD
     saved -.-> hasStaff
     saved -.-> classify
 
-    detail --> follow["Customer follows the ticket<br/>on SCR-10 and SCR-12"]
+    detail --> follow["Customer follows the ticket on SCR-10 and SCR-12<br/>email on each Staff reply or status change (BR-17)"]
     follow --> staffReply{"What did Staff do?"}
     staffReply -->|"Asked for information"| answer["Customer replies<br/>Waiting for Customer → In Progress"]
     staffReply -->|"Marked Resolved"| solved{"Problem solved?"}

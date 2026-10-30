@@ -39,5 +39,6 @@ These values make the stories testable. They apply unless the user changes them.
 | DF-16 | Home page after login: Customer → My tickets; Staff → My queue; Admin → Dashboard. |
 | DF-17 | The dashboard covers the last 30 days by ticket creation date unless the user picks another range. |
 | DF-18 | Categories are never deleted in the MVP, only hidden. |
+| DF-25 | **Notification email** (D-19): one email per Staff or Admin action, sent to the customer's account email from a no-reply address. It contains the ticket number, title, what changed (new reply or new status), and a link to the ticket. It does **not** contain the reply text, and it asks the customer to reply on the website. No unsubscribe option in the MVP. |
 
 **Related:** [Step index](README.md)
