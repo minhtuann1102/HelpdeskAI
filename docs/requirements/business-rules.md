@@ -9,14 +9,14 @@ Only rules confirmed by the project documentation are catalogued here. Values ma
 ## BR-01 — Roles
 
 - **Source:** D-02, D-03 ([Step 1 decisions](../01-research/00-decisions.md)), DF-13
-- **Related US:** US-01, US-04, US-30, US-31
+- **Related US:** US-01, US-02, US-24, US-25
 - **Related API:** TBD (Step 6)
 - **Rule:** The only roles are `CUSTOMER`, `STAFF`, and `ADMIN`. Admin has every Staff permission on all tickets, plus administration. Customers register themselves. Staff accounts are created by Admin. The first Admin account is created at installation.
 
 ## BR-02 — Visibility
 
 - **Source:** D-09, DF-14, DF-15
-- **Related US:** US-04, US-09, US-10, US-17, US-18, US-19
+- **Related US:** US-02, US-07, US-13, US-14, US-15
 - **Related API:** TBD (Step 6)
 - **Rule:**
   - A Customer sees only their own tickets and never sees priority, sentiment, confidence, AI reason, the summary, reply suggestions, or policy articles.
@@ -27,7 +27,7 @@ Only rules confirmed by the project documentation are catalogued here. Values ma
 ## BR-03 — Auto-assignment
 
 - **Source:** D-04, D-07, D-21, DF-01..DF-04, DF-27
-- **Related US:** US-07, US-11, US-13, US-31, US-32, US-36
+- **Related US:** US-06, US-08, US-11, US-25, US-26, US-27
 - **Related API:** TBD (Step 6), triggered by submit ticket, lock account, set on leave, and customer reply (reopen when the assignee is locked or on leave)
 - **Rule:** When a ticket is created, the system assigns it to the **active `STAFF` user with the fewest open tickets**.
   - Open means `New`, `In Progress`, or `Waiting for Customer`.
@@ -40,7 +40,7 @@ Only rules confirmed by the project documentation are catalogued here. Values ma
 ## BR-04 — Transfer and reassignment
 
 - **Source:** D-04
-- **Related US:** US-22, US-23
+- **Related US:** US-18
 - **Related API:** TBD (Step 6), including the list of active Staff
 - **Rule:**
   - Staff may transfer a non-closed ticket assigned to them to another **active Staff** member, chosen from a list of active Staff with their open-ticket counts.
@@ -51,7 +51,7 @@ Only rules confirmed by the project documentation are catalogued here. Values ma
 ## BR-05 — Locked accounts
 
 - **Source:** DF-05, DF-06, DF-13
-- **Related US:** US-02, US-11, US-32, US-36
+- **Related US:** US-02, US-08, US-26, US-27
 - **Related API:** TBD (Step 6)
 - **Rule:**
   - A locked user cannot log in, and any existing session ends on its next request.
@@ -62,7 +62,7 @@ Only rules confirmed by the project documentation are catalogued here. Values ma
 ## BR-06 — Ticket status transitions
 
 - **Source:** brief (ticket lifecycle), D-10, D-11
-- **Related US:** US-11, US-12, US-20, US-21
+- **Related US:** US-08, US-09, US-16, US-17
 - **Related API:** TBD (Step 6)
 - **Rule:** Only the transitions below are allowed. `Closed` is final.
 
@@ -101,7 +101,7 @@ stateDiagram-v2
 ## BR-07 — Replies
 
 - **Source:** brief, D-10
-- **Related US:** US-11, US-20
+- **Related US:** US-08, US-16
 - **Related API:** TBD (Step 6)
 - **Rule:**
   - A Customer can reply to their own ticket unless it is `Closed`.
@@ -113,7 +113,7 @@ stateDiagram-v2
 ## BR-08 — AI classification
 
 - **Source:** brief (AI design 1), A-05, D-22, DF-07..DF-09, DF-28
-- **Related US:** US-07, US-14, US-15, US-16, US-17, US-19
+- **Related US:** US-06, US-12, US-13, US-15
 - **Related API:** TBD (Step 6), triggered by submit ticket
 - **Rule:**
   1. Runs once per ticket, after the ticket is saved, using **one** LLM call.
@@ -130,7 +130,7 @@ stateDiagram-v2
 ## BR-09 — AI label and final label
 
 - **Source:** brief ("store the AI's original label and the final label")
-- **Related US:** US-14, US-19, US-24
+- **Related US:** US-12, US-15, US-19
 - **Related API:** TBD (Step 6)
 - **Rule:**
   - The **AI label** is stored once and never overwritten. It holds the category (if AI chose it), the priority after rule 6, the sentiment, the confidence, and the reason.
@@ -140,7 +140,7 @@ stateDiagram-v2
 ## BR-10 — Label correction rate
 
 - **Source:** D-12
-- **Related US:** US-24, US-33, US-34
+- **Related US:** US-19, US-28
 - **Related API:** TBD (Step 6)
 - **Rule:**
   - **Denominator:** tickets in the period whose AI classification succeeded: classification status `Classified` (BR-08 rule 9).
@@ -151,7 +151,7 @@ stateDiagram-v2
 ## BR-11 — AI summary
 
 - **Source:** brief (AI design 2), DF-09
-- **Related US:** US-25
+- **Related US:** US-20
 - **Related API:** TBD (Step 6)
 - **Rule:**
   - Input: the original description and all replies.
@@ -163,7 +163,7 @@ stateDiagram-v2
 ## BR-12 — AI reply rewrite
 
 - **Source:** brief (AI design 3), DF-09
-- **Related US:** US-20, US-26
+- **Related US:** US-16, US-21
 - **Related API:** TBD (Step 6)
 - **Rule:**
   - Input: the draft and the ticket context.
@@ -174,7 +174,7 @@ stateDiagram-v2
 ## BR-13 — Categories
 
 - **Source:** brief (category management), DF-18
-- **Related US:** US-07, US-27, US-28, US-29
+- **Related US:** US-06, US-23
 - **Related API:** TBD (Step 6)
 - **Rule:**
   - A category has a name (required, unique ignoring case) and a description (required, because AI uses it as context).
@@ -184,7 +184,7 @@ stateDiagram-v2
 ## BR-14 — Attachments
 
 - **Source:** brief (submit form), A-05, DF-10
-- **Related US:** US-08
+- **Related US:** US-06
 - **Related API:** TBD (Step 6)
 - **Rule:**
   - Attachments are allowed only when submitting a ticket: up to 5 files, 10 MB each, of type `jpg`, `jpeg`, `png`, or `pdf`.
@@ -194,7 +194,7 @@ stateDiagram-v2
 ## BR-15 — Accounts and passwords
 
 - **Source:** brief (authentication, profile), DF-11, DF-12
-- **Related US:** US-01, US-02, US-05, US-06, US-31
+- **Related US:** US-01, US-02, US-04, US-05, US-25
 - **Related API:** TBD (Step 6)
 - **Rule:**
   - Email is unique and is the login name.
@@ -205,7 +205,7 @@ stateDiagram-v2
 ## BR-16 — Dashboard metrics
 
 - **Source:** brief (dashboard), D-08, DF-17
-- **Related US:** US-33, US-34
+- **Related US:** US-28
 - **Related API:** TBD (Step 6)
 - **Rule:**
   - **Range:** the last 30 days by creation date, unless the user picks another range.
@@ -217,7 +217,7 @@ stateDiagram-v2
 ## BR-17 — Customer email notifications
 
 - **Source:** D-19, DF-25
-- **Related US:** US-35
+- **Related US:** US-10
 - **Related API:** TBD (Step 6), triggered by reply to customer and change status
 - **Rule:**
   - The customer of a ticket gets an email when Staff or Admin **reply** to it or **change its status** (any transition in BR-06 made by them).
@@ -230,7 +230,7 @@ stateDiagram-v2
 ## BR-18 — Staff on leave
 
 - **Source:** D-20, D-24, DF-26
-- **Related US:** US-13, US-22, US-23, US-36
+- **Related US:** US-11, US-18, US-27
 - **Related API:** TBD (Step 6), set on leave and end leave
 - **Rule:**
   - Account status is `Active`, `On leave`, or `Locked`. `On leave` exists only for `STAFF` accounts.
@@ -244,7 +244,7 @@ stateDiagram-v2
 ## BR-19 — Concurrent changes to a ticket
 
 - **Source:** D-23
-- **Related US:** US-20, US-21, US-22, US-23, US-24
+- **Related US:** US-16, US-17, US-18, US-19
 - **Related API:** TBD (Step 6), every ticket action by Staff or Admin
 - **Rule:**
   - Each ticket has a **version**. It changes on any new message (customer or Staff), status change, label change, assignee change (including redistribution), and the classification result. Creating or regenerating a summary, or creating a reply suggestion, does not change it.
@@ -258,7 +258,7 @@ stateDiagram-v2
 ## BR-20 — Policy articles
 
 - **Source:** D-25, D-26, DF-29, A-07
-- **Related US:** US-37, US-38, US-39, US-40
+- **Related US:** US-22, US-29
 - **Related API:** TBD (Step 6)
 - **Rule:**
   - An article has a title (required, unique ignoring case, up to 150 characters), a body (required, up to 5,000 characters), an active or hidden state, and a last-reviewed date.
@@ -275,7 +275,7 @@ stateDiagram-v2
 ## BR-21 — AI reply suggestion
 
 - **Source:** D-25, D-26, DF-09, DF-29
-- **Related US:** US-20, US-40, US-41
+- **Related US:** US-16, US-22
 - **Related API:** TBD (Step 6)
 - **Rule:**
   1. Runs only when Staff or Admin click "Gợi ý trả lời" on a ticket they can act on that is not `Closed`. The button is disabled when no active, reviewed article exists.

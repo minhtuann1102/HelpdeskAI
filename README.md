@@ -14,7 +14,7 @@ Requirements define what Helpdesk AI must do, who uses it, the value delivered, 
 
 ### 1.2 INVEST requirements
 
-The MVP backlog includes 41 user stories. They cover registration and login, customer tickets, automatic assignment, AI classification, ticket handling with AI summary and rewrite, categories, users (including Staff on leave), dashboards, email notifications to customers, and policy articles that ground cited reply suggestions. Before a user story is ready for development, it is checked using the INVEST criteria.
+The MVP backlog includes 29 user stories, one per use case. They cover registration and login, customer tickets, automatic assignment, AI classification, ticket handling with AI summary and rewrite, categories, users (including Staff on leave), dashboards, email notifications to customers, and policy articles that ground cited reply suggestions. Before a user story is ready for development, it is checked using the INVEST criteria.
 
 | Criterion | Meaning in Helpdesk AI |
 |---|---|
@@ -22,25 +22,22 @@ The MVP backlog includes 41 user stories. They cover registration and login, cus
 | **Negotiable** | The UI and technical implementation can change as long as the outcome, permissions, and AI guardrails stay the same. |
 | **Valuable** | Each story gives value to the Customer, Staff, Administrator, or the business. |
 | **Estimable** | Roles, inputs, limits, dependencies, and failure cases (including AI failure) are documented, and every story has a size. |
-| **Small** | Each story covers one capability; AI classification is split into the main classification, the angry rule, and the fallback. |
+| **Small** | Each story covers one use case; a larger story groups its criteria by part, for example AI classification into the main classification, the angry rule, and the fallback. |
 | **Testable** | Every story has Given/When/Then acceptance criteria with concrete values. |
 
 ```text
-US-01–US-04   Authentication and authorization
-US-05–US-06   Personal profile
-US-07–US-12   Submit and track tickets (Customer)
-US-13–US-16   Automatic assignment and AI classification (system behaviour)
-US-17–US-26   Ticket handling with AI summary and rewrite (Staff, Administrator)
-US-27–US-29   Category management
-US-30–US-32   User management
-US-33–US-34   Dashboard
-US-35         Email notification of ticket updates (Customer)
-US-36         Set Staff on leave (Administrator)
-US-37–US-39   Policy articles (Administrator)
-US-40–US-41   Reply suggestion from policies (Staff, Administrator)
+US-01–US-03   Authentication and authorization
+US-04–US-05   Personal profile
+US-06–US-10   Submit and track tickets, email notification of updates (Customer)
+US-11–US-12   Automatic assignment and AI classification (system behaviour)
+US-13–US-22   Ticket handling with AI summary, rewrite, and reply suggestion from policies (Staff, Administrator)
+US-23         Category management
+US-24–US-27   User management, including Staff on leave
+US-28         Dashboard
+US-29         Policy articles (Administrator)
 ```
 
-Stories are prioritized with MoSCoW: 22 Must, 19 Should, 0 Could, and 7 Won't (out of scope). The complete backlog and per-story INVEST review are maintained in [User Stories (INVEST)](docs/02-usecases-userstories/03-user-stories-invest.md), the Given/When/Then criteria in [Acceptance Criteria](docs/02-usecases-userstories/04-acceptance-criteria.md), and the priorities in [MoSCoW Prioritization](docs/02-usecases-userstories/05-moscow-prioritization.md).
+Stories are prioritized with MoSCoW: 17 Must, 12 Should, 0 Could, and 7 Won't (out of scope). The complete backlog and per-story INVEST review are maintained in [User Stories (INVEST)](docs/02-usecases-userstories/03-user-stories-invest.md), the Given/When/Then criteria in [Acceptance Criteria](docs/02-usecases-userstories/04-acceptance-criteria.md), and the priorities in [MoSCoW Prioritization](docs/02-usecases-userstories/05-moscow-prioritization.md).
 
 ### 1.3 Use cases
 
