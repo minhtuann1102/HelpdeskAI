@@ -298,7 +298,7 @@ Each transition can also pause, resume, or end the response clock (BR-22).
 ## BR-22 — Reply deadlines (SLA)
 
 - **Source:** D-35, DF-15, DF-31..DF-33
-- **Related US:** US-10, US-12, US-13, US-14, US-15, US-16, US-19, US-24
+- **Related US:** US-06, US-08, US-09, US-10, US-12, US-13, US-14, US-15, US-16, US-19, US-24
 - **Related API:** TBD (Step 6), triggered by submit ticket, reply (customer, Staff, Admin), change status, correct or confirm labels, and the classification result
 - **Rule:**
   1. **Response clock.** A ticket has at most one open clock. It starts when the ticket is created (first response) or when the customer writes while no clock is open (next response). Further customer messages do not restart it.

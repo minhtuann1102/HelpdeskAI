@@ -50,7 +50,7 @@ UC-05 · BR-15
 - **AC-05.4** *Given* any registration request, *when* it is processed, *then* the role is always `CUSTOMER`, even if the request tries to set another role.
 
 ## US-06 — Submit a ticket with optional attachments
-UC-06 · BR-03, BR-08, BR-14
+UC-06 · BR-03, BR-08, BR-14, BR-22
 
 - **AC-06.1** *Given* I am logged in as a Customer, *when* I submit a title (required, up to 200 characters) and a description (required), *then* a ticket is created with status `New` and a ticket number, I see a confirmation, and it appears in My tickets.
 - **AC-06.2** *Given* the submit form, *when* I open the category list, *then* it shows only active categories plus an empty choice "Not sure".
@@ -79,7 +79,7 @@ UC-07 · BR-02
 - **AC-07.6** *Given* another customer's ticket number, *when* I try to open it, *then* access is denied.
 
 ## US-08 — Reply to my ticket
-UC-08 · BR-05, BR-06, BR-07
+UC-08 · BR-05, BR-06, BR-07, BR-22
 
 - **AC-08.1** *Given* my ticket is `New` or `In Progress`, *when* I send a reply, *then* it appears in the conversation and the status does not change.
 - **AC-08.2** *Given* my ticket is `Waiting for Customer`, *when* I send a reply, *then* the status becomes `In Progress` (T4).
@@ -88,7 +88,7 @@ UC-08 · BR-05, BR-06, BR-07
 - **AC-08.5** *Given* an empty reply, *when* I try to send it, *then* it is not sent.
 
 ## US-09 — Close my ticket
-UC-09 · BR-06
+UC-09 · BR-06, BR-22
 
 - **AC-09.1** *Given* my ticket is not `Closed`, *when* I choose Close and confirm, *then* the status becomes `Closed`.
 - **AC-09.2** *Given* a `Closed` ticket, *when* anyone tries to reply or change its status, *then* the action is rejected.
