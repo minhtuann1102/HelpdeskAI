@@ -216,6 +216,115 @@ Summary marked outdated after a new message:
 
 Source: [Screen notes and states](docs/04-uiux/02-screen-notes.md) and [Design system](docs/04-uiux/01-design-system.md).
 
+## 3. C4 Architecture
+
+Designed in Step 7, together with the tech stack and the LLM provider.
+
+## 4. Database Diagrams and OpenAPI 3.0 Contract
+
+Step 5 defines the persistence contract. The HTTP contract (4.2) follows in Step 6.
+
+### 4.1 Database diagrams
+
+The PostgreSQL model (assumed here, confirmed in Step 7) keeps accounts, tickets with both their AI label and their final label, a log of AI calls, customer email notifications, and the internal policy articles with their revisions. Nothing is deleted: users are locked, categories and articles hidden, tickets closed.
+
+```mermaid
+erDiagram
+    app_users ||--o{ staff_leaves : "takes leave"
+    app_users ||--o{ tickets : submits
+    app_users |o--o{ tickets : "is assigned"
+    categories |o--o{ tickets : labels
+    tickets ||--o{ ticket_messages : has
+    app_users ||--o{ ticket_messages : writes
+    tickets ||--o{ ticket_attachments : has
+    tickets ||--o| ticket_summaries : "is summarized in"
+    tickets ||--o{ ai_requests : "is sent to AI in"
+    tickets ||--o{ email_notifications : "notifies by"
+    policy_articles ||--|{ policy_article_revisions : "keeps"
+    tickets ||--o{ reply_suggestions : gets
+    ai_requests |o--o| reply_suggestions : produces
+    reply_suggestions ||--o{ reply_suggestion_citations : cites
+    policy_article_revisions ||--o{ reply_suggestion_citations : "is quoted in"
+
+    app_users {
+        bigint id PK
+        varchar email
+        user_role role
+        account_status status
+    }
+    staff_leaves {
+        bigint id PK
+        bigint staff_id FK
+        timestamptz starts_at
+        timestamptz ends_at
+    }
+    categories {
+        bigint id PK
+        varchar name
+        boolean is_active
+    }
+    tickets {
+        bigint id PK
+        bigint customer_id FK
+        bigint assignee_id FK
+        ticket_status status
+        classification_status classification_status
+        bigint ai_category_id FK
+        bigint category_id FK
+        integer version
+    }
+    ticket_messages {
+        bigint id PK
+        bigint ticket_id FK
+        bigint author_id FK
+    }
+    ticket_attachments {
+        bigint id PK
+        bigint ticket_id FK
+        varchar content_type
+    }
+    ticket_summaries {
+        bigint ticket_id PK, FK
+        bigint last_message_id FK
+    }
+    ai_requests {
+        bigint id PK
+        ai_feature feature
+        ai_outcome outcome
+        integer latency_ms
+    }
+    email_notifications {
+        bigint id PK
+        bigint ticket_id FK
+        email_status status
+    }
+    policy_articles {
+        bigint id PK
+        varchar title
+        bigint current_revision_id FK
+        date last_reviewed_at
+    }
+    policy_article_revisions {
+        bigint id PK
+        bigint article_id FK
+        integer revision_no
+        text body
+    }
+    reply_suggestions {
+        bigint id PK
+        bigint ticket_id FK
+        suggestion_outcome outcome
+        timestamptz accepted_at
+    }
+    reply_suggestion_citations {
+        bigint suggestion_id PK, FK
+        smallint cite_no PK
+        bigint revision_id FK
+    }
+```
+
+See the [ER diagram](docs/05-database/02-er-diagram.md), [data model](docs/05-database/01-data-model.md), and [DBML schema](docs/05-database/helpdesk_ai.dbml).
+
 ## Documentation
 
 - Research: [Context and problem](docs/01-research/01-context-and-problem.md), [Goals and metrics](docs/01-research/02-goals-and-metrics.md), [Stakeholders](docs/01-research/03-stakeholders.md), [Similar products](docs/01-research/04-similar-products.md), [MVP scope](docs/01-research/05-scope.md), [Risks](docs/01-research/06-risks.md), [AI vs rule-based](docs/01-research/07-ai-vs-rule-based.md), [Glossary](docs/01-research/08-glossary.md), [Decisions](docs/01-research/00-decisions.md), [Future work](docs/01-research/09-future-work.md).
@@ -223,6 +332,7 @@ Source: [Screen notes and states](docs/04-uiux/02-screen-notes.md) and [Design s
 - Requirements catalogs: [Business rules](docs/requirements/business-rules.md).
 - UI/UX: [Sitemap](docs/03-information-architecture/01-sitemap.md), [Routes and permissions](docs/03-information-architecture/02-routes-and-permissions.md), [Navigation](docs/03-information-architecture/03-navigation.md), [Screen inventory](docs/03-information-architecture/04-screen-inventory.md), [User flows](docs/03-information-architecture/05-user-flows.md), [UI states and accessibility](docs/03-information-architecture/06-ui-states-and-accessibility.md), [Decisions and defaults](docs/03-information-architecture/00-decisions.md).
 - Wireframes: [Wireframe gallery](docs/04-uiux/wireframes/index.html), [Screen notes and states](docs/04-uiux/02-screen-notes.md), [Design system](docs/04-uiux/01-design-system.md), [Decisions and defaults](docs/04-uiux/00-decisions.md).
+- Database: [Data model](docs/05-database/01-data-model.md), [ER diagram](docs/05-database/02-er-diagram.md), [DBML schema](docs/05-database/helpdesk_ai.dbml), [Decisions and defaults](docs/05-database/00-decisions.md).
 - Traceability: [Master traceability matrix](docs/traceability/master-traceability.md).
 
 ## Project Progress
@@ -236,7 +346,7 @@ Source: [Screen notes and states](docs/04-uiux/02-screen-notes.md) and [Design s
 - [x] Prioritize the backlog with MoSCoW
 - [x] Design the information architecture, sitemap per role, and user flows
 - [x] Design the UI/UX wireframes, including AI states (loading, error, Unclassified, outdated summary)
-- [ ] Design the ERD (DBML and Mermaid)
+- [x] Design the ERD (DBML and Mermaid)
 - [ ] Write the API documentation in OpenAPI 3.0 and the cross-check report
 - [ ] Design the C4 model and choose the tech stack and LLM provider
 - [ ] Design the code structure

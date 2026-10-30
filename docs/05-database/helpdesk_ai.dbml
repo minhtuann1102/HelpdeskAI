@@ -1,0 +1,463 @@
+Project helpdesk_ai {
+  database_type: 'PostgreSQL'
+  Note: '''
+    Helpdesk AI: a customer service help desk with AI for a small online shop.
+    Step 5 of 9, logical schema. PostgreSQL is assumed here and confirmed in Step 7 (D-28).
+
+    One account table for the three roles CUSTOMER, STAFF, ADMIN (BR-01).
+    A ticket keeps the AI label (written once) next to the final label (BR-09).
+    Nothing is deleted: users are locked, categories and articles hidden, tickets closed.
+    Group "policies" exists because of D-25 (mentor confirmation O-09 pending).
+
+    Not modelled here: login sessions and tokens, file storage, and embeddings for
+    policy search (all Step 7); SQL migrations (Step 9).
+  '''
+}
+
+// ───────── Enums ─────────
+
+Enum user_role {
+  CUSTOMER
+  STAFF
+  ADMIN
+}
+
+Enum account_status {
+  ACTIVE
+  ON_LEAVE [note: 'STAFF only (BR-18)']
+  LOCKED
+}
+
+Enum leave_end_reason {
+  ENDED_BY_ADMIN
+  ACCOUNT_LOCKED [note: 'Locking an on-leave account closes its leave (BR-18)']
+}
+
+Enum ticket_status {
+  NEW
+  IN_PROGRESS
+  WAITING_FOR_CUSTOMER
+  RESOLVED
+  CLOSED [note: 'Final (BR-06)']
+}
+
+Enum ticket_priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+Enum ticket_sentiment {
+  POSITIVE
+  NEUTRAL
+  NEGATIVE
+  ANGRY
+}
+
+Enum classification_status {
+  PENDING
+  CLASSIFIED
+  UNCLASSIFIED
+}
+
+Enum unclassified_cause {
+  LOW_CONFIDENCE
+  AI_ERROR [note: 'Error, timeout, invalid output, or still PENDING after 30 s (DF-28)']
+}
+
+Enum email_status {
+  PENDING
+  SENT
+  FAILED
+}
+
+Enum ai_feature {
+  CLASSIFY
+  SUMMARIZE
+  REWRITE
+  SUGGEST_REPLY
+}
+
+Enum ai_outcome {
+  SUCCESS [note: 'Valid output that passed every check']
+  INVALID_OUTPUT [note: 'Wrong schema, enum, category, or citation']
+  TIMEOUT
+  ERROR
+}
+
+Enum suggestion_outcome {
+  SHOWN
+  NO_MATCH [note: 'No relevant article, or invalid output (BR-21 rule 4)']
+  POLICY_CHANGED [note: 'A cited article got a new revision while AI was writing (BR-21 rule 7)']
+  FAILED [note: 'Timeout or error']
+}
+
+// ───────── Groups ─────────
+
+TableGroup accounts {
+  app_users
+  staff_leaves
+}
+
+TableGroup tickets {
+  categories
+  tickets
+  ticket_messages
+  ticket_attachments
+}
+
+TableGroup ai {
+  ticket_summaries
+  ai_requests
+}
+
+TableGroup notifications {
+  email_notifications
+}
+
+TableGroup policies {
+  policy_articles
+  policy_article_revisions
+  reply_suggestions
+  reply_suggestion_citations
+}
+
+// ───────── Accounts ─────────
+
+Table app_users {
+  id bigint [pk, increment]
+  email varchar(255) [not null, note: 'Login name, unique ignoring case (BR-15)']
+  password_hash text [not null, note: 'Never returned by the API or written to logs']
+  full_name varchar(150) [not null]
+  phone varchar(20)
+  role user_role [not null, note: 'Never changes after creation']
+  status account_status [not null, default: 'ACTIVE', note: 'Single source of truth for Active, On leave, Locked (BR-18)']
+  assignment_joined_at timestamptz [note: 'STAFF: when they last joined auto-assignment (account created, leave ended, unlocked); the 4-hour warm-up counts from here (BR-03, DF-27)']
+  last_assigned_at timestamptz [note: 'STAFF: when a ticket was last assigned to them by any route; tie-break, NULL first (DF-02)']
+  created_by bigint [note: 'Admin who created a Staff account; NULL for customers and the first Admin']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  indexes {
+    `lower(email)` [unique, name: 'ux_app_users_email']
+    (role, status) [name: 'ix_app_users_role_status']
+  }
+
+  checks {
+    `status <> 'ON_LEAVE' OR role = 'STAFF'` [name: 'ck_app_users_leave_staff_only']
+  }
+
+  Note: 'Every account: customers who registered, Staff created by Admin, and Admin (BR-01, BR-15). Never deleted; locked instead (BR-05).'
+}
+
+Table staff_leaves {
+  id bigint [pk, increment]
+  staff_id bigint [not null]
+  starts_at timestamptz [not null, default: `now()`, note: 'MVP: when Admin set the leave. Scheduled leave (future work) may use a later time']
+  ends_at timestamptz [note: 'NULL while the leave is open']
+  set_by bigint [not null, note: 'Admin']
+  ended_by bigint [note: 'Admin who ended the leave or locked the account']
+  end_reason leave_end_reason
+
+  indexes {
+    staff_id [name: 'ix_staff_leaves_staff']
+  }
+
+  checks {
+    `(ends_at IS NULL) = (ended_by IS NULL) AND (ends_at IS NULL) = (end_reason IS NULL)` [name: 'ck_staff_leaves_end_fields']
+    `ends_at IS NULL OR ends_at >= starts_at` [name: 'ck_staff_leaves_order']
+  }
+
+  Note: '''
+    History of each leave (D-24, BR-18). app_users.status stays the source of truth.
+    SQL adds a partial unique index that DBML cannot express:
+    UNIQUE (staff_id) WHERE ends_at IS NULL, so a Staff member has at most one open leave.
+  '''
+}
+
+// ───────── Tickets ─────────
+
+Table categories {
+  id bigint [pk, increment]
+  name varchar(100) [not null, note: 'Unique ignoring case (AC-20.2)']
+  description text [not null, note: 'Sent to AI as context for classification (BR-08, BR-13)']
+  is_active boolean [not null, default: true, note: 'false = hidden: not on the customer form, the AI list, or label choices']
+  created_by bigint [not null]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  indexes {
+    `lower(name)` [unique, name: 'ux_categories_name']
+  }
+
+  Note: 'Ticket categories managed by Admin (BR-13). Never deleted; hidden instead (DF-18).'
+}
+
+Table tickets {
+  id bigint [pk, increment, note: 'Shown as the ticket number, for example #1042']
+  customer_id bigint [not null]
+  title varchar(200) [not null]
+  description text [not null]
+  status ticket_status [not null, default: 'NEW']
+  assignee_id bigint [note: 'STAFF or ADMIN; NULL = Unassigned (DF-04)']
+  assigned_at timestamptz
+  customer_category_id bigint [note: 'Category the customer chose; NULL = "Not sure". Never changes (BR-08 rule 4)']
+
+  classification_status classification_status [not null, default: 'PENDING', note: 'Describes the AI run only; people never change it (BR-08 rule 9)']
+  unclassified_cause unclassified_cause [note: 'Set only when classification_status = UNCLASSIFIED']
+  classified_at timestamptz [note: 'When the AI result or failure was saved']
+
+  ai_category_id bigint [note: 'AI label, written once (BR-09) and only when CLASSIFIED. NULL when the customer chose the category']
+  ai_priority ticket_priority [note: 'Only when CLASSIFIED; after the anger rule (BR-08 rule 6)']
+  ai_priority_raised boolean [not null, default: false, note: 'true when angry sentiment raised the priority one level (AC-24.9)']
+  ai_sentiment ticket_sentiment [note: 'Only when CLASSIFIED']
+  ai_confidence numeric(3,2) [note: 'Also kept for LOW_CONFIDENCE, with the reason']
+  ai_reason text
+
+  category_id bigint [note: 'Final label (BR-09). NULL = Unclassified']
+  priority ticket_priority [note: 'Final label. NULL = Unclassified']
+  sentiment ticket_sentiment [note: 'Final label. NULL = Unclassified']
+  labels_edited_by bigint [note: 'Staff or Admin who last set the final labels; once set, AI never overwrites them (BR-08 rule 10)']
+  labels_edited_at timestamptz
+
+  first_response_at timestamptz [note: 'First reply by the assignee or Admin (BR-07); used for response time (BR-16)']
+  version integer [not null, default: 1, note: 'Optimistic concurrency (BR-19)']
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`, note: 'Changes with version; shown as the last update']
+
+  indexes {
+    (assignee_id, status) [name: 'ix_tickets_assignee_status']
+    (customer_id, created_at) [name: 'ix_tickets_customer_created']
+    created_at [name: 'ix_tickets_created']
+  }
+
+  checks {
+    `(classification_status = 'UNCLASSIFIED') = (unclassified_cause IS NOT NULL)` [name: 'ck_tickets_unclassified_cause']
+    `ai_confidence IS NULL OR ai_confidence BETWEEN 0 AND 1` [name: 'ck_tickets_ai_confidence']
+    `(assignee_id IS NULL) = (assigned_at IS NULL)` [name: 'ck_tickets_assigned_at']
+    `version >= 1` [name: 'ck_tickets_version']
+  }
+
+  Note: 'A customer request (BR-06..BR-10). Never deleted; Closed is final.'
+}
+
+Table ticket_messages {
+  id bigint [pk, increment]
+  ticket_id bigint [not null]
+  author_id bigint [not null, note: 'The customer, the assignee, or Admin']
+  body text [not null]
+  created_at timestamptz [not null, default: `now()`]
+
+  indexes {
+    (ticket_id, id) [name: 'ix_ticket_messages_ticket']
+  }
+
+  Note: 'Replies after the description (BR-07). Never edited or deleted.'
+}
+
+Table ticket_attachments {
+  id bigint [pk, increment]
+  ticket_id bigint [not null]
+  original_name varchar(255) [not null]
+  storage_key varchar(500) [not null, note: 'Where the file is kept (Step 7); never shown to users']
+  content_type varchar(50) [not null]
+  size_bytes integer [not null]
+  created_at timestamptz [not null, default: `now()`]
+
+  indexes {
+    ticket_id [name: 'ix_ticket_attachments_ticket']
+  }
+
+  checks {
+    `content_type IN ('image/jpeg', 'image/png', 'application/pdf')` [name: 'ck_ticket_attachments_type']
+    `size_bytes BETWEEN 1 AND 10485760` [name: 'ck_ticket_attachments_size']
+  }
+
+  Note: 'Files added when the ticket is submitted (BR-14): at most 5 per ticket, checked by the API. Never sent to the LLM.'
+}
+
+// ───────── AI ─────────
+
+Table ticket_summaries {
+  ticket_id bigint [pk]
+  content text [not null]
+  last_message_id bigint [note: 'Newest reply in the input; NULL if there were none. Outdated when a newer reply exists (BR-11)']
+  generated_by bigint [not null]
+  generated_at timestamptz [not null, default: `now()`]
+
+  Note: 'Latest AI summary of a ticket (BR-11). Regenerating replaces the row. Does not change the ticket version (BR-19).'
+}
+
+Table ai_requests {
+  id bigint [pk, increment]
+  feature ai_feature [not null]
+  ticket_id bigint [not null]
+  requested_by bigint [note: 'Staff or Admin who clicked; NULL for classification, which the system starts']
+  model varchar(100) [not null, note: 'Provider model ID (Step 7)']
+  outcome ai_outcome [not null]
+  latency_ms integer [not null]
+  input_tokens integer
+  output_tokens integer
+  created_at timestamptz [not null, default: `now()`]
+
+  indexes {
+    (feature, created_at) [name: 'ix_ai_requests_feature_created']
+    ticket_id [name: 'ix_ai_requests_ticket']
+  }
+
+  Note: 'One row per LLM call, for latency (G-06) and cost. Holds no prompt or response text: results live in tickets, ticket_summaries, and reply_suggestions; a rewrite is never stored.'
+}
+
+// ───────── Notifications ─────────
+
+Table email_notifications {
+  id bigint [pk, increment]
+  ticket_id bigint [not null]
+  recipient_id bigint [not null, note: 'The ticket customer']
+  actor_id bigint [not null, note: 'Staff or Admin whose action caused the email']
+  message_id bigint [note: 'The reply, if the action included one']
+  new_status ticket_status [note: 'The new status, if the action changed it']
+  status email_status [not null, default: 'PENDING']
+  attempts smallint [not null, default: 0]
+  last_error varchar(500) [note: 'Short provider error; no message text or secrets']
+  created_at timestamptz [not null, default: `now()`]
+  sent_at timestamptz
+
+  indexes {
+    (status, created_at) [name: 'ix_email_notifications_status']
+  }
+
+  checks {
+    `message_id IS NOT NULL OR new_status IS NOT NULL` [name: 'ck_email_notifications_change']
+  }
+
+  Note: 'Outbox of customer emails (BR-17, DF-25): one row per Staff or Admin action, written with the action and sent after commit. A failed send stays here and never undoes the action.'
+}
+
+// ───────── Policies (D-25, D-26) ─────────
+
+Table policy_articles {
+  id bigint [pk, increment]
+  title varchar(150) [not null, note: 'Copy of the current revision title, kept here for the unique check']
+  current_revision_id bigint [note: 'Set in the same transaction as the first revision; never NULL after commit']
+  is_active boolean [not null, default: true, note: 'false = hidden; never given to AI']
+  last_reviewed_at date [not null, note: 'Overdue 180 days after this date (DF-29)']
+  last_reviewed_by bigint [not null]
+  created_by bigint [not null]
+  created_at timestamptz [not null, default: `now()`]
+  updated_at timestamptz [not null, default: `now()`]
+
+  indexes {
+    `lower(title)` [unique, name: 'ux_policy_articles_title']
+    current_revision_id [unique, name: 'ux_policy_articles_current_revision']
+  }
+
+  Note: 'Internal policy list (BR-20). Never deleted; hidden instead. Not linked to categories.'
+}
+
+Table policy_article_revisions {
+  id bigint [pk, increment]
+  article_id bigint [not null]
+  revision_no integer [not null, note: '1, 2, 3, … per article']
+  title varchar(150) [not null]
+  body text [not null, note: 'Unicode NFC; at most 5,000 characters']
+  body_hash char(64) [not null, note: 'SHA-256 of the body after NFC, lower case, and collapsed spaces; finds a body that repeats another article (BR-20)']
+  created_by bigint [not null]
+  created_at timestamptz [not null, default: `now()`]
+
+  indexes {
+    (article_id, revision_no) [unique, name: 'ux_policy_article_revisions_no']
+    body_hash [name: 'ix_policy_article_revisions_hash']
+  }
+
+  checks {
+    `revision_no >= 1` [name: 'ck_policy_article_revisions_no']
+    `char_length(body) <= 5000` [name: 'ck_policy_article_revisions_body']
+  }
+
+  Note: 'Numbered text of an article (D-26). Rows are only inserted, never updated or deleted.'
+}
+
+Table reply_suggestions {
+  id bigint [pk, increment]
+  ticket_id bigint [not null]
+  requested_by bigint [not null]
+  ai_request_id bigint [note: 'The LLM call; NULL when no relevant article was found and no call was made']
+  outcome suggestion_outcome [not null]
+  suggestion_text text [note: 'Only when outcome = SHOWN']
+  accepted_at timestamptz [note: 'When "Dùng bản này" was chosen; use rate = accepted ÷ shown (G-09)']
+  created_at timestamptz [not null, default: `now()`]
+
+  indexes {
+    ticket_id [name: 'ix_reply_suggestions_ticket']
+    created_at [name: 'ix_reply_suggestions_created']
+    ai_request_id [unique, name: 'ux_reply_suggestions_ai_request']
+  }
+
+  checks {
+    `(outcome = 'SHOWN') = (suggestion_text IS NOT NULL)` [name: 'ck_reply_suggestions_text']
+    `accepted_at IS NULL OR outcome = 'SHOWN'` [name: 'ck_reply_suggestions_accepted']
+  }
+
+  Note: 'Log of every "Gợi ý trả lời" click (BR-21 rule 8, G-09). Never shown to customers; does not change the ticket version.'
+}
+
+Table reply_suggestion_citations {
+  suggestion_id bigint [not null]
+  cite_no smallint [not null, note: 'Marker 1, 2, or 3 in the suggestion text']
+  revision_id bigint [not null, note: 'The exact revision given to AI']
+  quote text [not null, note: 'Appears word for word in that revision body (BR-21 rule 4)']
+
+  indexes {
+    (suggestion_id, cite_no) [pk]
+    revision_id [name: 'ix_reply_suggestion_citations_revision']
+  }
+
+  checks {
+    `cite_no BETWEEN 1 AND 3` [name: 'ck_reply_suggestion_citations_no']
+  }
+
+  Note: 'Passages a shown suggestion cites, in marker order (D-26).'
+}
+
+// ───────── References ─────────
+// No row is ever deleted, so every foreign key keeps the default NO ACTION.
+
+Ref: app_users.created_by > app_users.id
+Ref: staff_leaves.staff_id > app_users.id
+Ref: staff_leaves.set_by > app_users.id
+Ref: staff_leaves.ended_by > app_users.id
+
+Ref: categories.created_by > app_users.id
+Ref: tickets.customer_id > app_users.id
+Ref: tickets.assignee_id > app_users.id
+Ref: tickets.labels_edited_by > app_users.id
+Ref: tickets.customer_category_id > categories.id
+Ref: tickets.ai_category_id > categories.id
+Ref: tickets.category_id > categories.id
+Ref: ticket_messages.ticket_id > tickets.id
+Ref: ticket_messages.author_id > app_users.id
+Ref: ticket_attachments.ticket_id > tickets.id
+
+Ref: tickets.id - ticket_summaries.ticket_id
+Ref: ticket_summaries.last_message_id > ticket_messages.id
+Ref: ticket_summaries.generated_by > app_users.id
+Ref: ai_requests.ticket_id > tickets.id
+Ref: ai_requests.requested_by > app_users.id
+
+Ref: email_notifications.ticket_id > tickets.id
+Ref: email_notifications.recipient_id > app_users.id
+Ref: email_notifications.actor_id > app_users.id
+Ref: email_notifications.message_id > ticket_messages.id
+
+Ref: policy_article_revisions.id - policy_articles.current_revision_id
+Ref: policy_articles.last_reviewed_by > app_users.id
+Ref: policy_articles.created_by > app_users.id
+Ref: policy_article_revisions.article_id > policy_articles.id
+Ref: policy_article_revisions.created_by > app_users.id
+Ref: reply_suggestions.ticket_id > tickets.id
+Ref: reply_suggestions.requested_by > app_users.id
+Ref: ai_requests.id - reply_suggestions.ai_request_id
+Ref: reply_suggestion_citations.suggestion_id > reply_suggestions.id
+Ref: reply_suggestion_citations.revision_id > policy_article_revisions.id
