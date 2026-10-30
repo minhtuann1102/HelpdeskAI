@@ -106,7 +106,7 @@ For detailed actors and the use case diagram, see [Actors and Use Cases](docs/02
 | Manage users (create Staff, lock/unlock) | No | No | Yes |
 | Set Staff on leave or back | No | No (not even themselves) | Yes |
 
-New tickets are auto-assigned to the active Staff member with the fewest open tickets; Staff on leave or locked are skipped. The backend must enforce role and assignment rules; hiding frontend controls serves UI/UX only. See [Business rules](docs/requirements/business-rules.md).
+New tickets are auto-assigned to the active Staff member with the fewest open tickets; Staff on leave or locked are skipped, and for the first 4 hours after leave a returning Staff member gets a fair share of new tickets instead of all of them. The backend must enforce role and assignment rules; hiding frontend controls serves UI/UX only. See [Business rules](docs/requirements/business-rules.md).
 
 ## 2. Information Architecture, Screen Hierarchy, and UI/UX
 

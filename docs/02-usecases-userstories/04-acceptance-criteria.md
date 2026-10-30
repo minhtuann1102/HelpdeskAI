@@ -125,6 +125,8 @@ UC-25 · BR-03
 - **AC-13.4** *Given* no active Staff exists, *when* a ticket is created, *then* it is Unassigned and appears under the Administrator's "Unassigned" filter.
 - **AC-13.5** *Given* the AI call fails, *when* a ticket is created, *then* it is still assigned.
 - **AC-13.6** *Given* a Staff member has tickets that are `Resolved` or `Closed`, *when* the load is counted, *then* those tickets are not counted (DF-01).
+- **AC-13.7** *Given* active Staff B and C each have 6 open tickets, and Staff A's leave was ended 1 hour ago with 0 open tickets, *when* new tickets are created, *then* A's load counts as 6, so the new tickets are shared among A, B, and C (about one in three each) instead of all going to A; 4 hours after End leave, A's actual count is used again (D-21, DF-27).
+- **AC-13.8** *Given* A's leave was just ended and A is the only active Staff, *when* a ticket is created, *then* it is assigned to A; the warm-up never leaves a ticket Unassigned.
 
 ### US-14 — AI classification of new tickets
 UC-24 · BR-08, BR-09
@@ -282,8 +284,8 @@ UC-27 · BR-03, BR-04, BR-18
 
 - **AC-36.1** *Given* an `Active` Staff member with 2 open tickets, *when* I (Administrator) choose Set on leave and confirm, *then* their status becomes `On leave` and both tickets are reassigned by the auto-assignment rule among the other active Staff, or become Unassigned if none remain.
 - **AC-36.2** *Given* a Staff member on leave, *when* a ticket is created, *then* it is never assigned to them, and they do not appear in the transfer or reassign list.
-- **AC-36.3** *Given* a Staff member on leave, *when* they log in, *then* they can use the system, but the tickets moved away are no longer visible to them (D-09).
-- **AC-36.4** *Given* a Staff member on leave, *when* I choose End leave, *then* their status becomes `Active`, they rejoin auto-assignment immediately, and the moved tickets are not moved back.
+- **AC-36.3** *Given* a Staff member on leave, *when* they log in, *then* they can use the system, but the tickets moved away are no longer visible to them (D-09), and logging in does not end their leave.
+- **AC-36.4** *Given* a Staff member on leave, *when* I choose End leave, *then* their status becomes `Active`, they rejoin auto-assignment immediately with the 4-hour warm-up of BR-03 (AC-13.7), and the moved tickets are not moved back.
 - **AC-36.5** *Given* a Staff member is logged in, *when* they look for a way to change their own status, *then* there is none, and a direct request to change it is rejected (D-20).
 - **AC-36.6** *Given* a Customer, an Administrator, or a `Locked` account, *when* I look at its row, *then* Set on leave is not available.
 - **AC-36.7** *Given* a `Resolved` ticket whose assignee is on leave, *when* the customer replies, *then* the ticket reopens and is auto-assigned again (BR-05).

@@ -13,7 +13,7 @@ Each requirement is small enough to implement and test independently. Cross-cutt
 | Independent | Each story produces a demonstrable outcome and names only unavoidable prerequisites (login, ticket creation, categories). |
 | Negotiable | Layout and implementation details may change while the stated outcome and permissions stay fixed. |
 | Valuable | Every story names the user benefit. System behaviours (US-13..US-16) are written for the role that benefits from them. |
-| Estimable | Inputs, limits, roles, and failure cases are explicit (DF-01..DF-18, DF-25, DF-26), and every story has a size. |
+| Estimable | Inputs, limits, roles, and failure cases are explicit (DF-01..DF-18, DF-25..DF-27), and every story has a size. |
 | Small | Each story targets one capability. Sizes: **S** = a simple screen or rule; **M** = a screen with several rules; **L** = AI integration or cross-cutting logic. |
 | Testable | Every story has Given/When/Then acceptance criteria in [Acceptance criteria](04-acceptance-criteria.md). |
 

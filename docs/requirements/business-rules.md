@@ -26,7 +26,7 @@ Only rules confirmed by the project documentation are catalogued here. Values ma
 
 ## BR-03 — Auto-assignment
 
-- **Source:** D-04, D-07, DF-01..DF-04
+- **Source:** D-04, D-07, D-21, DF-01..DF-04, DF-27
 - **Related US:** US-07, US-11, US-13, US-32, US-36
 - **Related API:** TBD (Step 6), triggered by submit ticket, lock account, set on leave, and customer reply (reopen when the assignee is locked or on leave)
 - **Rule:** When a ticket is created, the system assigns it to the **active `STAFF` user with the fewest open tickets**.
@@ -35,6 +35,7 @@ Only rules confirmed by the project documentation are catalogued here. Values ma
   - Admin, locked users, and Staff on leave are never chosen (BR-18).
   - With no active Staff, the ticket stays Unassigned.
   - Assignment does not depend on the AI result.
+  - **Warm-up after leave** (D-21, DF-27): for 4 hours after Admin ends a Staff member's leave, their load counts as the larger of their actual open tickets and the average actual open tickets of the other active Staff. With no other active Staff, their actual count is used. The system stores when each leave ended. This applies to every auto-assignment, including redistribution; manual transfer and reassignment (BR-04) are not limited.
 
 ## BR-04 — Transfer and reassignment
 
@@ -231,8 +232,8 @@ stateDiagram-v2
 - **Related API:** TBD (Step 6), set on leave and end leave
 - **Rule:**
   - Account status is `Active`, `On leave`, or `Locked`. `On leave` exists only for `STAFF` accounts.
-  - **Only Admin** can set a Staff member on leave or end their leave. Staff cannot change their own status; the server rejects such a request.
-  - Only an `Active` Staff account can be set on leave. Setting it redistributes all their open tickets with BR-03; ending leave sets `Active` and does not move tickets back.
+  - **Only Admin** can set a Staff member on leave or end their leave. Staff cannot change their own status; the server rejects such a request. Logging in never ends leave.
+  - Only an `Active` Staff account can be set on leave. Setting it redistributes all their open tickets with BR-03; ending leave sets `Active`, starts the warm-up of BR-03 (D-21), and does not move tickets back.
   - A Staff member on leave is never auto-assigned and never offered as a transfer or reassign target. They can still log in and see only the tickets still assigned to them (BR-02).
   - An on-leave account can be locked; unlocking returns it to `Active`.
   - Setting or ending leave sends no email to customers (BR-17). [Use cases and user stories](../02-usecases-userstories/README.md) · [Master traceability](../traceability/master-traceability.md)

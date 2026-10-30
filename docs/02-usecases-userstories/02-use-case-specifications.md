@@ -193,7 +193,7 @@
 ## UC-25 Auto-assign ticket
 
 - **Actor:** System · **Included by:** UC-06, UC-08, UC-23, UC-27
-- **Main flow:** pick the active Staff with the fewest open tickets (tie-break DF-02) → set the assignee and the assignment time
+- **Main flow:** pick the active Staff with the fewest open tickets, counting a Staff member in warm-up at the others' average (BR-03, DF-27; tie-break DF-02) → set the assignee and the assignment time
 - **Alternative:** no active Staff → Unassigned (DF-04)
 - **Permission:** internal
 - **Result:** the ticket has an owner · **Stories:** US-13, US-32
