@@ -1,6 +1,6 @@
 # Helpdesk AI
 
-Helpdesk AI helps small businesses turn scattered customer requests into tracked tickets. Every new ticket is assigned to a Staff member automatically, and AI helps at three points: it classifies new tickets (category, priority, sentiment), summarizes long tickets for Staff, and polishes Staff replies before they are sent. AI never blocks ticket creation and never sends anything to a customer by itself. Customers get an email when Staff reply to their ticket or change its status; the conversation itself stays on the website.
+Helpdesk AI helps small businesses turn scattered customer requests into tracked tickets. Every new ticket is assigned to a Staff member automatically, and AI helps at four points: it classifies new tickets (category, priority, sentiment), summarizes long tickets for Staff, polishes Staff replies before they are sent, and suggests replies grounded in the shop's own policies, citing them. AI never blocks ticket creation and never sends anything to a customer by itself. Customers get an email when Staff reply to their ticket or change its status; the conversation itself stays on the website.
 
 Helpdesk AI is a **customer service** help desk (tickets come from external customers), not an internal IT service desk. Examples, wireframes, and sample data use one sample domain: **a small online shop**.
 
@@ -14,7 +14,7 @@ Requirements define what Helpdesk AI must do, who uses it, the value delivered, 
 
 ### 1.2 INVEST requirements
 
-The MVP backlog includes 36 user stories. They cover registration and login, customer tickets, automatic assignment, AI classification, ticket handling with AI summary and rewrite, categories, users (including Staff on leave), dashboards, and email notifications to customers. Before a user story is ready for development, it is checked using the INVEST criteria.
+The MVP backlog includes 41 user stories. They cover registration and login, customer tickets, automatic assignment, AI classification, ticket handling with AI summary and rewrite, categories, users (including Staff on leave), dashboards, email notifications to customers, and policy articles that ground cited reply suggestions. Before a user story is ready for development, it is checked using the INVEST criteria.
 
 | Criterion | Meaning in Helpdesk AI |
 |---|---|
@@ -36,9 +36,11 @@ US-30–US-32   User management
 US-33–US-34   Dashboard
 US-35         Email notification of ticket updates (Customer)
 US-36         Set Staff on leave (Administrator)
+US-37–US-39   Policy articles (Administrator)
+US-40–US-41   Reply suggestion from policies (Staff, Administrator)
 ```
 
-Stories are prioritized with MoSCoW: 22 Must, 14 Should, 0 Could, and 8 Won't (out of scope). The complete backlog and per-story INVEST review are maintained in [User Stories (INVEST)](docs/02-usecases-userstories/03-user-stories-invest.md), the Given/When/Then criteria in [Acceptance Criteria](docs/02-usecases-userstories/04-acceptance-criteria.md), and the priorities in [MoSCoW Prioritization](docs/02-usecases-userstories/05-moscow-prioritization.md).
+Stories are prioritized with MoSCoW: 22 Must, 19 Should, 0 Could, and 7 Won't (out of scope). The complete backlog and per-story INVEST review are maintained in [User Stories (INVEST)](docs/02-usecases-userstories/03-user-stories-invest.md), the Given/When/Then criteria in [Acceptance Criteria](docs/02-usecases-userstories/04-acceptance-criteria.md), and the priorities in [MoSCoW Prioritization](docs/02-usecases-userstories/05-moscow-prioritization.md).
 
 ### 1.3 Use cases
 
@@ -54,8 +56,8 @@ flowchart TB
     subgraph system["Helpdesk AI — System Boundary"]
         direction LR
         customerCases["<b>Customer</b><br/><br/>UC-01 Log in · UC-02 Log out<br/>UC-03 Update Profile · UC-04 Change Password<br/>UC-05 Register<br/>UC-06 Submit Ticket<br/>UC-07 View Own Tickets<br/>UC-08 Reply to Own Ticket<br/>UC-09 Close Own Ticket"]
-        staffCases["<b>Staff</b> (tickets assigned to me)<br/><br/>UC-01 Log in · UC-02 Log out<br/>UC-03 Update Profile · UC-04 Change Password<br/>UC-10 View Ticket Queue · UC-11 Search and Filter<br/>UC-12 View Ticket Details · UC-13 Reply to Customer<br/>UC-14 Change Status · UC-15 Transfer Ticket<br/>UC-16 Correct AI Labels<br/>UC-17 Summarize Ticket · UC-18 Rewrite Reply<br/>UC-19 View Personal Dashboard"]
-        adminCases["<b>Administrator</b> (all tickets)<br/><br/>UC-01 Log in · UC-02 Log out<br/>UC-03 Update Profile · UC-04 Change Password<br/>UC-10 View Ticket Queue · UC-11 Search and Filter<br/>UC-12 View Ticket Details · UC-13 Reply to Customer<br/>UC-14 Change Status · UC-15 Reassign Any Ticket<br/>UC-16 Correct AI Labels<br/>UC-17 Summarize Ticket · UC-18 Rewrite Reply<br/>UC-19 View System-wide Dashboard<br/>UC-20 Manage Categories<br/>UC-21 View User List · UC-22 Create Staff Account<br/>UC-23 Lock or Unlock Account<br/>UC-27 Set Staff On Leave"]
+        staffCases["<b>Staff</b> (tickets assigned to me)<br/><br/>UC-01 Log in · UC-02 Log out<br/>UC-03 Update Profile · UC-04 Change Password<br/>UC-10 View Ticket Queue · UC-11 Search and Filter<br/>UC-12 View Ticket Details · UC-13 Reply to Customer<br/>UC-14 Change Status · UC-15 Transfer Ticket<br/>UC-16 Correct AI Labels<br/>UC-17 Summarize Ticket · UC-18 Rewrite Reply · UC-29 Suggest Reply<br/>UC-19 View Personal Dashboard"]
+        adminCases["<b>Administrator</b> (all tickets)<br/><br/>UC-01 Log in · UC-02 Log out<br/>UC-03 Update Profile · UC-04 Change Password<br/>UC-10 View Ticket Queue · UC-11 Search and Filter<br/>UC-12 View Ticket Details · UC-13 Reply to Customer<br/>UC-14 Change Status · UC-15 Reassign Any Ticket<br/>UC-16 Correct AI Labels<br/>UC-17 Summarize Ticket · UC-18 Rewrite Reply · UC-29 Suggest Reply<br/>UC-19 View System-wide Dashboard<br/>UC-20 Manage Categories<br/>UC-21 View User List · UC-22 Create Staff Account<br/>UC-23 Lock or Unlock Account<br/>UC-27 Set Staff On Leave<br/>UC-28 Manage Policy Articles"]
         systemCases["<b>System</b> (automatic)<br/><br/>UC-24 Classify Ticket<br/>UC-25 Auto-assign Ticket<br/>UC-26 Notify Customer by Email"]
     end
 
@@ -70,7 +72,7 @@ flowchart TB
     adminCases -.->|"UC-23, UC-27 include UC-25"| systemCases
     systemCases -.->|"classification"| llm
     systemCases -.->|"notification email"| email
-    staffCases -.->|"summary and rewrite"| llm
+    staffCases -.->|"summary, rewrite, and suggestion"| llm
 
     classDef actor fill:none,stroke:none,color:#111
     classDef external fill:#666,color:#fff,stroke:#333
@@ -98,12 +100,13 @@ For detailed actors and the use case diagram, see [Actors and Use Cases](docs/02
 | Receive an email when Staff reply or change the status | Own tickets | No | No |
 | View ticket queue and details | No | Assigned to me | All tickets |
 | Reply, change status, correct AI labels | No | Assigned to me | All tickets |
-| AI summary and AI reply rewrite | No | Assigned to me | All tickets |
+| AI summary, AI reply rewrite, and AI reply suggestion | No | Assigned to me | All tickets |
 | Transfer / reassign tickets | No | Transfer own | Reassign any |
 | See priority, sentiment, confidence, AI reason | No | Yes | Yes |
 | Dashboard | No | Personal | System-wide |
 | Manage categories | No | No | Yes |
 | Manage users (create Staff, lock/unlock) | No | No | Yes |
+| Manage policy articles | No | No | Yes |
 | Set Staff on leave or back | No | No (not even themselves) | Yes |
 
 New tickets are auto-assigned to the active Staff member with the fewest open tickets; Staff on leave or locked are skipped, and for the first 4 hours after a Staff account is created, comes back from leave, or is unlocked, that Staff member gets a fair share of new tickets instead of all of them. The backend must enforce role and assignment rules; hiding frontend controls serves UI/UX only. See [Business rules](docs/requirements/business-rules.md).
@@ -141,7 +144,7 @@ flowchart TB
     subgraph workspace["Ticket workspace (Staff: own tickets · Admin: all)"]
         direction TB
         queue["<b>SCR-20 Ticket Queue</b><br/>• Tickets by urgency<br/>• AI labels, Unclassified badge<br/>• Search and filters"]
-        handling["<b>SCR-21 Ticket Handling</b><br/>• Conversation<br/>• AI label panel + edit<br/>• AI summary<br/>• Reply box + AI rewrite<br/>• Status, transfer"]
+        handling["<b>SCR-21 Ticket Handling</b><br/>• Conversation<br/>• AI label panel + edit<br/>• AI summary<br/>• Reply box + AI rewrite<br/>• AI reply suggestion with citations<br/>• Status, transfer"]
         dashboard["<b>SCR-22 Dashboard</b><br/>• Tickets by status, category, sentiment<br/>• Avg first response time<br/>• AI label correction rate"]
         queue --- handling
     end
@@ -149,6 +152,7 @@ flowchart TB
     subgraph administration["Administration (Admin only)"]
         direction TB
         categories["<b>SCR-30 Categories</b><br/>• Category list<br/>• Add / edit (description for AI)<br/>• Hide / show"]
+        policies["<b>SCR-36 Policies</b><br/>• Policy articles + review status<br/>• Add / edit, mark reviewed<br/>• Hide / show"]
         users["<b>SCR-31 Users</b><br/>• User list + filters<br/>• Create Staff<br/>• Lock / unlock<br/>• Staff on leave / back"]
     end
 
@@ -164,7 +168,7 @@ flowchart TB
     classDef screen fill:#fff,color:#111,stroke:#1168bd,text-align:left
     classDef ai fill:#f3ecfb,color:#111,stroke:#7b3fbf,text-align:left
     class customer,staff,admin actor
-    class login,register,profile,myTickets,submit,custDetail,queue,dashboard,categories,users screen
+    class login,register,profile,myTickets,submit,custDetail,queue,dashboard,categories,users,policies screen
     class handling ai
 ```
 
@@ -201,6 +205,10 @@ Fallback to "Unclassified" when AI fails, so Staff triage manually:
 Reply rewrite shown beside the draft; nothing is sent until Staff click Send:
 
 ![Reply rewrite result](docs/images/staff/21c-ticket-handling-rewrite-result.png)
+
+Reply suggestion grounded in the shop's policies, with the cited passages; the customer asked about Friday, but no policy promises a date, so neither does the suggestion:
+
+![Reply suggestion with citations](docs/images/staff/21f-ticket-handling-suggest-result.png)
 
 Summary marked outdated after a new message:
 
