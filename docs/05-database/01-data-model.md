@@ -85,11 +85,11 @@ The LLM call never runs inside a database transaction, so no lock is held for up
 | Auto-assignment (new ticket, redistribution, reopen) | Take one assignment lock, read the loads, set `assignee_id`, `assigned_at`, `version`, and the Staff member's `last_assigned_at` | — |
 | Staff or Admin reply | `ticket_messages` row; ticket `version`, `updated_at`, and, on the first reply, `first_response_at` and `NEW → IN_PROGRESS`; one `email_notifications` row | Send the email |
 | "Send and wait for customer" | Reply, status change (version-checked), and **one** email row. On a conflict nothing is saved (BR-19) | Send the email |
-| Customer reply | `ticket_messages` row and the automatic T4 or T6. If the reply reopens the ticket (T6) and the assignee is locked or on leave, auto-assignment runs in the same transaction (BR-05) | — |
+| Customer reply | `ticket_messages` row, the ticket `version` and `updated_at`, and the automatic T4 or T6. If the reply reopens the ticket (T6) and the assignee is locked or on leave, auto-assignment runs in the same transaction (BR-05) | — |
 | Status change, label correction, transfer, reassignment | One version-checked update of the ticket (plus an email row for a status change) | Send the email |
 | Lock a Staff member or set them on leave | `app_users.status`, the `staff_leaves` row (opened, or closed with `ACCOUNT_LOCKED`), and redistribution of every open ticket | — |
 | Unlock or end leave | `status = ACTIVE`, `assignment_joined_at = now()`, and the open leave closed with `ENDED_BY_ADMIN` | — |
-| Classification result | The guarded ticket update (below) and the `ai_requests` row | — |
+| Classification result | The guarded ticket update (below), which also increments `version` (BR-19), and the `ai_requests` row | — |
 | Summary | Upsert of `ticket_summaries` and the `ai_requests` row; the ticket version is unchanged | — |
 | Save a policy article | New revision, then the article's `title`, `current_revision_id`, and `last_reviewed_at`, after the duplicate checks | — |
 | Suggestion result | Check that every cited revision is still current, then `reply_suggestions`, its citations, and the `ai_requests` row | — |
@@ -98,7 +98,7 @@ The LLM call never runs inside a database transaction, so no lock is held for up
 
 - **Ticket version** (BR-19): a checked action runs `UPDATE tickets SET …, version = version + 1 WHERE id = :id AND version = :seen`. Zero rows updated means the ticket changed, and nothing is saved.
 - **Auto-assignment** takes a single transaction-level lock (for example a PostgreSQL advisory lock), so two tickets created at the same moment never read the same loads and land on the same person.
-- **Late classification** (DF-28): the result is written with `WHERE classification_status = 'PENDING' AND created_at > now() - interval '30 seconds'`. Zero rows means the result is discarded. The final label is filled only when `labels_edited_at` is NULL (BR-08 rule 10). Whether a job also rewrites stale `PENDING` rows is decided in Step 7; reads already treat them as `AI_ERROR`.
+- **Late classification** (DF-28): the result is written with `UPDATE tickets SET …, version = version + 1 WHERE id = :id AND classification_status = 'PENDING' AND created_at > now() - interval '30 seconds'`. Zero rows means the result is discarded. The final label is filled only when `labels_edited_at` is NULL (BR-08 rule 10). Whether a job also rewrites stale `PENDING` rows is decided in Step 7; reads already treat them as `AI_ERROR`.
 - **Policy revisions**: `(article_id, revision_no)` is unique, so a double save cannot create two revisions with the same number.
 
 ## Duplicate and change checks for policy articles
