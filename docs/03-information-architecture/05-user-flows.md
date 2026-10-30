@@ -56,7 +56,7 @@ flowchart TD
 
 ## Staff handles a ticket with AI
 
-The three AI features meet here: labels from classification, Summarize, and Rewrite. Every AI step has a failure path that leaves the Staff member able to continue manually.
+The four AI features meet here: labels from classification, Summarize, Suggest reply, and Rewrite. Every AI step has a failure path that leaves the Staff member able to continue manually.
 
 ```mermaid
 flowchart TD
@@ -71,12 +71,19 @@ flowchart TD
     correct --> needSummary
 
     needSummary -->|"Yes"| summarize["Click Summarize"]:::ai
-    needSummary -->|"No"| draft["Write a draft reply"]
+    needSummary -->|"No"| policyQ{"Question about<br/>a shop policy?"}
     summarize --> summaryOk{"AI answered<br/>within 20 s?"}
     summaryOk -->|"Yes"| readSummary["Read the 3–4 line summary"]
     summaryOk -->|"No"| readThread["Error with Retry<br/>read the thread instead"]
-    readSummary --> draft
-    readThread --> draft
+    readSummary --> policyQ
+    readThread --> policyQ
+
+    policyQ -->|"Yes"| suggest["Click Gợi ý trả lời"]:::ai
+    policyQ -->|"No"| draft["Write a draft reply"]
+    suggest --> suggestOk{"Suggestion with citations<br/>within 20 s?"}
+    suggestOk -->|"Yes"| checkSources["Check the cited passages<br/>Use, edit, or discard"]
+    suggestOk -->|"No policy fits,<br/>error, or timeout"| draft
+    checkSources --> sendChoice
 
     draft --> polish{"Polish the wording?"}
     polish -->|"Yes"| rewrite["Click Rewrite"]:::ai

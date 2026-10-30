@@ -15,11 +15,13 @@
 | `SCR-12` | Ticket Detail | Page | Customer | Status, category, description, attachments, conversation, reply box, Close ticket; no AI data | US-10, US-11, US-12 |
 | `SCR-13` | Close ticket confirmation | Modal on SCR-12 | Customer | Ticket number, warning that a closed ticket cannot be reopened | US-12 |
 | `SCR-20` | Ticket Queue | Page | Staff (own), Administrator (all) | Ticket table ordered by urgency, priority and sentiment chips, AI marker, Unclassified badge, search, filters (Administrator: assignee, Unassigned) | US-17, US-18 |
-| `SCR-21` | Ticket Handling | Page | Staff (own), Administrator (all) | Header (customer, status control, assignee, Transfer); conversation; **AI label panel** (final vs AI label, confidence, reason, edit); **AI summary panel**; reply box with **Rewrite**, Send, Send and wait | US-19, US-20, US-21, US-24, US-25, US-26 |
+| `SCR-21` | Ticket Handling | Page | Staff (own), Administrator (all) | Header (customer, status control, assignee, Transfer); conversation; **AI label panel** (final vs AI label, confidence, reason, edit); **AI summary panel**; reply box with **Rewrite**, **Gợi ý trả lời** (cited suggestion), Send, Send and wait | US-19, US-20, US-21, US-24, US-25, US-26, US-40, US-41 |
 | `SCR-23` | Transfer / reassign | Modal on SCR-21 | Staff (transfer own), Administrator (reassign any) | Active Staff list with open-ticket counts; Administrator can also choose self | US-22, US-23 |
 | `SCR-22` | Dashboard | Page | Staff (personal), Administrator (system-wide) | Date range; tickets by status, category, sentiment; average first response time; label correction rate | US-33, US-34 |
 | `SCR-30` | Categories | Page | Administrator | Category list (name, description, active/hidden), Add, Edit, Hide/Show | US-27, US-28, US-29 |
 | `SCR-32` | Category form | Modal on SCR-30 | Administrator | Name, description (marked "used by AI") | US-27, US-28 |
+| `SCR-36` | Policies | Page | Administrator | Policy article list (title, excerpt, last reviewed, active/hidden, "Cần xem lại" when overdue), Add, Edit, Mark reviewed, Hide/Show | US-37, US-38, US-39 |
+| `SCR-37` | Policy article form | Modal on SCR-36 | Administrator | Title, body (marked "AI quotes this text"), last-reviewed date | US-37, US-38 |
 | `SCR-31` | Users | Page | Administrator | User list (name, email, role, status Active / On leave / Locked, created), search, role and status filters, Create Staff, Lock/Unlock, Set on leave / End leave (Staff only) | US-30, US-32, US-36 |
 | `SCR-33` | Create Staff | Modal on SCR-31 | Administrator | Full name, email, initial password; role fixed to Staff | US-31 |
 | `SCR-34` | Lock / unlock confirmation | Modal on SCR-31 | Administrator | User name; for Staff, a note that open tickets will be redistributed | US-32 |
@@ -49,8 +51,11 @@
 | US-24 | `SCR-21` AI label panel → Edit labels |
 | US-25 | `SCR-21` AI summary panel → Summarize / Regenerate |
 | US-26 | `SCR-21` reply box → Rewrite → compare → Use / Discard |
+| US-40, US-41 | `SCR-21` reply box → Gợi ý trả lời → suggestion with citations, or "no relevant policy" → Use / Discard |
 | US-27, US-28 | `SCR-30` Add / Edit → `SCR-32` |
 | US-29 | `SCR-30` Hide / Show |
+| US-37, US-38 | `SCR-36` Add / Edit → `SCR-37`; Mark reviewed on the list |
+| US-39 | `SCR-36` Hide / Show |
 | US-30 | `SCR-31` list, search, filters |
 | US-31 | `SCR-31` Create Staff → `SCR-33` |
 | US-32 | `SCR-31` Lock / Unlock → `SCR-34` |
@@ -69,6 +74,7 @@ Filled in by Step 6 (OpenAPI).
 | SCR-20, SCR-21, SCR-23 | TBD |
 | SCR-22 | TBD |
 | SCR-30, SCR-32 | TBD |
+| SCR-36, SCR-37 | TBD |
 | SCR-31, SCR-33, SCR-34, SCR-35 | TBD |
 | SCR-40 | TBD |
 

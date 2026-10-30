@@ -20,7 +20,7 @@
 | Success | Confirm the action, close the modal if any, and refresh the affected list. |
 | Conflict (ticket changed meanwhile) | Nothing is saved; keep the user's input (draft, chosen status or labels) and show "Ticket vừa được cập nhật. Tải lại để xem thay đổi." with a Reload action (BR-19). |
 | Lost access while editing | The ticket was transferred away: keep the draft so it can be copied, explain that the ticket now belongs to someone else, and link back to the queue (BR-19). |
-| Destructive confirmation | Name the item and the effect: closing a ticket is final; locking a Staff member or setting them on leave redistributes their open tickets; hiding a category removes it from the form and AI. |
+| Destructive confirmation | Name the item and the effect: closing a ticket is final; locking a Staff member or setting them on leave redistributes their open tickets; hiding a category removes it from the form and AI; hiding a policy article stops suggestions from using it. |
 
 ### AI states
 
@@ -37,6 +37,11 @@
 | Rewrite loading | SCR-21 | Spinner on Rewrite; Rewrite and Send are disabled until the result or an error arrives. |
 | Rewrite result | SCR-21 | Rewrite shown next to the original draft with **Use** and **Discard**; nothing is sent. |
 | Rewrite error or timeout | SCR-21 | Inline error; the draft is unchanged and can still be sent. |
+| Suggestion unavailable | SCR-21 | No active, reviewed policy article exists: "Gợi ý trả lời" is disabled with the hint "Chưa có chính sách nào để AI dựa vào" (AC-41.4). |
+| Suggestion loading | SCR-21 | Spinner on "Gợi ý trả lời"; Rewrite, Suggest, and Send are disabled until the result or an error arrives. |
+| Suggestion result | SCR-21 | The suggestion next to the draft, with a source chip per cited article that shows its title and quoted passage; **Use** and **Discard**; nothing is sent. |
+| No relevant policy | SCR-21 | Neutral notice "Không tìm thấy chính sách phù hợp"; the draft is unchanged; Staff write the reply themselves (US-41). |
+| Suggestion error or timeout | SCR-21 | Inline error with Retry; the draft is unchanged. |
 
 ## Responsive and accessibility rules
 

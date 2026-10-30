@@ -37,7 +37,7 @@ flowchart TB
     subgraph workspace["Ticket workspace (Staff: own tickets · Admin: all)"]
         direction TB
         queue["<b>SCR-20 Ticket Queue</b><br/>• Tickets by urgency<br/>• AI labels, Unclassified badge<br/>• Search and filters"]
-        handling["<b>SCR-21 Ticket Handling</b><br/>• Conversation<br/>• AI label panel + edit<br/>• AI summary<br/>• Reply box + AI rewrite<br/>• Status, transfer"]
+        handling["<b>SCR-21 Ticket Handling</b><br/>• Conversation<br/>• AI label panel + edit<br/>• AI summary<br/>• Reply box + AI rewrite<br/>• AI reply suggestion with citations<br/>• Status, transfer"]
         dashboard["<b>SCR-22 Dashboard</b><br/>• Tickets by status, category, sentiment<br/>• Avg first response time<br/>• AI label correction rate"]
         queue --- handling
     end
@@ -45,6 +45,7 @@ flowchart TB
     subgraph administration["Administration (Admin only)"]
         direction TB
         categories["<b>SCR-30 Categories</b><br/>• Category list<br/>• Add / edit (description for AI)<br/>• Hide / show"]
+        policies["<b>SCR-36 Policies</b><br/>• Policy articles + review status<br/>• Add / edit, mark reviewed<br/>• Hide / show"]
         users["<b>SCR-31 Users</b><br/>• User list + filters<br/>• Create Staff<br/>• Lock / unlock<br/>• Staff on leave / back"]
     end
 
@@ -60,7 +61,7 @@ flowchart TB
     classDef screen fill:#fff,color:#111,stroke:#1168bd,text-align:left
     classDef ai fill:#f3ecfb,color:#111,stroke:#7b3fbf,text-align:left
     class customer,staff,admin actor
-    class login,register,profile,myTickets,submit,custDetail,queue,dashboard,categories,users screen
+    class login,register,profile,myTickets,submit,custDetail,queue,dashboard,categories,users,policies screen
     class handling ai
 ```
 
@@ -70,6 +71,6 @@ flowchart TB
 |---|---|---|
 | Customer | SCR-10 My Tickets | SCR-01, SCR-02, SCR-10, SCR-11, SCR-12, SCR-40 |
 | Staff | SCR-20 Ticket Queue (my tickets) | SCR-01, SCR-20, SCR-21, SCR-22 (personal), SCR-40 |
-| Administrator | SCR-22 Dashboard (system-wide) | SCR-01, SCR-20 (all tickets), SCR-21, SCR-22, SCR-30, SCR-31, SCR-40 |
+| Administrator | SCR-22 Dashboard (system-wide) | SCR-01, SCR-20 (all tickets), SCR-21, SCR-22, SCR-30, SCR-31, SCR-36, SCR-40 |
 
 **Related:** [Step index](README.md)

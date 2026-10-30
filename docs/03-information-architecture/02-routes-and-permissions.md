@@ -6,7 +6,7 @@
 
 ## Routes
 
-`/login` `/register` `/my-tickets` `/my-tickets/new` `/my-tickets/:id` `/queue` `/queue/:id` `/dashboard` `/admin/categories` `/admin/users` `/profile` `/403`
+`/login` `/register` `/my-tickets` `/my-tickets/new` `/my-tickets/:id` `/queue` `/queue/:id` `/dashboard` `/admin/categories` `/admin/users` `/admin/policies` `/profile` `/403`
 
 - Staff and Administrator share `/queue` and `/dashboard`; the server returns only the tickets and numbers the role may see (BR-02, BR-16).
 - Modals have no route of their own; they open on top of their list page (DF-20).
@@ -20,7 +20,7 @@
 | SCR-20 Ticket Queue | — | Assigned to me | All tickets |
 | SCR-21 Ticket Handling | — | Assigned to me | All tickets |
 | SCR-22 Dashboard | — | Personal | System-wide |
-| SCR-30 Categories, SCR-31 Users | — | — | ✓ |
+| SCR-30 Categories, SCR-31 Users, SCR-36 Policies | — | — | ✓ |
 | SCR-40 Profile | ✓ | ✓ | ✓ |
 | Unauthorized | `/403` | `/403` | `/403` |
 
