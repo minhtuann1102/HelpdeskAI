@@ -68,6 +68,17 @@ AI takes over more of the work one level at a time. Each level keeps the guardra
 - **Level 2 — automatic answers for simple questions.** A fixed list of low-risk topics (for example order status or delivery time) is answered automatically when retrieval is confident. Every other ticket, and any `angry` or `urgent` ticket, goes to Staff as today. It changes G-07 and W-07, so it needs the Level 1 measurements first.
 - **Level 3 — chatbot.** A chat window on the website answers first and hands the conversation to Staff as a ticket when it cannot help. It needs real-time chat (W-01) and changes W-08.
 
+## Scheduled leave (Admin only)
+
+In the MVP, Admin sets and ends leave by hand at the moment it happens (D-20). If Admin forgets to end it, a returning Staff member gets no tickets. Scheduled leave lets Admin plan it ahead. Only Admin can use it, as today, and logging in still never ends leave.
+
+- **One form, by half-day session.** "From" and "To", each a date plus *sáng* (from 0:00) or *chiều* (from 12:00). "From" defaults to now. An empty "To" means the leave lasts until Admin ends it. This covers both "set the return date only" and "plan the whole leave ahead".
+- **Starts and ends by itself.** A background job checks every few minutes. At "From" it sets the Staff member On leave and redistributes their tickets. At "To" it sets them back to Active, which starts the warm-up (D-21).
+- **Redistribution is a choice.** A "redistribute open tickets" checkbox is on by default for leave of one day or more, and off for a single session. For a half-day absence, the Staff member only stops getting new tickets and keeps the ones they are working on.
+- **Admin can still override.** End leave early, or extend it by editing "To". Lock wins over leave: leave that ends while the account is locked keeps it locked.
+- **History.** Who set each leave, when, and its From and To, for later review.
+- **Data model (Step 5).** A status column on the user is enough for the MVP. A separate `staff_leave` table (Staff, from, to, set by) costs one table now but makes this feature and the leave history a small change later. Decide when designing the ERD.
+
 ## Other candidates
 
 | Item | Idea | Why it waits | Related |
@@ -77,6 +88,5 @@ AI takes over more of the work one level at a time. Each level keeps the guardra
 | SLA escalation | Time limits per priority; reassign or alert when a ticket waits too long | The brief excludes automatic SLA (W-06) | W-06, G-03 |
 | AI category hint | When the customer chose a category, AI still proposes one in the same call and shows it to Staff if it differs | Changes BR-08 rule 4, AC-14.3, AC-19.2, and SCR-21 | BR-08 |
 | Transfer note | An optional "why" note when transferring a ticket | Not requested yet; adds one field | BR-04 |
-| Leave from a calendar | On leave set automatically from a shift or leave calendar | The MVP sets it by hand (D-20) | R-08, BR-18 |
 
 **Related:** [Step index](README.md) · [MVP scope](05-scope.md)

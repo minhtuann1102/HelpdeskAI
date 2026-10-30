@@ -17,7 +17,7 @@ Step 1 analyses **Helpdesk AI** top-down: context, problem, measurable goals, st
 | [06-risks.md](06-risks.md) | Risks R-01..R-13 and mitigations |
 | [07-ai-vs-rule-based.md](07-ai-vs-rule-based.md) | Where rules break down, where rules stay (hybrid design) |
 | [08-glossary.md](08-glossary.md) | Terms used across the documentation |
-| [09-future-work.md](09-future-work.md) | After the MVP: automation roadmap (policy knowledge base and reply suggestions, then automatic answers, then chatbot) and other candidates |
+| [09-future-work.md](09-future-work.md) | After the MVP: automation roadmap (policy knowledge base and reply suggestions, then automatic answers, then chatbot), scheduled leave, and other candidates |
 
 Also part of Step 1: the [product mind map](../mindmap.png) and the [problem traceability](../traceability/master-traceability.md#problem-traceability).
 
