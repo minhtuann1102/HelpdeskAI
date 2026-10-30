@@ -26,7 +26,7 @@ These values make the stories testable. They apply unless the user changes them.
 | DF-03 | Admin is never auto-assigned; Admin receives tickets only by manual reassignment (O-07). |
 | DF-04 | If no active Staff exists, the ticket stays **Unassigned** and Admin assigns it manually. |
 | DF-05 | **Locking a Staff account redistributes their open tickets** using the auto-assignment rule. |
-| DF-06 | A reopened ticket whose assignee is locked is auto-assigned again. |
+| DF-06 | A reopened ticket whose assignee is locked or on leave (DF-26) is auto-assigned again. |
 | DF-07 | If the customer chose a category and the AI fails or has low confidence, the category is kept; priority and sentiment become "Unclassified" (O-04). |
 | DF-08 | No automatic AI retry. Unclassified tickets are triaged by a human. |
 | DF-09 | AI settings: confidence threshold 0.6; timeout 10 s for classification, 20 s for summary and rewrite. Set in server configuration; **no settings screen** in the MVP. |
@@ -40,5 +40,6 @@ These values make the stories testable. They apply unless the user changes them.
 | DF-17 | The dashboard covers the last 30 days by ticket creation date unless the user picks another range. |
 | DF-18 | Categories are never deleted in the MVP, only hidden. |
 | DF-25 | **Notification email** (D-19): one email per Staff or Admin action, sent to the customer's account email from a no-reply address. It contains the ticket number, title, what changed (new reply or new status), and a link to the ticket. It does **not** contain the reply text, and it asks the customer to reply on the website. No unsubscribe option in the MVP. |
+| DF-26 | **On leave** (D-20): only an `Active` Staff account can be set on leave. Setting it redistributes **all** their open tickets with the auto-assignment rule; ending leave sets the account back to `Active` and does not move tickets back. A Staff member on leave can still log in. An on-leave account can be locked; unlocking returns it to `Active`. Side effect, as after unlock or for a new Staff: a returning Staff member has 0 open tickets, so they receive new tickets first until their load catches up. |
 
 **Related:** [Step index](README.md)

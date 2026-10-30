@@ -14,7 +14,7 @@
 | M-04 | Ticket handling (Staff, and Admin per D-03) | **Personal queue of auto-assigned tickets** (D-04); transfer a ticket to another Staff member; change status; reply to the customer; search and filter; correct AI labels; AI summary; AI reply rewrite. Admin sees all tickets and can reassign any of them. |
 | M-05 | AI assistance | Classification and sentiment on creation; ticket summary on demand; reply rewrite on demand (see [Why AI instead of rule-based](07-ai-vs-rule-based.md) and the brief's AI design). |
 | M-06 | Category management | Admin adds, edits, and hides categories (name and description; the description is used as AI context). |
-| M-07 | User management | Admin lists users, creates Staff accounts, locks and unlocks accounts. |
+| M-07 | User management | Admin lists users, creates Staff accounts, locks and unlocks accounts, and sets Staff on leave and back (D-20). |
 | M-08 | Dashboard | **Admin (system-wide):** tickets by status, category, and sentiment; average response time; label correction rate. **Staff (personal, D-05):** the same metrics limited to tickets assigned to them. |
 
 **Ticket lifecycle:** `New → In Progress → Waiting for Customer → Resolved → Closed`. Allowed transitions and who may trigger them: [BR-06](../requirements/business-rules.md#br-06--ticket-status-transitions).

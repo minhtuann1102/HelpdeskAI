@@ -163,17 +163,19 @@ Rows also show the AI states *Classification pending* (#1046), *Priority raised 
 | `form-error` | Validation error | Duplicate name (ignoring case) and missing description (AC-27.2, AC-27.3). |
 | `hide-confirm` | Destructive confirmation | Names the category and the effect on customers, AI, and old tickets. |
 
-### SCR-31 Users, SCR-33 and SCR-34 — [`31-users.html`](wireframes/31-users.html) · [PNG](../images/admin/31-users.png)
+### SCR-31 Users, SCR-33, SCR-34 and SCR-35 — [`31-users.html`](wireframes/31-users.html) · [PNG](../images/admin/31-users.png)
 
 | # | Note |
 |---|---|
 | 1 | Create Staff only; role fixed (DF-13). |
 | 2 | Lock / unlock; own account cannot be locked (AC-32.4). |
+| 3 | "Đang nghỉ" is set and ended only here, by the Administrator; Staff rows only. There is no leave control on SCR-40, so Staff cannot change their own status (AC-36.5). |
 
 | State | Source | Behavior |
 |---|---|---|
 | `create-staff` | — | SCR-33 form; the new Staff joins auto-assignment ([PNG](../images/admin/31b-create-staff.png)). |
 | `lock-confirm` | Destructive confirmation | SCR-34 warns that 3 open tickets will be redistributed (DF-05) ([PNG](../images/admin/31c-lock-account.png)). |
+| `leave-confirm` | Destructive confirmation | SCR-35: the Staff member can still log in but gets no new tickets or transfers; 2 open tickets will be redistributed and not moved back (DF-26) ([PNG](../images/admin/31d-set-on-leave.png)). "Kết thúc nghỉ" applies at once with a success toast. |
 | `empty-filtered` | Empty (filtered) | "Không tìm thấy người dùng" with **Xóa bộ lọc**. |
 
 ## States without a dedicated variant

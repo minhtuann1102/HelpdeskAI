@@ -14,6 +14,7 @@
     <li><a href="31-users.html">default</a></li>
     <li><a href="31-users.html?state=create-staff">SCR-33 create-staff</a></li>
     <li><a href="31-users.html?state=lock-confirm">SCR-34 lock-confirm</a></li>
+    <li><a href="31-users.html?state=leave-confirm">SCR-35 leave-confirm</a></li>
     <li><a href="31-users.html?state=empty-filtered">empty-filtered</a></li>
   </ul>
   <span>Sample data: fictional people and shop</span>
@@ -65,7 +66,7 @@
           <input class="input" type="search" value="minh khoa" aria-label="Tìm người dùng" data-show="empty-filtered">
         </div>
         <select class="select" aria-label="Vai trò"><option>Mọi vai trò</option><option>Khách hàng</option><option>Nhân viên hỗ trợ</option><option>Quản trị viên</option></select>
-        <select class="select" aria-label="Trạng thái"><option>Mọi trạng thái</option><option>Hoạt động</option><option>Đã khóa</option></select>
+        <select class="select" aria-label="Trạng thái"><option>Mọi trạng thái</option><option>Hoạt động</option><option>Đang nghỉ</option><option>Đã khóa</option></select>
       </div>
 
       <div class="table-wrap">
@@ -88,7 +89,7 @@
               <td><span class="chip chip-ok">Hoạt động</span></td>
               <td class="num">7</td>
               <td class="muted">03/09/2026</td>
-              <td><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-lock"></use></svg>Khóa</button></td>
+              <td><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-clock"></use></svg>Đặt nghỉ</button><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-lock"></use></svg>Khóa</button></td>
             </tr>
             <tr>
               <td><span class="cell-person"><span class="avatar avatar-staff">NA</span><span class="t-title" style="min-width:0"><b>Nguyễn An</b><span>an.nguyen@lacohome.example</span></span></span></td>
@@ -96,7 +97,7 @@
               <td><span class="chip chip-ok">Hoạt động</span></td>
               <td class="num">3</td>
               <td class="muted">03/09/2026</td>
-              <td><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-lock"></use></svg>Khóa</button> <span class="callout" aria-hidden="true">2</span></td>
+              <td><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-clock"></use></svg>Đặt nghỉ</button><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-lock"></use></svg>Khóa</button> <span class="callout" aria-hidden="true">2</span></td>
             </tr>
             <tr>
               <td><span class="cell-person"><span class="avatar avatar-staff">LC</span><span class="t-title" style="min-width:0"><b>Lê Chi</b><span>chi.le@lacohome.example</span></span></span></td>
@@ -104,7 +105,15 @@
               <td><span class="chip chip-ok">Hoạt động</span></td>
               <td class="num">2</td>
               <td class="muted">15/09/2026</td>
-              <td><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-lock"></use></svg>Khóa</button></td>
+              <td><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-clock"></use></svg>Đặt nghỉ</button><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-lock"></use></svg>Khóa</button></td>
+            </tr>
+            <tr>
+              <td><span class="cell-person"><span class="avatar">VT</span><span class="t-title" style="min-width:0"><b>Võ Minh Thư</b><span>thu.vo@lacohome.example</span></span></span></td>
+              <td>Nhân viên hỗ trợ</td>
+              <td><span class="chip chip-leave"><svg class="i i-sm"><use href="#i-clock"></use></svg>Đang nghỉ</span> <span class="callout" aria-hidden="true">3</span></td>
+              <td class="num muted">0</td>
+              <td class="muted">20/09/2026</td>
+              <td><button class="btn btn-sm" type="button">Kết thúc nghỉ</button><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-lock"></use></svg>Khóa</button></td>
             </tr>
             <tr>
               <td><span class="cell-person"><span class="avatar">ĐV</span><span class="t-title" style="min-width:0"><b>Đặng Quốc Việt</b><span>viet.dang@lacohome.example</span></span></span></td>
@@ -140,7 +149,7 @@
           <button class="btn" type="button"><svg class="i i-sm"><use href="#i-x"></use></svg>Xóa bộ lọc</button>
         </div>
 
-        <div class="table-foot" data-hide="empty-filtered"><span>7 người dùng: 1 quản trị viên, 4 nhân viên hỗ trợ, 2 khách hàng</span><span>Trang 1/1</span></div>
+        <div class="table-foot" data-hide="empty-filtered"><span>8 người dùng: 1 quản trị viên, 5 nhân viên hỗ trợ, 2 khách hàng</span><span>Trang 1/1</span></div>
       </div>
     </main>
   </div>
@@ -195,6 +204,29 @@
     <div class="modal-foot">
       <button class="btn btn-quiet" type="button">Hủy</button>
       <button class="btn btn-danger-solid" type="button"><svg class="i i-sm"><use href="#i-lock"></use></svg>Khóa tài khoản</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCR-35 Set on leave confirmation -->
+<div class="scrim" data-show="leave-confirm">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="leave-title">
+    <div class="modal-head">
+      <div class="stack" style="gap:4px">
+        <h2 id="leave-title">Chuyển Lê Chi sang trạng thái nghỉ?</h2>
+        <p class="small muted">Lê Chi vẫn đăng nhập được nhưng không nhận ticket mới và không có trong danh sách chuyển ticket cho đến khi bạn kết thúc nghỉ.</p>
+      </div>
+      <button class="icon-btn" type="button" aria-label="Đóng"><svg class="i"><use href="#i-x"></use></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="notice notice-neutral">
+        <svg class="i"><use href="#i-swap"></use></svg>
+        <span><b style="color:var(--graphite)">2 ticket đang mở sẽ được chia lại</b> cho nhân viên đang hoạt động có ít ticket nhất. Khi kết thúc nghỉ, các ticket này không tự quay về.</span>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-quiet" type="button">Hủy</button>
+      <button class="btn btn-primary" type="button"><svg class="i i-sm"><use href="#i-clock"></use></svg>Chuyển sang nghỉ</button>
     </div>
   </div>
 </div>

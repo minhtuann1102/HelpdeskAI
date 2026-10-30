@@ -18,7 +18,7 @@
 | Forbidden | Show SCR-90 with a link back to the role's home page. |
 | Saving | Disable the submit button to prevent double submission and show progress. |
 | Success | Confirm the action, close the modal if any, and refresh the affected list. |
-| Destructive confirmation | Name the item and the effect: closing a ticket is final; locking a Staff member redistributes their open tickets; hiding a category removes it from the form and AI. |
+| Destructive confirmation | Name the item and the effect: closing a ticket is final; locking a Staff member or setting them on leave redistributes their open tickets; hiding a category removes it from the form and AI. |
 
 ### AI states
 

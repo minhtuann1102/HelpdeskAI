@@ -1,6 +1,6 @@
 # Master Traceability Matrix — Helpdesk AI MVP
 
-> Design status: MVP — updated at every step (last update: after Step 4, D-19 email notifications; wireframes for each screen are listed in [Screen notes and states](../04-uiux/02-screen-notes.md))
+> Design status: MVP — updated at every step (last update: after Step 4, D-19 email notifications and D-20 Staff on leave; wireframes for each screen are listed in [Screen notes and states](../04-uiux/02-screen-notes.md))
 >
 > Implementation status: NOT STARTED
 
@@ -22,7 +22,7 @@ Columns marked TBD are filled in by the step that owns them: Screen (Step 3), Da
 | US-10 | UC-07 | AC-10.1–AC-10.3 | BR-02 | SCR-12 | TBD | TBD | TBD |
 | US-11 | UC-08 | AC-11.1–AC-11.5 | BR-05, BR-06, BR-07 | SCR-12 | TBD | TBD | TBD |
 | US-12 | UC-09 | AC-12.1–AC-12.2 | BR-06 | SCR-12, SCR-13 | TBD | TBD | TBD |
-| US-13 | UC-25 | AC-13.1–AC-13.6 | BR-03 | — (system) | Via submit ticket, lock account, and customer reply (reopen when assignee is locked) | TBD | TBD |
+| US-13 | UC-25 | AC-13.1–AC-13.6 | BR-03 | — (system) | Via submit ticket, lock account, set on leave, and customer reply (reopen when assignee is locked or on leave) | TBD | TBD |
 | US-14 | UC-24 | AC-14.1–AC-14.5 | BR-08, BR-09 | — (system) | Via submit ticket | TBD | TBD |
 | US-15 | UC-24 | AC-15.1–AC-15.3 | BR-08 | — (system) | Via submit ticket | TBD | TBD |
 | US-16 | UC-24 | AC-16.1–AC-16.5 | BR-08 | — (system) | Via submit ticket | TBD | TBD |
@@ -45,6 +45,7 @@ Columns marked TBD are filled in by the step that owns them: Screen (Step 3), Da
 | US-33 | UC-19 | AC-33.1–AC-33.5 | BR-10, BR-16 | SCR-22 | TBD | TBD | TBD |
 | US-34 | UC-19 | AC-34.1–AC-34.2 | BR-16 | SCR-22 | TBD | TBD | TBD |
 | US-35 | UC-26 (via UC-13, UC-14) | AC-35.1–AC-35.6 | BR-17 | — (email, links to SCR-12) | Via reply to customer and change status | TBD | TBD |
+| US-36 | UC-27 | AC-36.1–AC-36.7 | BR-03, BR-04, BR-18 | SCR-31, SCR-35 | TBD | TBD | TBD |
 
 ## Goal traceability
 

@@ -14,7 +14,7 @@ Requirements define what Helpdesk AI must do, who uses it, the value delivered, 
 
 ### 1.2 INVEST requirements
 
-The MVP backlog includes 35 user stories. They cover registration and login, customer tickets, automatic assignment, AI classification, ticket handling with AI summary and rewrite, categories, users, dashboards, and email notifications to customers. Before a user story is ready for development, it is checked using the INVEST criteria.
+The MVP backlog includes 36 user stories. They cover registration and login, customer tickets, automatic assignment, AI classification, ticket handling with AI summary and rewrite, categories, users (including Staff on leave), dashboards, and email notifications to customers. Before a user story is ready for development, it is checked using the INVEST criteria.
 
 | Criterion | Meaning in Helpdesk AI |
 |---|---|
@@ -35,9 +35,10 @@ US-27–US-29   Category management
 US-30–US-32   User management
 US-33–US-34   Dashboard
 US-35         Email notification of ticket updates (Customer)
+US-36         Set Staff on leave (Administrator)
 ```
 
-Stories are prioritized with MoSCoW: 22 Must, 13 Should, 0 Could, and 8 Won't (out of scope). The complete backlog and per-story INVEST review are maintained in [User Stories (INVEST)](docs/02-usecases-userstories/03-user-stories-invest.md), the Given/When/Then criteria in [Acceptance Criteria](docs/02-usecases-userstories/04-acceptance-criteria.md), and the priorities in [MoSCoW Prioritization](docs/02-usecases-userstories/05-moscow-prioritization.md).
+Stories are prioritized with MoSCoW: 22 Must, 14 Should, 0 Could, and 8 Won't (out of scope). The complete backlog and per-story INVEST review are maintained in [User Stories (INVEST)](docs/02-usecases-userstories/03-user-stories-invest.md), the Given/When/Then criteria in [Acceptance Criteria](docs/02-usecases-userstories/04-acceptance-criteria.md), and the priorities in [MoSCoW Prioritization](docs/02-usecases-userstories/05-moscow-prioritization.md).
 
 ### 1.3 Use cases
 
@@ -54,7 +55,7 @@ flowchart TB
         direction LR
         customerCases["<b>Customer</b><br/><br/>UC-01 Log in · UC-02 Log out<br/>UC-03 Update Profile · UC-04 Change Password<br/>UC-05 Register<br/>UC-06 Submit Ticket<br/>UC-07 View Own Tickets<br/>UC-08 Reply to Own Ticket<br/>UC-09 Close Own Ticket"]
         staffCases["<b>Staff</b> (tickets assigned to me)<br/><br/>UC-01 Log in · UC-02 Log out<br/>UC-03 Update Profile · UC-04 Change Password<br/>UC-10 View Ticket Queue · UC-11 Search and Filter<br/>UC-12 View Ticket Details · UC-13 Reply to Customer<br/>UC-14 Change Status · UC-15 Transfer Ticket<br/>UC-16 Correct AI Labels<br/>UC-17 Summarize Ticket · UC-18 Rewrite Reply<br/>UC-19 View Personal Dashboard"]
-        adminCases["<b>Administrator</b> (all tickets)<br/><br/>UC-01 Log in · UC-02 Log out<br/>UC-03 Update Profile · UC-04 Change Password<br/>UC-10 View Ticket Queue · UC-11 Search and Filter<br/>UC-12 View Ticket Details · UC-13 Reply to Customer<br/>UC-14 Change Status · UC-15 Reassign Any Ticket<br/>UC-16 Correct AI Labels<br/>UC-17 Summarize Ticket · UC-18 Rewrite Reply<br/>UC-19 View System-wide Dashboard<br/>UC-20 Manage Categories<br/>UC-21 View User List · UC-22 Create Staff Account<br/>UC-23 Lock or Unlock Account"]
+        adminCases["<b>Administrator</b> (all tickets)<br/><br/>UC-01 Log in · UC-02 Log out<br/>UC-03 Update Profile · UC-04 Change Password<br/>UC-10 View Ticket Queue · UC-11 Search and Filter<br/>UC-12 View Ticket Details · UC-13 Reply to Customer<br/>UC-14 Change Status · UC-15 Reassign Any Ticket<br/>UC-16 Correct AI Labels<br/>UC-17 Summarize Ticket · UC-18 Rewrite Reply<br/>UC-19 View System-wide Dashboard<br/>UC-20 Manage Categories<br/>UC-21 View User List · UC-22 Create Staff Account<br/>UC-23 Lock or Unlock Account<br/>UC-27 Set Staff On Leave"]
         systemCases["<b>System</b> (automatic)<br/><br/>UC-24 Classify Ticket<br/>UC-25 Auto-assign Ticket<br/>UC-26 Notify Customer by Email"]
     end
 
@@ -66,6 +67,7 @@ flowchart TB
     admin --> adminCases
     customerCases -.->|"UC-06 includes"| systemCases
     staffCases -.->|"UC-13, UC-14 include UC-26"| systemCases
+    adminCases -.->|"UC-23, UC-27 include UC-25"| systemCases
     systemCases -.->|"classification"| llm
     systemCases -.->|"notification email"| email
     staffCases -.->|"summary and rewrite"| llm
@@ -102,8 +104,9 @@ For detailed actors and the use case diagram, see [Actors and Use Cases](docs/02
 | Dashboard | No | Personal | System-wide |
 | Manage categories | No | No | Yes |
 | Manage users (create Staff, lock/unlock) | No | No | Yes |
+| Set Staff on leave or back | No | No (not even themselves) | Yes |
 
-New tickets are auto-assigned to the active Staff member with the fewest open tickets. The backend must enforce role and assignment rules; hiding frontend controls serves UI/UX only. See [Business rules](docs/requirements/business-rules.md).
+New tickets are auto-assigned to the active Staff member with the fewest open tickets; Staff on leave or locked are skipped. The backend must enforce role and assignment rules; hiding frontend controls serves UI/UX only. See [Business rules](docs/requirements/business-rules.md).
 
 ## 2. Information Architecture, Screen Hierarchy, and UI/UX
 
@@ -146,7 +149,7 @@ flowchart TB
     subgraph administration["Administration (Admin only)"]
         direction TB
         categories["<b>SCR-30 Categories</b><br/>• Category list<br/>• Add / edit (description for AI)<br/>• Hide / show"]
-        users["<b>SCR-31 Users</b><br/>• User list + filters<br/>• Create Staff<br/>• Lock / unlock"]
+        users["<b>SCR-31 Users</b><br/>• User list + filters<br/>• Create Staff<br/>• Lock / unlock<br/>• Staff on leave / back"]
     end
 
     customer -.-> portal

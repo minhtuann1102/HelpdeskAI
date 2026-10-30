@@ -34,6 +34,7 @@ These decisions refine the original brief. Later steps must follow them.
 | ID | Decision | Effect on the brief | Source |
 |---|---|---|---|
 | D-19 | **Customers get an email notification** when Staff or Admin reply to their ticket or change its status (US-35, BR-17). The email only tells the customer that something changed and links to the ticket; the conversation stays on the website. | The brief's "no email integration" is read as **no email intake**: tickets and replies still come only from the web form (W-05). Outbound notification emails are added. Changes A-03 and A-04. | User, 2026-10-30 |
+| D-20 | **Staff can be set "On leave" by the Administrator only.** A Staff member on leave gets no new tickets, cannot receive transfers, and their open tickets are redistributed (US-36, BR-18). Staff cannot change their own status. | Narrows R-08 (absence). No change to the brief. | User, 2026-10-30 |
 
 | ID | Open item | Status |
 |---|---|---|

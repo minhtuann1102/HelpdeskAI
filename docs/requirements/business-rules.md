@@ -27,12 +27,12 @@ Only rules confirmed by the project documentation are catalogued here. Values ma
 ## BR-03 — Auto-assignment
 
 - **Source:** D-04, D-07, DF-01..DF-04
-- **Related US:** US-07, US-11, US-13, US-32
-- **Related API:** TBD (Step 6), triggered by submit ticket, lock account, and customer reply (reopen when the assignee is locked)
+- **Related US:** US-07, US-11, US-13, US-32, US-36
+- **Related API:** TBD (Step 6), triggered by submit ticket, lock account, set on leave, and customer reply (reopen when the assignee is locked or on leave)
 - **Rule:** When a ticket is created, the system assigns it to the **active `STAFF` user with the fewest open tickets**.
   - Open means `New`, `In Progress`, or `Waiting for Customer`.
   - Ties go to the Staff member whose last assignment is the oldest.
-  - Admin and locked users are never chosen.
+  - Admin, locked users, and Staff on leave are never chosen (BR-18).
   - With no active Staff, the ticket stays Unassigned.
   - Assignment does not depend on the AI result.
 
@@ -45,16 +45,17 @@ Only rules confirmed by the project documentation are catalogued here. Values ma
   - Staff may transfer a non-closed ticket assigned to them to another **active Staff** member, chosen from a list of active Staff with their open-ticket counts.
   - Admin may reassign any non-closed ticket (including Unassigned) to any active Staff member or to themselves.
   - A transfer does not change the ticket status.
+  - "Active Staff" means status `Active`; Staff on leave or locked are not in the list (BR-18).
 
 ## BR-05 — Locked accounts
 
 - **Source:** DF-05, DF-06, DF-13
-- **Related US:** US-02, US-11, US-32
+- **Related US:** US-02, US-11, US-32, US-36
 - **Related API:** TBD (Step 6)
 - **Rule:**
   - A locked user cannot log in, and any existing session ends on its next request.
   - Locking a Staff member redistributes their open tickets using BR-03.
-  - A reopened ticket whose assignee is locked is auto-assigned again.
+  - A reopened ticket whose assignee is locked or on leave is auto-assigned again.
   - Admin cannot lock their own account.
 
 ## BR-06 — Ticket status transitions
@@ -221,4 +222,17 @@ stateDiagram-v2
   - No email for the customer's own actions, automatic transitions caused by them (T4, T6), transfers, reassignments, or label corrections.
   - No email when the customer account is locked.
   - Content follows DF-25: ticket number, title, what changed, and a link to the ticket. The reply text is not included.
-  - Sending happens after the action is saved. A failed send is logged and **never blocks or undoes** the reply or status change. [Use cases and user stories](../02-usecases-userstories/README.md) · [Master traceability](../traceability/master-traceability.md)
+  - Sending happens after the action is saved. A failed send is logged and **never blocks or undoes** the reply or status change.
+
+## BR-18 — Staff on leave
+
+- **Source:** D-20, DF-26
+- **Related US:** US-13, US-22, US-23, US-36
+- **Related API:** TBD (Step 6), set on leave and end leave
+- **Rule:**
+  - Account status is `Active`, `On leave`, or `Locked`. `On leave` exists only for `STAFF` accounts.
+  - **Only Admin** can set a Staff member on leave or end their leave. Staff cannot change their own status; the server rejects such a request.
+  - Only an `Active` Staff account can be set on leave. Setting it redistributes all their open tickets with BR-03; ending leave sets `Active` and does not move tickets back.
+  - A Staff member on leave is never auto-assigned and never offered as a transfer or reassign target. They can still log in and see only the tickets still assigned to them (BR-02).
+  - An on-leave account can be locked; unlocking returns it to `Active`.
+  - Setting or ending leave sends no email to customers (BR-17). [Use cases and user stories](../02-usecases-userstories/README.md) · [Master traceability](../traceability/master-traceability.md)

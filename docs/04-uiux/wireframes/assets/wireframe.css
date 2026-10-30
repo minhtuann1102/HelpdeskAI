@@ -306,6 +306,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .chip-plain { border-color: transparent; background: var(--sage); }
 .chip-locked { border-color: var(--brick); color: var(--brick); background: var(--brick-wash); }
 .chip-ok { border-color: #b9d8c6; color: var(--leaf); background: #ecf6f0; }
+.chip-leave { border-color: #c4cec8; color: var(--moss); background: var(--sage); }
 .skeleton-row td i { display: block; height: 10px; border-radius: 4px; background: var(--sage); }
 
 /* ---------- Empty states ---------- */

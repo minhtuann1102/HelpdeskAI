@@ -63,7 +63,7 @@
 
 ## UC-08 Reply to own ticket
 
-- **Actor:** Customer · **Includes:** UC-25 (only when reopening a ticket whose assignee is locked)
+- **Actor:** Customer · **Includes:** UC-25 (only when reopening a ticket whose assignee is locked or on leave)
 - **Main flow:** open own ticket → write a reply → send → reply joins the conversation; status may change (BR-06)
 - **Alternative:** ticket `Closed` → no reply possible
 - **Permission:** `CUSTOMER`, own tickets only
@@ -192,7 +192,7 @@
 
 ## UC-25 Auto-assign ticket
 
-- **Actor:** System · **Included by:** UC-06, UC-08, UC-23
+- **Actor:** System · **Included by:** UC-06, UC-08, UC-23, UC-27
 - **Main flow:** pick the active Staff with the fewest open tickets (tie-break DF-02) → set the assignee and the assignment time
 - **Alternative:** no active Staff → Unassigned (DF-04)
 - **Permission:** internal
@@ -205,5 +205,13 @@
 - **Alternative:** the action came from the customer, or the customer account is locked → no email; the Email Service fails → the failure is logged, and the reply or status change stays saved
 - **Permission:** internal
 - **Result:** the customer knows the ticket has an update without opening the website · **Stories:** US-35
+
+## UC-27 Set Staff on leave or back
+
+- **Actor:** Administrator · **Includes:** UC-25 (when the Staff member has open tickets)
+- **Main flow:** open Users → choose Set on leave on an `Active` Staff member → confirm → status `On leave`; their open tickets are redistributed. Later: choose End leave → status `Active`
+- **Alternative:** target is not Staff, or not `Active` when setting leave → action not available; no other active Staff → the redistributed tickets become Unassigned (DF-04)
+- **Permission:** `ADMIN` only; Staff cannot change their own status
+- **Result:** no new tickets or transfers reach a Staff member who is away (BR-18) · **Stories:** US-36
 
 **Related:** [Step index](README.md)

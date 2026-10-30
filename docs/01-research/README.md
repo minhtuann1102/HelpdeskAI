@@ -8,7 +8,7 @@ Step 1 analyses **Helpdesk AI** top-down: context, problem, measurable goals, st
 
 | File | Content |
 |---|---|
-| [00-decisions.md](00-decisions.md) | Decisions D-01..D-06; open items O-01..O-07 and how they were resolved; change D-19 (email notifications) and open item O-08 |
+| [00-decisions.md](00-decisions.md) | Decisions D-01..D-06; open items O-01..O-07 and how they were resolved; changes D-19 (email notifications) and D-20 (Staff on leave); open item O-08 |
 | [01-context-and-problem.md](01-context-and-problem.md) | Context, problem statement P-01..P-05, product vision |
 | [02-goals-and-metrics.md](02-goals-and-metrics.md) | Measurable goals G-01..G-08 |
 | [03-stakeholders.md](03-stakeholders.md) | Stakeholders and their interests |

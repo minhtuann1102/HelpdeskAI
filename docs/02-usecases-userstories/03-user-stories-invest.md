@@ -13,7 +13,7 @@ Each requirement is small enough to implement and test independently. Cross-cutt
 | Independent | Each story produces a demonstrable outcome and names only unavoidable prerequisites (login, ticket creation, categories). |
 | Negotiable | Layout and implementation details may change while the stated outcome and permissions stay fixed. |
 | Valuable | Every story names the user benefit. System behaviours (US-13..US-16) are written for the role that benefits from them. |
-| Estimable | Inputs, limits, roles, and failure cases are explicit (DF-01..DF-18, DF-25), and every story has a size. |
+| Estimable | Inputs, limits, roles, and failure cases are explicit (DF-01..DF-18, DF-25, DF-26), and every story has a size. |
 | Small | Each story targets one capability. Sizes: **S** = a simple screen or rule; **M** = a screen with several rules; **L** = AI integration or cross-cutting logic. |
 | Testable | Every story has Given/When/Then acceptance criteria in [Acceptance criteria](04-acceptance-criteria.md). |
 
@@ -56,6 +56,7 @@ Each requirement is small enough to implement and test independently. Cross-cutt
 | US-33 | As Administrator, I want a dashboard of ticket volume, response time, and AI quality, so that I can manage support with data. | Data-driven management | US-14, US-20, US-24 | Should | L |
 | US-34 | As Staff, I want to see the same metrics for my own tickets, so that I can track my workload and response time. | Self-management | US-33 | Should | S |
 | US-35 | As a Customer, I want an email when Staff reply to my ticket or change its status, so that I know there is an update without checking the website. | Timely updates | US-20, US-21 | Should | S |
+| US-36 | As Administrator, I want to set a Staff member on leave and back, so that no new tickets go to someone who is away and their open tickets are handled by others. | Coverage during absence | US-13, US-30 | Should | M |
 
 ## Per-story INVEST review
 
@@ -80,6 +81,7 @@ Each requirement is small enough to implement and test independently. Cross-cutt
 | US-33 | PASS | PASS | PASS | PASS | PASS | PASS | Metric definitions in BR-10 and BR-16. |
 | US-34 | PASS | PASS | PASS | PASS | PASS | PASS | Small because it reuses US-33 with a filter. |
 | US-35 | PASS | PASS | PASS | PASS | PASS | PASS | Added after Step 4 (D-19). Testable with a mocked Email Service; the email content is fixed by DF-25. |
+| US-36 | PASS | PASS | PASS | PASS | PASS | PASS | Added after Step 4 (D-20). Reuses the redistribution of US-32; only the Administrator can set it. |
 
 ## Cross-cutting acceptance constraints
 

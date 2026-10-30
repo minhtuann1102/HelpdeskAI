@@ -65,6 +65,7 @@ Spacing steps: 4, 8, 12, 16, 20, 28, 40 px. Radius follows hierarchy: surfaces 1
 | Unclassified chip | Dashed grey, "Chưa phân loại". |
 | Priority meter | 1–4 bars plus the word; `urgent` bars are brick. Never color alone. |
 | Status pill | Dot + text: New (graphite dot), In progress (amber), Waiting (hollow ring), Resolved (leaf), Closed (muted). |
+| Account status chip | "Hoạt động" (leaf), "Đang nghỉ" (neutral sage with a clock icon; amber stays reserved for ticket progress), "Đã khóa" (brick). |
 | Confidence bar | Violet fill with the value (`0,86`); grey fill when below the threshold. |
 | Pencil note | Dashed violet left rule for AI-written text (reason, summary). |
 | Message bubbles | Customer left on white; Staff right on pine-soft (the customer's own messages are on the right in the portal). |

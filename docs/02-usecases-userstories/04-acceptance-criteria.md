@@ -92,7 +92,7 @@ UC-08 · BR-05, BR-06, BR-07
 
 - **AC-11.1** *Given* my ticket is `New` or `In Progress`, *when* I send a reply, *then* it appears in the conversation and the status does not change.
 - **AC-11.2** *Given* my ticket is `Waiting for Customer`, *when* I send a reply, *then* the status becomes `In Progress` (T4).
-- **AC-11.3** *Given* my ticket is `Resolved`, *when* I send a reply, *then* the ticket reopens to `In Progress` with the same assignee (T6); if that assignee is locked, the ticket is auto-assigned again (DF-06).
+- **AC-11.3** *Given* my ticket is `Resolved`, *when* I send a reply, *then* the ticket reopens to `In Progress` with the same assignee (T6); if that assignee is locked or on leave, the ticket is auto-assigned again (DF-06, BR-18).
 - **AC-11.4** *Given* my ticket is `Closed`, *when* I open it, *then* there is no reply box, and a direct reply request is rejected with "This ticket is closed. Please submit a new ticket."
 - **AC-11.5** *Given* an empty reply, *when* I try to send it, *then* it is not sent.
 
@@ -121,7 +121,7 @@ UC-25 · BR-03
 
 - **AC-13.1** *Given* active Staff A has 3 open tickets and B has 1, *when* a ticket is created, *then* it is assigned to B and the assignment time is recorded.
 - **AC-13.2** *Given* two active Staff members with the same number of open tickets, *when* a ticket is created, *then* it goes to the one whose last assignment is older (a never-assigned Staff member first).
-- **AC-13.3** *Given* a locked Staff member or an Administrator has fewer open tickets than anyone, *when* a ticket is created, *then* they are not chosen.
+- **AC-13.3** *Given* a locked Staff member, a Staff member on leave, or an Administrator has fewer open tickets than anyone, *when* a ticket is created, *then* they are not chosen.
 - **AC-13.4** *Given* no active Staff exists, *when* a ticket is created, *then* it is Unassigned and appears under the Administrator's "Unassigned" filter.
 - **AC-13.5** *Given* the AI call fails, *when* a ticket is created, *then* it is still assigned.
 - **AC-13.6** *Given* a Staff member has tickets that are `Resolved` or `Closed`, *when* the load is counted, *then* those tickets are not counted (DF-01).
@@ -259,7 +259,7 @@ UC-20 · BR-13
 ### US-30 — View the user list
 UC-21 · BR-01
 
-- **AC-30.1** *Given* users exist, *when* I open Users, *then* I see name, email, role, status (Active or Locked), and creation date for each.
+- **AC-30.1** *Given* users exist, *when* I open Users, *then* I see name, email, role, status (Active, On leave, or Locked), and creation date for each.
 - **AC-30.2** *Given* the list, *when* I search by name or email or filter by role and status, *then* only matching users are shown.
 
 ### US-31 — Create a Staff account
@@ -276,6 +276,17 @@ UC-23 · BR-05
 - **AC-32.2** *Given* a Staff member with open tickets, *when* I lock the account, *then* each open ticket is reassigned by the auto-assignment rule among the remaining active Staff, or becomes Unassigned if none remain (DF-05).
 - **AC-32.3** *Given* a locked user, *when* I unlock the account, *then* they can log in again, and a Staff member rejoins auto-assignment; tickets moved away are not moved back.
 - **AC-32.4** *Given* my own Administrator account, *when* I look for Lock, *then* it is not available.
+
+### US-36 — Set a Staff member on leave
+UC-27 · BR-03, BR-04, BR-18
+
+- **AC-36.1** *Given* an `Active` Staff member with 2 open tickets, *when* I (Administrator) choose Set on leave and confirm, *then* their status becomes `On leave` and both tickets are reassigned by the auto-assignment rule among the other active Staff, or become Unassigned if none remain.
+- **AC-36.2** *Given* a Staff member on leave, *when* a ticket is created, *then* it is never assigned to them, and they do not appear in the transfer or reassign list.
+- **AC-36.3** *Given* a Staff member on leave, *when* they log in, *then* they can use the system, but the tickets moved away are no longer visible to them (D-09).
+- **AC-36.4** *Given* a Staff member on leave, *when* I choose End leave, *then* their status becomes `Active`, they rejoin auto-assignment immediately, and the moved tickets are not moved back.
+- **AC-36.5** *Given* a Staff member is logged in, *when* they look for a way to change their own status, *then* there is none, and a direct request to change it is rejected (D-20).
+- **AC-36.6** *Given* a Customer, an Administrator, or a `Locked` account, *when* I look at its row, *then* Set on leave is not available.
+- **AC-36.7** *Given* a `Resolved` ticket whose assignee is on leave, *when* the customer replies, *then* the ticket reopens and is auto-assigned again (BR-05).
 
 ## Dashboard (M-08)
 

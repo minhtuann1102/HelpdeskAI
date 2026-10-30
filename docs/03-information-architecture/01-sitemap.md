@@ -45,7 +45,7 @@ flowchart TB
     subgraph administration["Administration (Admin only)"]
         direction TB
         categories["<b>SCR-30 Categories</b><br/>• Category list<br/>• Add / edit (description for AI)<br/>• Hide / show"]
-        users["<b>SCR-31 Users</b><br/>• User list + filters<br/>• Create Staff<br/>• Lock / unlock"]
+        users["<b>SCR-31 Users</b><br/>• User list + filters<br/>• Create Staff<br/>• Lock / unlock<br/>• Staff on leave / back"]
     end
 
     customer -.-> portal

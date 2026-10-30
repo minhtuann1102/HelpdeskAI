@@ -40,6 +40,7 @@
 | UC-21 View user list | | | ✓ |
 | UC-22 Create Staff account | | | ✓ |
 | UC-23 Lock or unlock account | | | ✓ |
+| UC-27 Set Staff on leave or back | | | ✓ |
 | UC-24 Classify ticket, UC-25 Auto-assign ticket | System | System | System |
 | UC-26 Notify customer by email | Receives the email | System | System |
 
@@ -92,6 +93,7 @@ flowchart LR
             uc21["UC-21 View User List"]
             uc22["UC-22 Create Staff Account"]
             uc23["UC-23 Lock or Unlock Account"]
+            uc27["UC-27 Set Staff On Leave"]
         end
         subgraph automatic["Automatic (System)"]
             direction LR
@@ -109,13 +111,13 @@ flowchart LR
 
     customer --> uc01 & uc02 & uc03 & uc04 & uc05 & uc06 & uc07 & uc08 & uc09
     staff --> uc01 & uc02 & uc03 & uc04 & uc10 & uc11 & uc12 & uc13 & uc14 & uc15 & uc16 & uc17 & uc18 & uc19
-    admin --> uc01 & uc02 & uc03 & uc04 & uc10 & uc11 & uc12 & uc13 & uc14 & uc15 & uc16 & uc17 & uc18 & uc19 & uc20 & uc21 & uc22 & uc23
+    admin --> uc01 & uc02 & uc03 & uc04 & uc10 & uc11 & uc12 & uc13 & uc14 & uc15 & uc16 & uc17 & uc18 & uc19 & uc20 & uc21 & uc22 & uc23 & uc27
 
     classDef actor fill:none,stroke:none,color:#111
     classDef usecase fill:#1168bd,color:#fff,stroke:#0b4f9e
     classDef ai fill:#7b3fbf,color:#fff,stroke:#5a2d8c
     class customer,staff,admin actor
-    class uc01,uc02,uc03,uc04,uc05,uc06,uc07,uc08,uc09,uc10,uc11,uc12,uc13,uc14,uc15,uc16,uc19,uc20,uc21,uc22,uc23,uc25,uc26 usecase
+    class uc01,uc02,uc03,uc04,uc05,uc06,uc07,uc08,uc09,uc10,uc11,uc12,uc13,uc14,uc15,uc16,uc19,uc20,uc21,uc22,uc23,uc25,uc26,uc27 usecase
     class uc17,uc18,uc24 ai
     style left fill:#fff,stroke:#bbb,stroke-dasharray:5 5
     style right fill:#fff,stroke:#bbb,stroke-dasharray:5 5
@@ -131,6 +133,7 @@ flowchart LR
     submit["UC-06 Submit Ticket"]
     reply["UC-08 Reply to Own Ticket"]
     lock["UC-23 Lock or Unlock Account"]
+    leave["UC-27 Set Staff On Leave"]
     rewrite["UC-18 Rewrite Reply"]
     staffReply["UC-13 Reply to Customer"]
     changeStatus["UC-14 Change Status"]
@@ -144,7 +147,8 @@ flowchart LR
     submit -.->|"«include»"| classify
     submit -.->|"«include»"| assign
     lock -.->|"«include» when a Staff with open tickets is locked"| assign
-    reply -.->|"«include» when reopening a ticket whose assignee is locked"| assign
+    leave -.->|"«include» when a Staff with open tickets goes on leave"| assign
+    reply -.->|"«include» when reopening a ticket whose assignee is locked or on leave"| assign
     rewrite -.->|"«extend»"| staffReply
     staffReply -.->|"«include»"| notify
     changeStatus -.->|"«include»"| notify
@@ -167,7 +171,7 @@ Administrator can perform UC-10..UC-19 on **all** tickets; Staff only on tickets
 |---|---|
 | Customer | UC-01 Log in · UC-02 Log out · UC-03 Update profile · UC-04 Change password · UC-05 Register · UC-06 Submit ticket · UC-07 View own tickets · UC-08 Reply to own ticket · UC-09 Close own ticket |
 | Staff | UC-01..UC-04 · UC-10 View ticket queue · UC-11 Search and filter · UC-12 View ticket details · UC-13 Reply to customer · UC-14 Change status · UC-15 Transfer ticket · UC-16 Correct AI labels · UC-17 Summarize ticket · UC-18 Rewrite reply · UC-19 View personal dashboard |
-| Administrator | UC-01..UC-04 · UC-10..UC-19 on all tickets (UC-15 = reassign any ticket, UC-19 = system-wide dashboard) · UC-20 Manage categories · UC-21 View user list · UC-22 Create Staff account · UC-23 Lock or unlock account |
+| Administrator | UC-01..UC-04 · UC-10..UC-19 on all tickets (UC-15 = reassign any ticket, UC-19 = system-wide dashboard) · UC-20 Manage categories · UC-21 View user list · UC-22 Create Staff account · UC-23 Lock or unlock account · UC-27 Set Staff on leave or back |
 | System | UC-24 Classify ticket (with LLM Provider) · UC-25 Auto-assign ticket · UC-26 Notify customer by email (with Email Service) |
 
 **Related:** [Step index](README.md)

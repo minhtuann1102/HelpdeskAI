@@ -20,9 +20,10 @@
 | `SCR-22` | Dashboard | Page | Staff (personal), Administrator (system-wide) | Date range; tickets by status, category, sentiment; average first response time; label correction rate | US-33, US-34 |
 | `SCR-30` | Categories | Page | Administrator | Category list (name, description, active/hidden), Add, Edit, Hide/Show | US-27, US-28, US-29 |
 | `SCR-32` | Category form | Modal on SCR-30 | Administrator | Name, description (marked "used by AI") | US-27, US-28 |
-| `SCR-31` | Users | Page | Administrator | User list (name, email, role, status, created), search, role and status filters, Create Staff, Lock/Unlock | US-30, US-32 |
+| `SCR-31` | Users | Page | Administrator | User list (name, email, role, status Active / On leave / Locked, created), search, role and status filters, Create Staff, Lock/Unlock, Set on leave / End leave (Staff only) | US-30, US-32, US-36 |
 | `SCR-33` | Create Staff | Modal on SCR-31 | Administrator | Full name, email, initial password; role fixed to Staff | US-31 |
 | `SCR-34` | Lock / unlock confirmation | Modal on SCR-31 | Administrator | User name; for Staff, a note that open tickets will be redistributed | US-32 |
+| `SCR-35` | Set on leave confirmation | Modal on SCR-31 | Administrator | Staff name; the Staff member can still log in but gets no new tickets; number of open tickets that will be redistributed and not moved back | US-36 |
 | `SCR-40` | Profile | Page with two sections | All | Account (full name, phone; email and role read-only), Change password | US-05, US-06 |
 | `SCR-90` | Access denied | System page | All | Message and a link back to the role's home page | US-04 |
 
@@ -53,6 +54,7 @@
 | US-30 | `SCR-31` list, search, filters |
 | US-31 | `SCR-31` Create Staff → `SCR-33` |
 | US-32 | `SCR-31` Lock / Unlock → `SCR-34` |
+| US-36 | `SCR-31` Set on leave → `SCR-35`; End leave applies at once |
 | US-33, US-34 | `SCR-22` dashboard (scope by role) |
 | US-35 | No screen (email to the customer); the email link opens `SCR-12` |
 
@@ -67,7 +69,7 @@ Filled in by Step 6 (OpenAPI).
 | SCR-20, SCR-21, SCR-23 | TBD |
 | SCR-22 | TBD |
 | SCR-30, SCR-32 | TBD |
-| SCR-31, SCR-33, SCR-34 | TBD |
+| SCR-31, SCR-33, SCR-34, SCR-35 | TBD |
 | SCR-40 | TBD |
 
 **Related:** [Step index](README.md)
