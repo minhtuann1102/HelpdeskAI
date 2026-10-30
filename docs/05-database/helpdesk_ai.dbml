@@ -149,7 +149,7 @@ Table app_users {
   status account_status [not null, default: 'ACTIVE', note: 'Single source of truth for Active, On leave, Locked (BR-18)']
   assignment_joined_at timestamptz [note: 'STAFF: when they last joined auto-assignment (account created, leave ended, unlocked); the 4-hour warm-up counts from here (BR-03, DF-27)']
   last_assigned_at timestamptz [note: 'STAFF: when a ticket was last assigned to them by any route; tie-break, NULL first (DF-02)']
-  created_by bigint [note: 'Admin who created a Staff account; NULL for customers and the first Admin']
+  created_by bigint [note: 'Admin who created a Staff account; NULL for customers and the first Admin. Kept for audit; no rule reads it. The API checks that it points to an Admin']
   created_at timestamptz [not null, default: `now()`]
   updated_at timestamptz [not null, default: `now()`]
 
@@ -160,6 +160,7 @@ Table app_users {
 
   checks {
     `status <> 'ON_LEAVE' OR role = 'STAFF'` [name: 'ck_app_users_leave_staff_only']
+    `(role = 'STAFF') = (created_by IS NOT NULL)` [name: 'ck_app_users_created_by']
   }
 
   Note: 'Every account: customers who registered, Staff created by Admin, and Admin (BR-01, BR-15). Never deleted; locked instead (BR-05).'

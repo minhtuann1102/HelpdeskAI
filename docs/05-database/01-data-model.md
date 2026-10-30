@@ -4,7 +4,7 @@
 >
 > Implementation status: NOT STARTED
 
-The schema for **Helpdesk AI** on PostgreSQL (D-28): 14 tables in five groups. It stores what the [business rules](../requirements/business-rules.md) need and nothing that can be computed (D-34).
+The schema for **Helpdesk AI** on PostgreSQL (D-28): 14 tables in five groups. It stores what the [business rules](../requirements/business-rules.md) need, plus [who created each record](#who-created-a-record), and nothing that can be computed (D-34).
 
 Related sources of truth: [helpdesk_ai.dbml](helpdesk_ai.dbml), [ER diagram](02-er-diagram.md).
 
@@ -30,6 +30,12 @@ Related sources of truth: [helpdesk_ai.dbml](helpdesk_ai.dbml), [ER diagram](02-
 There are no dashboard or report tables: every metric is calculated from `tickets`, `response_clocks`, and the logs (see [Derived values](#derived-values)).
 
 The Policies group exists because of D-25. If the mentor does not accept it (O-09), the four tables, the `SUGGEST_REPLY` value of `ai_feature`, and the `suggestion_outcome` enum are removed; no other table depends on them.
+
+### Who created a record
+
+The `created_by` columns of `app_users`, `categories`, `policy_articles`, and `policy_article_revisions` are kept for audit. No rule or screen reads them yet, but this information cannot be recovered later.
+
+`app_users.created_by` refers to `app_users` itself, because Admin and Staff share one table (D-29). It is an ordinary one-to-many relationship between two roles: one Admin creates many Staff accounts, and each Staff account has one creator. Customers and the first Admin have none, so a check allows a value only on `STAFF` rows. A check cannot read another row, so the API verifies that the creator is an Admin.
 
 ## Labels on a ticket
 
