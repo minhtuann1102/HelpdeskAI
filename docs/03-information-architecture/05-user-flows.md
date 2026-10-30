@@ -82,7 +82,7 @@ flowchart TD
     policyQ -->|"No"| draft["Write a draft reply"]
     suggest --> suggestOk{"Suggestion with citations<br/>within 20 s?"}
     suggestOk -->|"Yes"| checkSources["Check the cited passages<br/>Use, edit, or discard"]
-    suggestOk -->|"No policy fits,<br/>error, or timeout"| draft
+    suggestOk -->|"No policy fits, error,<br/>timeout, or policy changed"| draft
     checkSources --> sendChoice
 
     draft --> polish{"Polish the wording?"}

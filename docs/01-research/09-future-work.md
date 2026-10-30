@@ -48,5 +48,6 @@ In the MVP, Admin sets and ends leave by hand at the moment it happens (D-20). I
 | SLA escalation | Time limits per priority; reassign or alert when a ticket waits too long | The brief excludes automatic SLA (W-06) | W-06, G-03 |
 | AI category hint | When the customer chose a category, AI still proposes one in the same call and shows it to Staff if it differs | Changes BR-08 rule 4, AC-14.3, AC-19.2, and SCR-21 | BR-08 |
 | Transfer note | An optional "why" note when transferring a ticket | Not requested yet; adds one field | BR-04 |
+| Near-duplicate policy warning | When an article is saved, compare it by meaning with the other articles and warn, with a link, when one says nearly the same thing; later, also flag articles that contradict each other | Needs a similarity search, which depends on the Step 7 retrieval choice, and a new warning state on SCR-37. The MVP rejects only a body that repeats another article's body (D-26) | BR-20, R-14 |
 
 **Related:** [Step index](README.md) · [MVP scope](05-scope.md)

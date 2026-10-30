@@ -251,13 +251,14 @@ UC-29 · BR-20, BR-21
 - **AC-40.3** *Given* the fixed test set of 10 sample tickets that each have a matching article, *when* each gets a suggestion, *then* no suggestion contains a fact, date, amount, or commitment that is not in an article it cites.
 - **AC-40.4** *Given* the AI errors or does not answer within 20 s, *when* I click "Gợi ý trả lời", *then* I see an error with Retry, and my draft is unchanged.
 - **AC-40.5** *Given* a suggestion was created, *when* the customer views the ticket, *then* no suggestion or citation is visible (DF-14), and the ticket version is unchanged (BR-19).
-- **AC-40.6** *Given* a suggestion is shown, *when* it is shown and when I choose "Dùng bản này", *then* the system records the time, the ticket, the cited articles, and whether it was accepted (G-09).
+- **AC-40.6** *Given* a suggestion is shown, *when* it is shown and when I choose "Dùng bản này", *then* the system records the time, the ticket, the outcome, the suggested text, each cited article with its revision and quoted passage, and whether it was accepted (G-09).
+- **AC-40.7** *Given* an article that a suggestion cites is edited while AI is writing it, *when* the result arrives, *then* it is discarded, I see "Chính sách vừa được cập nhật…" with Retry, and my draft is unchanged (D-26).
 
 ### US-41 — No suggestion when no policy fits
 UC-29 · BR-21
 
 - **AC-41.1** *Given* no active, reviewed article is relevant to the ticket, *when* I click "Gợi ý trả lời", *then* I see "Không tìm thấy chính sách phù hợp" and no suggested text.
-- **AC-41.2** *Given* the AI output cites no article it was given, or cites a hidden or overdue article, *when* it is processed, *then* it is discarded and I see the same message as AC-41.1.
+- **AC-41.2** *Given* the AI output cites no article it was given, cites a hidden or overdue article, or quotes a passage that is not in the cited article, *when* it is processed, *then* it is discarded and I see the same message as AC-41.1.
 - **AC-41.3** *Given* the fixed test set also has 5 tickets with no relevant article, *when* each is run, *then* none produces a suggestion.
 - **AC-41.4** *Given* there is no active, reviewed article at all, *when* I look at "Gợi ý trả lời", *then* it is disabled with the hint "Chưa có chính sách nào để AI dựa vào".
 
@@ -343,13 +344,15 @@ UC-28 · BR-20
 - **AC-37.1** *Given* a unique title (up to 150 characters, ignoring case) and a body (up to 5,000 characters), *when* I save, *then* the article is active, its last-reviewed date is today, and suggestions can use it.
 - **AC-37.2** *Given* a title that already exists (ignoring case), *when* I save, *then* I see an error and nothing is saved.
 - **AC-37.3** *Given* an empty title or body, *when* I save, *then* each empty field shows an error and nothing is saved.
+- **AC-37.4** *Given* a body that repeats another article's body (ignoring case, spacing, and how accents are encoded), *when* I save, *then* I see an error that names that article, and nothing is saved.
 
 ### US-38 — Edit a policy article and mark it reviewed
 UC-28 · BR-20
 
-- **AC-38.1** *Given* an existing article, *when* I change its title or body and save, *then* the next suggestion uses the new text and its last-reviewed date becomes today.
+- **AC-38.1** *Given* an existing article, *when* I change its title or body and save, *then* the next suggestion uses only the new text, the old text is kept as an earlier revision and never given to AI again, and its last-reviewed date becomes today.
 - **AC-38.2** *Given* an article that is still correct, *when* I choose "Đánh dấu đã xem lại", *then* its last-reviewed date becomes today without other changes.
 - **AC-38.3** *Given* an article last reviewed more than 180 days ago, *when* the list is shown, *then* it carries a "Cần xem lại" chip, and suggestions do not use it until it is reviewed (DF-29).
+- **AC-38.4** *Given* an existing article, *when* I save it without changing its title or body, *then* no revision is added and only its last-reviewed date becomes today.
 
 ### US-39 — Hide or show a policy article
 UC-28 · BR-20

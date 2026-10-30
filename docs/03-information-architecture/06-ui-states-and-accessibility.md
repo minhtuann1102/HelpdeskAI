@@ -42,6 +42,7 @@
 | Suggestion result | SCR-21 | The suggestion next to the draft, with a source chip per cited article that shows its title and quoted passage; **Use** and **Discard**; nothing is sent. |
 | No relevant policy | SCR-21 | Neutral notice "Không tìm thấy chính sách phù hợp"; the draft is unchanged; Staff write the reply themselves (US-41). |
 | Suggestion error or timeout | SCR-21 | Inline error with Retry; the draft is unchanged. |
+| Policy changed during suggestion | SCR-21 | Shown like the suggestion error: "Chính sách vừa được cập nhật. Bấm Gợi ý trả lời lại để dùng nội dung mới." with Retry; the draft is unchanged (AC-40.7). |
 
 ## Responsive and accessibility rules
 

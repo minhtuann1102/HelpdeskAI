@@ -257,12 +257,16 @@ stateDiagram-v2
 
 ## BR-20 — Policy articles
 
-- **Source:** D-25, DF-29, A-07
+- **Source:** D-25, D-26, DF-29, A-07
 - **Related US:** US-37, US-38, US-39, US-40
 - **Related API:** TBD (Step 6)
 - **Rule:**
   - An article has a title (required, unique ignoring case, up to 150 characters), a body (required, up to 5,000 characters), an active or hidden state, and a last-reviewed date.
   - Creating or editing an article, or choosing "Đánh dấu đã xem lại", sets the last-reviewed date to today.
+  - **Revisions** (D-26): the title and body are kept as numbered revisions. Saving a changed title or body adds a revision and makes it current. Revisions are never changed or deleted. Saving with no change to the title or body (compared after Unicode NFC normalization and trimming) adds no revision and only sets the last-reviewed date. Hiding, showing, and marking reviewed add no revision.
+  - Only the **current revision** is ever given to AI. Earlier revisions are kept to show what a past suggestion cited, and are never used again.
+  - **Duplicates:** a body that repeats another article's current body is rejected, like a duplicate title. The comparison ignores case, runs of spaces and line breaks, and how Vietnamese accents are encoded, and it includes hidden articles. Articles that only say nearly the same thing are not detected in the MVP ([future work](../01-research/09-future-work.md)).
+  - Articles are not linked to categories: one article can answer tickets of any category.
   - An article is **overdue** 180 days after its last review. Overdue and hidden articles are never given to AI; the list marks overdue ones "Cần xem lại".
   - Articles are never deleted, only hidden.
   - Only Admin manages articles. Staff see them only as citations inside a suggestion; customers never see them.
@@ -270,17 +274,17 @@ stateDiagram-v2
 
 ## BR-21 — AI reply suggestion
 
-- **Source:** D-25, DF-09, DF-29
+- **Source:** D-25, D-26, DF-09, DF-29
 - **Related US:** US-20, US-40, US-41
 - **Related API:** TBD (Step 6)
 - **Rule:**
   1. Runs only when Staff or Admin click "Gợi ý trả lời" on a ticket they can act on that is not `Closed`. The button is disabled when no active, reviewed article exists.
-  2. Input: the ticket description and replies, and at most 3 of the most relevant active, reviewed articles, each with its ID. How the articles are found is a Step 7 decision.
+  2. Input: the ticket description and replies, and at most 3 of the most relevant active, reviewed articles, each as its current revision with its ID. How the articles are found is a Step 7 decision.
   3. Output: the reply text, the IDs of the articles it relies on, and the quoted passage from each.
-  4. The output is valid only if it cites at least one article it was given. Citing none, or citing an unknown, hidden, or overdue article, makes it invalid. Invalid output and "no relevant article" both show "Không tìm thấy chính sách phù hợp" and no text.
+  4. The output is valid only if it cites at least one article it was given, and each quoted passage appears word for word in that article's text (compared after Unicode NFC normalization). Citing none, citing an unknown, hidden, or overdue article, or quoting text the article does not contain makes it invalid. Invalid output and "no relevant article" both show "Không tìm thấy chính sách phù hợp" and no text.
   5. The reply may state facts, dates, amounts, or commitments **only if they appear in a cited article**.
   6. The suggestion is shown next to the draft with its citations. "Dùng bản này" puts it in the reply box; **nothing is sent without an explicit Send click.** A later Rewrite follows BR-12 and keeps the facts already in the draft.
-  7. The timeout is 20 s. An error leaves the draft unchanged; there is no automatic retry.
-  8. Each suggestion is logged (time, user, ticket, cited articles, accepted or not) for G-09. It does not change the ticket version (BR-19), and customers never see it (DF-14).
+  7. The timeout is 20 s. An error leaves the draft unchanged; there is no automatic retry. If a cited article got a new revision while AI was writing (D-26), the result is discarded the same way with the message "Chính sách vừa được cập nhật. Bấm Gợi ý trả lời lại để dùng nội dung mới.", and Retry uses the new text.
+  8. Each suggestion is logged for G-09: time, user, ticket, outcome, the suggested text, each cited article with its revision and quoted passage, and whether it was accepted. It does not change the ticket version (BR-19), and customers never see it (DF-14).
 
 **Related:** [Use cases and user stories](../02-usecases-userstories/README.md) · [Master traceability](../traceability/master-traceability.md)

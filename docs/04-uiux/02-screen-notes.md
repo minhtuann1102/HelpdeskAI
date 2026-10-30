@@ -180,8 +180,8 @@ The page says up front that customers never see it and that AI uses only active 
 
 | State | Source | Behavior |
 |---|---|---|
-| `edit` | — | SCR-37 for the overdue article; saving also counts as reviewed today ([PNG](../images/admin/36b-edit-policy.png)). |
-| `form-error` | Validation error | Duplicate title (ignoring case) and missing body (AC-37.2, AC-37.3). |
+| `edit` | — | SCR-37 for the overdue article; saving also counts as reviewed today, and adds a revision only if the title or body changed (BR-20) ([PNG](../images/admin/36b-edit-policy.png)). |
+| `form-error` | Validation error | Duplicate title (ignoring case) and missing body (AC-37.2, AC-37.3). A body that repeats another article's body uses the same pattern under **Nội dung** and names that article (AC-37.4); not drawn. |
 | `hide-confirm` | Destructive confirmation | Names the article and says AI stops using it; the text is kept (AC-39.1). |
 | `empty` | Empty | "Chưa có chính sách nào" explains that Staff's **Gợi ý trả lời** stays off until an article exists, with **Thêm chính sách**. |
 
@@ -206,5 +206,6 @@ The page says up front that customers never see it and that AI uses only active 
 - **Unauthorized** (session ended): redirect to SCR-01 with the `locked` or a "phiên đăng nhập đã hết" message.
 - **Conflict** (SCR-21, SCR-23): a brick notice above the reply box, "Ticket vừa được cập nhật. Tải lại để xem thay đổi." with **Tải lại**; the draft and the chosen status or labels stay as they were (BR-19).
 - **Lost access while editing** (SCR-21): a neutral notice "Ticket này đã được chuyển cho người khác." with a link back to **Hàng đợi của tôi**; the draft stays in the reply box so it can be copied (BR-19).
+- **Policy changed during suggestion** (SCR-21): same pattern as `suggest-error`, with "Chính sách vừa được cập nhật. Bấm Gợi ý trả lời lại để dùng nội dung mới." and **Thử lại** (AC-40.7).
 
 **Related:** [Step index](README.md) · [Design system](01-design-system.md)
