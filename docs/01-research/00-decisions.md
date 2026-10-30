@@ -39,9 +39,11 @@ These decisions refine the original brief. Later steps must follow them.
 | D-22 | **AI classification status is stored.** Each ticket records whether its AI classification is `Pending`, `Classified`, or `Unclassified` (with the cause). Ticket Handling refreshes itself while it is `Pending`, and a ticket that stays `Pending` too long counts as `Unclassified` (BR-08, DF-28). | Clarifies the brief's AI design. Input for Steps 5 and 6. | User, 2026-10-30 |
 | D-23 | **Concurrent changes are detected, never silently overwritten.** Each ticket has a version; a status change, label correction, transfer, or reassignment made from an outdated view is rejected with a prompt to reload (BR-19). | No change to the brief. Input for Steps 5 and 6. | User, 2026-10-30 |
 | D-24 | **Leave history is kept in a `staff_leave` table** (Staff, from, to, set by, ended by). The account status stays the single source of truth; the table is history and the base for scheduled leave later (BR-18). | Input for Step 5 (ERD). | User, 2026-10-30 |
+| D-25 | **Policy knowledge base and reply suggestions are in the MVP** (Level 1 of the [roadmap](09-future-work.md)). The Admin keeps an **internal** list of policy articles. On Ticket Handling, Staff can ask AI for a reply suggestion grounded in those articles, with citations; Staff review and send it, and AI never sends. Customers never see articles or citations (M-09, BR-20, BR-21). | **Changes the brief:** W-03 (AI reply suggestions using RAG) moves into scope; W-02 is narrowed to a customer-facing help centre, which stays out. | User, 2026-10-30 |
 
 | ID | Open item | Status |
 |---|---|---|
 | O-08 | Confirm with the mentor that "no email integration" in the brief excludes only email intake, not notification emails (D-19). | Pending |
+| O-09 | Confirm with the mentor that an internal policy list with cited reply suggestions (D-25) is acceptable, since the brief lists "knowledge base" and "AI reply suggestions using RAG" as out of scope. | Pending |
 
 **Related:** [Step index](README.md)

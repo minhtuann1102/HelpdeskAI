@@ -26,11 +26,12 @@ Today these businesses receive support requests through many disconnected channe
 
 ## Product vision
 
-Helpdesk AI turns every customer request into a **ticket** with an owner, a status, and a history. AI helps at three points:
+Helpdesk AI turns every customer request into a **ticket** with an owner, a status, and a history. AI helps at four points:
 
 1. **On creation:** it classifies the ticket (category, priority, sentiment) so urgent and angry tickets surface first.
 2. **On demand:** it summarizes long tickets so Staff can catch up in seconds.
 3. **On demand:** it rewrites a Staff draft into a polite, clear reply.
+4. **On demand:** it suggests a reply grounded in the shop's written policies and cites them, so policy questions get fast, consistent answers (D-25).
 
 **AI proposes, rules enforce, humans decide.** AI never blocks ticket creation and never sends anything to a customer by itself.
 

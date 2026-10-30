@@ -18,22 +18,22 @@ Sources: the products' official websites (zendesk.com, freshworks.com/freshdesk,
 
 ## Key learnings
 
-1. **Triage, summary, and reply rewriting are now standard AI features** in mature help desks. Our three AI features match what the market has validated.
+1. **Triage, summary, and reply rewriting are now standard AI features** in mature help desks. Helpdesk AI covers these three and adds a fourth: reply suggestions grounded in the shop's own policies, with citations (D-25).
 2. **Auto-assignment (round-robin or load-based) is standard.** Decision D-04 follows the same pattern.
 3. Mature products are **omnichannel and broad**. That breadth is their strength and also their cost: setup effort and price per seat.
 4. ML triage that **learns from historical tickets** needs data a new small business does not have yet.
 
 ## How Helpdesk AI differs
 
-Helpdesk AI does not compete on breadth. It has no omnichannel intake, no knowledge base, and no chatbot. It is a focused MVP built on six principles:
+Helpdesk AI does not compete on breadth. It has no omnichannel intake, no customer-facing help centre, and no chatbot; its only knowledge base is an internal list of policy articles that grounds reply suggestions (D-25). It is a focused MVP built on six principles:
 
 | # | Differentiator | How |
 |---|---|---|
 | 1 | **Works from day one, no training data** | Classification is zero-shot: the LLM chooses from the active categories using the **descriptions Admin writes**. Adding a category means writing a description, not training a model or writing keyword rules. |
 | 2 | **Vietnamese-first** | Built for customers who write without diacritics, use abbreviations, and mix several issues in one message. |
 | 3 | **Measurable trust in AI** | Stores the original AI label, the final label, the confidence, and the reason. The dashboard shows the label correction rate, so the owner can see whether AI helps. |
-| 4 | **Human-in-the-loop by design** | Low confidence gives "Unclassified" instead of a guess. A rewrite is only a draft that Staff review and edit. AI never sends anything. |
+| 4 | **Human-in-the-loop by design** | Low confidence gives "Unclassified" instead of a guess. A rewrite or a suggestion is only a draft that Staff review and edit, and a suggestion shows its sources. AI never sends anything. |
 | 5 | **Resilient** | An AI failure or timeout never blocks ticket creation. |
-| 6 | **Predictable cost** | One LLM call per ticket for classification. Summary and rewrite run only when Staff click a button. |
+| 6 | **Predictable cost** | One LLM call per ticket for classification. Summary, rewrite, and reply suggestion run only when Staff click a button. |
 
 **Related:** [Step index](README.md)

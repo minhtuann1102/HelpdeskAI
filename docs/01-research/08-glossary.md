@@ -22,6 +22,9 @@
 | Ticket version | A counter that changes whenever a ticket changes. Staff actions made from an outdated view are rejected instead of overwriting someone else's change (D-23, BR-19). |
 | Confidence | AI self-reported certainty, from 0 to 1. |
 | Label correction rate | Share of AI-labelled tickets whose final label differs from the AI label. |
+| Policy article | An internal text the Admin writes about one shop policy (returns, shipping, payment…), with a last-reviewed date. Customers never see it (D-25, BR-20). |
+| Reply suggestion | A draft reply that AI writes on request from the most relevant policy articles, citing them. Staff review it and send it themselves (BR-21). |
+| Citation | A reference from a reply suggestion to the policy article and passage it relies on, shown to Staff next to the suggestion. |
 | First response time | Time from ticket creation to the first reply by Staff or Admin. |
 | Stale summary | An AI summary created before the latest message on the ticket. |
 | Email notification | An email sent to the Customer when Staff or Admin reply to their ticket or change its status. It links to the ticket; the conversation stays on the website (D-19, BR-17). |

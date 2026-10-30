@@ -14,7 +14,7 @@
 | Priority depends on context | "Mai 8h shop mở bán mà trang thanh toán lỗi" (*"Our sale opens at 8 a.m. tomorrow and the payment page is broken"*) vs. "Không gấp đâu, khi nào rảnh xem giúp lỗi hiển thị" (*"Not urgent, check the display bug when you have time"*) | The keyword "lỗi" (*error*) gives both the same priority; "gấp" (*urgent*) even raises the second one. | First is `urgent`, second is `low`. |
 | Sarcasm and tone | "Tuyệt vời thật, lần thứ 3 giao sai hàng rồi đấy" (*"Just great, that's the third wrong delivery"*) | "tuyệt vời" (*great*) scores as positive. | Recognizes it as `angry`. |
 | New categories | Admin adds a "Warranty" category. | New keyword lists must be written, tested, and deployed. | Uses the new category right away from its description. |
-| Summary and reply rewrite | A 15-message thread; a curt draft reply. | Not possible: these are language generation tasks. | Core strength. |
+| Summary, reply rewrite, and reply suggestion | A 15-message thread; a curt draft reply; "đổi size được không shop?" (*"can I swap the size?"*) answered from the returns policy. | Not possible: these are language generation tasks. Keyword search can find a policy but cannot write the answer. | Core strength. |
 
 ## Where rules stay (hybrid design)
 
@@ -28,6 +28,8 @@ AI is used **only where language understanding is needed**. Deterministic polici
 | AI output must match the JSON schema, the enums, and the active category list. | Validation rule |
 | An AI error or timeout gives "Unclassified" and ticket creation continues. | Rule |
 | AI never sends a reply. | Design constraint: there is no code path for it |
+| A suggestion must cite at least one of the articles it was given; otherwise there is no suggestion. | Validation rule (BR-21) |
+| Hidden articles and articles past their review date are never given to AI. | Rule (BR-20) |
 | Auto-assignment of new tickets. | Rule (fewest open tickets, D-07; warm-up after joining, D-21) |
 
 ## Costs of using AI, and how they are handled

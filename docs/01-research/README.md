@@ -8,16 +8,16 @@ Step 1 analyses **Helpdesk AI** top-down: context, problem, measurable goals, st
 
 | File | Content |
 |---|---|
-| [00-decisions.md](00-decisions.md) | Decisions D-01..D-06; open items O-01..O-07 and how they were resolved; changes after Step 4 D-19..D-24 (email notifications, Staff on leave, warm-up after joining, classification status, concurrent changes, leave history); open item O-08 |
+| [00-decisions.md](00-decisions.md) | Decisions D-01..D-06; open items O-01..O-07 and how they were resolved; changes after Step 4 D-19..D-25 (email notifications, Staff on leave, warm-up after joining, classification status, concurrent changes, leave history, policy knowledge base and reply suggestions); open items O-08, O-09 |
 | [01-context-and-problem.md](01-context-and-problem.md) | Context, problem statement P-01..P-05, product vision |
-| [02-goals-and-metrics.md](02-goals-and-metrics.md) | Measurable goals G-01..G-08 |
+| [02-goals-and-metrics.md](02-goals-and-metrics.md) | Measurable goals G-01..G-09 |
 | [03-stakeholders.md](03-stakeholders.md) | Stakeholders and their interests |
 | [04-similar-products.md](04-similar-products.md) | Zendesk, Freshdesk, Zoho Desk; how Helpdesk AI differs |
-| [05-scope.md](05-scope.md) | MVP modules M-01..M-08, out of scope, assumptions A-01..A-06 |
-| [06-risks.md](06-risks.md) | Risks R-01..R-13 and mitigations |
+| [05-scope.md](05-scope.md) | MVP modules M-01..M-09, out of scope, assumptions A-01..A-07 |
+| [06-risks.md](06-risks.md) | Risks R-01..R-15 and mitigations |
 | [07-ai-vs-rule-based.md](07-ai-vs-rule-based.md) | Where rules break down, where rules stay (hybrid design) |
 | [08-glossary.md](08-glossary.md) | Terms used across the documentation |
-| [09-future-work.md](09-future-work.md) | After the MVP: automation roadmap (policy knowledge base and reply suggestions, then automatic answers, then chatbot), scheduled leave, and other candidates |
+| [09-future-work.md](09-future-work.md) | After the MVP: automation roadmap (Level 1, policy knowledge base and reply suggestions, is now in the MVP; then automatic answers, then chatbot), scheduled leave, and other candidates |
 
 Also part of Step 1: the [product mind map](../mindmap.png) and the [problem traceability](../traceability/master-traceability.md#problem-traceability).
 
