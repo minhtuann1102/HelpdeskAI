@@ -27,6 +27,7 @@ flowchart LR
       C[categories] --> T[tickets]
       T --> TM[ticket_messages]
       T --> TA[ticket_attachments]
+      T --> RK[response_clocks]
     end
 
     subgraph ai [AI]
@@ -71,6 +72,8 @@ flowchart LR
 | `ticket_sentiment` | POSITIVE, NEUTRAL, NEGATIVE, ANGRY | Tích cực, Trung lập, Tiêu cực, Bức xúc |
 | `classification_status` | PENDING, CLASSIFIED, UNCLASSIFIED | "AI đang phân loại…", the labels, "Chưa phân loại" |
 | `unclassified_cause` | LOW_CONFIDENCE, AI_ERROR | The label panel explains which one |
+| `response_kind` | FIRST, NEXT | Not shown; first response or a later one |
+| `clock_outcome` | ON_TIME, LATE, CANCELLED | Đúng hạn, Trễ, left out of the on-time share |
 | `email_status` | PENDING, SENT, FAILED | Not shown; email outbox |
 | `ai_feature` | CLASSIFY, SUMMARIZE, REWRITE, SUGGEST_REPLY | Not shown; AI request log |
 | `ai_outcome` | SUCCESS, INVALID_OUTPUT, TIMEOUT, ERROR | Not shown; AI request log |
@@ -153,6 +156,21 @@ erDiagram
     integer size_bytes
   }
 
+  response_clocks {
+    bigint id PK
+    bigint ticket_id FK
+    response_kind kind
+    timestamptz started_at
+    bigint started_by_message_id FK "NEXT only"
+    timestamptz paused_at "while paused"
+    integer paused_minutes "working minutes"
+    timestamptz ended_at "NULL while open"
+    clock_outcome outcome
+    bigint ended_by_message_id FK
+    timestamptz due_at "kept once ended"
+    ticket_priority priority "kept once ended"
+  }
+
   ticket_summaries {
     bigint ticket_id PK, FK
     text content
@@ -197,6 +215,9 @@ erDiagram
   tickets ||--o{ ticket_messages : ticket_id
   app_users ||--o{ ticket_messages : author_id
   tickets ||--o{ ticket_attachments : ticket_id
+  tickets ||--o{ response_clocks : ticket_id
+  ticket_messages |o--o{ response_clocks : started_by_message_id
+  ticket_messages |o--o{ response_clocks : ended_by_message_id
 
   tickets ||--o| ticket_summaries : ticket_id
   ticket_messages |o--o{ ticket_summaries : last_message_id
@@ -210,7 +231,7 @@ erDiagram
   ticket_messages |o--o{ email_notifications : message_id
 ```
 
-At most one leave per Staff member is open at a time (partial unique index on `staff_id` where `ends_at` is NULL), and at most 5 attachments belong to a ticket (checked by the API).
+At most one leave per Staff member is open at a time (partial unique index on `staff_id` where `ends_at` is NULL), at most one response clock per ticket is open (partial unique index on `ticket_id` where `ended_at` is NULL), and at most 5 attachments belong to a ticket (checked by the API).
 
 ## Detailed ER diagram — policies (D-25, D-26)
 

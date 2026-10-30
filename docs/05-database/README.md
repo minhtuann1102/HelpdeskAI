@@ -8,7 +8,7 @@ Step 5 turns the [business rules](../requirements/business-rules.md) and the [sc
 
 | File | Content |
 |---|---|
-| [00-decisions.md](00-decisions.md) | Decisions D-28..D-34; default DF-30 |
+| [00-decisions.md](00-decisions.md) | Decisions D-28..D-34, D-37; default DF-30 |
 | [01-data-model.md](01-data-model.md) | Tables, labels on a ticket, derived values, transaction boundaries, concurrency, duplicate checks, privacy, seed data, and what is not modelled |
 | [02-er-diagram.md](02-er-diagram.md) | Relationships by group, enums with their UI labels, detailed ER diagrams |
 | [helpdesk_ai.dbml](helpdesk_ai.dbml) | Schema source of truth in DBML; paste it into dbdiagram.io to view it |

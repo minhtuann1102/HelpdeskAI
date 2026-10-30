@@ -6,11 +6,13 @@ Project helpdesk_ai {
 
     One account table for the three roles CUSTOMER, STAFF, ADMIN (BR-01).
     A ticket keeps the AI label (written once) next to the final label (BR-09).
+    Each reply a customer waits for is a response clock with a deadline (D-35, BR-22).
     Nothing is deleted: users are locked, categories and articles hidden, tickets closed.
     Group "policies" exists because of D-25 (mentor confirmation O-09 pending).
 
     Not modelled here: login sessions and tokens, file storage, and embeddings for
-    policy search (all Step 7); SQL migrations (Step 9).
+    policy search (all Step 7); reply targets, working hours, and holidays, which are
+    server settings (DF-31, DF-32); SQL migrations (Step 9).
   '''
 }
 
@@ -66,6 +68,17 @@ Enum unclassified_cause {
   AI_ERROR [note: 'Error, timeout, invalid output, or still PENDING after 30 s (DF-28)']
 }
 
+Enum response_kind {
+  FIRST [note: 'From ticket creation']
+  NEXT [note: 'From a customer message written while no clock was open']
+}
+
+Enum clock_outcome {
+  ON_TIME [note: 'Staff or Admin replied before the deadline']
+  LATE [note: 'Replied after the deadline, or the ticket closed after it passed']
+  CANCELLED [note: 'The ticket closed before the deadline; left out of the on-time share (G-10)']
+}
+
 Enum email_status {
   PENDING
   SENT
@@ -105,6 +118,7 @@ TableGroup tickets {
   tickets
   ticket_messages
   ticket_attachments
+  response_clocks
 }
 
 TableGroup ai {
@@ -218,7 +232,7 @@ Table tickets {
   category_id bigint [note: 'Final label (BR-09). NULL = Unclassified']
   priority ticket_priority [note: 'Final label. NULL = Unclassified']
   sentiment ticket_sentiment [note: 'Final label. NULL = Unclassified']
-  labels_edited_by bigint [note: 'Staff or Admin who last set the final labels; once set, AI never overwrites them (BR-08 rule 10)']
+  labels_edited_by bigint [note: 'Staff or Admin who last corrected or confirmed the final labels; once set, AI never overwrites them (BR-08 rule 10), and the labels lose the AI marker and "AI chưa chắc" (BR-23)']
   labels_edited_at timestamptz
 
   first_response_at timestamptz [note: 'First reply by the assignee or Admin (BR-07); used for response time (BR-16)']
@@ -275,6 +289,40 @@ Table ticket_attachments {
   }
 
   Note: 'Files added when the ticket is submitted (BR-14): at most 5 per ticket, checked by the API. Never sent to the LLM.'
+}
+
+Table response_clocks {
+  id bigint [pk, increment]
+  ticket_id bigint [not null]
+  kind response_kind [not null]
+  started_at timestamptz [not null, note: 'Ticket creation, or the customer message that started it (BR-22 rule 1)']
+  started_by_message_id bigint [note: 'The customer message that started a NEXT clock; NULL for FIRST']
+  paused_at timestamptz [note: 'Set while the ticket is Waiting for Customer or Resolved with this clock open (BR-22 rule 2)']
+  paused_minutes integer [not null, default: 0, note: 'Working minutes spent paused so far; added when the clock resumes']
+  ended_at timestamptz [note: 'NULL while open']
+  outcome clock_outcome [note: 'Set when the clock ends (BR-22 rule 4)']
+  ended_by_message_id bigint [note: 'The Staff or Admin reply that ended it; NULL when closing the ticket ended it']
+  due_at timestamptz [note: 'Only once ended: the deadline in force then. A running deadline is computed when read (BR-22 rule 10)']
+  priority ticket_priority [note: 'Only once ended: the final priority then, for the on-time share by priority; NULL = none yet, the high target applied']
+
+  indexes {
+    ticket_id [name: 'ix_response_clocks_ticket']
+    ended_at [name: 'ix_response_clocks_ended']
+  }
+
+  checks {
+    `(ended_at IS NULL) = (outcome IS NULL) AND (ended_at IS NULL) = (due_at IS NULL)` [name: 'ck_response_clocks_end_fields']
+    `ended_at IS NULL OR paused_at IS NULL` [name: 'ck_response_clocks_paused_open']
+    `(kind = 'FIRST') = (started_by_message_id IS NULL)` [name: 'ck_response_clocks_start']
+    `paused_minutes >= 0` [name: 'ck_response_clocks_paused_minutes']
+  }
+
+  Note: '''
+    One row per reply a customer waited for (D-35, D-37, BR-22). Rows are inserted and ended, never deleted.
+    Customers never read this table (DF-14).
+    SQL adds a partial unique index that DBML cannot express:
+    UNIQUE (ticket_id) WHERE ended_at IS NULL, so a ticket has at most one open clock.
+  '''
 }
 
 // ───────── AI ─────────
@@ -439,6 +487,9 @@ Ref: tickets.category_id > categories.id
 Ref: ticket_messages.ticket_id > tickets.id
 Ref: ticket_messages.author_id > app_users.id
 Ref: ticket_attachments.ticket_id > tickets.id
+Ref: response_clocks.ticket_id > tickets.id
+Ref: response_clocks.started_by_message_id > ticket_messages.id
+Ref: response_clocks.ended_by_message_id > ticket_messages.id
 
 Ref: tickets.id - ticket_summaries.ticket_id
 Ref: ticket_summaries.last_message_id > ticket_messages.id
