@@ -1,6 +1,6 @@
 # Master Traceability Matrix — Helpdesk AI MVP
 
-> Design status: MVP — updated at every step (last update: after Step 4, D-19 email notifications, D-20 Staff on leave, D-21 warm-up after joining; wireframes for each screen are listed in [Screen notes and states](../04-uiux/02-screen-notes.md))
+> Design status: MVP — updated at every step (last update: after Step 4, D-19 email notifications, D-20 Staff on leave, D-21 warm-up after joining, D-22..D-24 classification status, concurrent changes, leave history; wireframes for each screen are listed in [Screen notes and states](../04-uiux/02-screen-notes.md))
 >
 > Implementation status: NOT STARTED
 
@@ -23,17 +23,17 @@ Columns marked TBD are filled in by the step that owns them: Screen (Step 3), Da
 | US-11 | UC-08 | AC-11.1–AC-11.5 | BR-05, BR-06, BR-07 | SCR-12 | TBD | TBD | TBD |
 | US-12 | UC-09 | AC-12.1–AC-12.2 | BR-06 | SCR-12, SCR-13 | TBD | TBD | TBD |
 | US-13 | UC-25 | AC-13.1–AC-13.8 | BR-03 | — (system) | Via submit ticket, lock account, set on leave, and customer reply (reopen when assignee is locked or on leave) | TBD | TBD |
-| US-14 | UC-24 | AC-14.1–AC-14.5 | BR-08, BR-09 | — (system) | Via submit ticket | TBD | TBD |
+| US-14 | UC-24 | AC-14.1–AC-14.6 | BR-08, BR-09 | — (system) | Via submit ticket | TBD | TBD |
 | US-15 | UC-24 | AC-15.1–AC-15.3 | BR-08 | — (system) | Via submit ticket | TBD | TBD |
-| US-16 | UC-24 | AC-16.1–AC-16.5 | BR-08 | — (system) | Via submit ticket | TBD | TBD |
-| US-17 | UC-10 | AC-17.1–AC-17.5 | BR-02 | SCR-20 | TBD | TBD | TBD |
+| US-16 | UC-24 | AC-16.1–AC-16.7 | BR-08, BR-09 | — (system) | Via submit ticket | TBD | TBD |
+| US-17 | UC-10 | AC-17.1–AC-17.5 | BR-02, BR-08 | SCR-20 | TBD | TBD | TBD |
 | US-18 | UC-11 | AC-18.1–AC-18.4 | BR-02 | SCR-20 | TBD | TBD | TBD |
-| US-19 | UC-12 | AC-19.1–AC-19.3 | BR-02, BR-09 | SCR-21 | TBD | TBD | TBD |
-| US-20 | UC-13 | AC-20.1–AC-20.5 | BR-06, BR-07 | SCR-21 | TBD | TBD | TBD |
-| US-21 | UC-14 | AC-21.1–AC-21.3 | BR-06 | SCR-21 | TBD | TBD | TBD |
-| US-22 | UC-15 | AC-22.1–AC-22.3 | BR-04 | SCR-21, SCR-23 | TBD (incl. list of active Staff) | TBD | TBD |
-| US-23 | UC-15 | AC-23.1–AC-23.2 | BR-04 | SCR-21, SCR-23 | TBD | TBD | TBD |
-| US-24 | UC-16 | AC-24.1–AC-24.3 | BR-09, BR-10 | SCR-21 | TBD | TBD | TBD |
+| US-19 | UC-12 | AC-19.1–AC-19.4 | BR-02, BR-08, BR-09 | SCR-21 | TBD | TBD | TBD |
+| US-20 | UC-13 | AC-20.1–AC-20.7 | BR-06, BR-07, BR-19 | SCR-21 | TBD | TBD | TBD |
+| US-21 | UC-14 | AC-21.1–AC-21.4 | BR-06, BR-19 | SCR-21 | TBD | TBD | TBD |
+| US-22 | UC-15 | AC-22.1–AC-22.4 | BR-04, BR-19 | SCR-21, SCR-23 | TBD (incl. list of active Staff) | TBD | TBD |
+| US-23 | UC-15 | AC-23.1–AC-23.3 | BR-04, BR-19 | SCR-21, SCR-23 | TBD | TBD | TBD |
+| US-24 | UC-16 | AC-24.1–AC-24.4 | BR-09, BR-10, BR-19 | SCR-21 | TBD | TBD | TBD |
 | US-25 | UC-17 | AC-25.1–AC-25.5 | BR-11 | SCR-21 | TBD | TBD | TBD |
 | US-26 | UC-18 | AC-26.1–AC-26.5 | BR-12 | SCR-21 | TBD | TBD | TBD |
 | US-27 | UC-20 | AC-27.1–AC-27.3 | BR-13 | SCR-30, SCR-32 | TBD | TBD | TBD |

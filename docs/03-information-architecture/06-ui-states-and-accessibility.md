@@ -18,13 +18,15 @@
 | Forbidden | Show SCR-90 with a link back to the role's home page. |
 | Saving | Disable the submit button to prevent double submission and show progress. |
 | Success | Confirm the action, close the modal if any, and refresh the affected list. |
+| Conflict (ticket changed meanwhile) | Nothing is saved; keep the user's input (draft, chosen status or labels) and show "Ticket vừa được cập nhật. Tải lại để xem thay đổi." with a Reload action (BR-19). |
+| Lost access while editing | The ticket was transferred away: keep the draft so it can be copied, explain that the ticket now belongs to someone else, and link back to the queue (BR-19). |
 | Destructive confirmation | Name the item and the effect: closing a ticket is final; locking a Staff member or setting them on leave redistributes their open tickets; hiding a category removes it from the form and AI. |
 
 ### AI states
 
 | State | Where | Required behavior |
 |---|---|---|
-| Classification pending | SCR-20, SCR-21 | If the labels are not ready yet, show a "Classifying…" chip instead of empty labels; the ticket is usable. Customers never see it. |
+| Classification pending | SCR-20, SCR-21 | If the labels are not ready yet, show a "Classifying…" chip instead of empty labels; the ticket is usable. In SCR-20 the ticket sorts with Unclassified at the top. SCR-21 re-checks every 3 s and shows the labels when ready; after 30 s it shows the Unclassified (AI error) state (DF-28). Customers never see it. |
 | Unclassified (low confidence) | SCR-20, SCR-21 | "Unclassified" badge; the label panel shows the confidence and reason and asks for manual triage. |
 | Unclassified (AI error or timeout) | SCR-20, SCR-21 | "Unclassified" badge; the label panel says "AI was unavailable" and asks for manual triage. |
 | Priority raised by anger | SCR-20, SCR-21 | The priority chip shows that it was raised because of angry sentiment (AC-15.3). |

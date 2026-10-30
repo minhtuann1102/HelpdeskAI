@@ -77,7 +77,7 @@ In the MVP, Admin sets and ends leave by hand at the moment it happens (D-20). I
 - **Redistribution is a choice.** A "redistribute open tickets" checkbox is on by default for leave of one day or more, and off for a single session. For a half-day absence, the Staff member only stops getting new tickets and keeps the ones they are working on.
 - **Admin can still override.** End leave early, or extend it by editing "To". Lock wins over leave: leave that ends while the account is locked keeps it locked.
 - **History.** Who set each leave, when, and its From and To, for later review.
-- **Data model (Step 5).** A status column on the user is enough for the MVP. A separate `staff_leave` table (Staff, from, to, set by) costs one table now but makes this feature and the leave history a small change later. Decide when designing the ERD.
+- **Data model.** Decided in D-24: the MVP already keeps each leave in a `staff_leave` table (Staff, from, to, set by, ended by) next to the account status. Scheduled leave only needs to start using future "From" values and a filled "To".
 
 ## Other candidates
 

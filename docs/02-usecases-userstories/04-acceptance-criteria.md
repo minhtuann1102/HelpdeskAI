@@ -84,7 +84,7 @@ UC-07 · BR-02
 UC-07 · BR-02
 
 - **AC-10.1** *Given* my ticket, *when* I open it, *then* I see the title, description, attachments, status, category, and every message in time order with author and time.
-- **AC-10.2** *Given* my ticket, *when* it is shown, *then* priority, sentiment, confidence, AI reason, and summary are not shown (DF-14).
+- **AC-10.2** *Given* my ticket, *when* it is shown, *then* priority, sentiment, confidence, AI reason, classification status, and summary are not shown (DF-14).
 - **AC-10.3** *Given* another customer's ticket number, *when* I try to open it, *then* access is denied.
 
 ### US-11 — Reply to my ticket
@@ -136,6 +136,7 @@ UC-24 · BR-08, BR-09
 - **AC-14.3** *Given* the customer chose a category, *when* the ticket is classified, *then* the category stays unchanged and AI sets only priority and sentiment, in the same single call.
 - **AC-14.4** *Given* the AI returns a category that is not active, a value outside the enums, or invalid JSON, *when* it is processed, *then* it is treated as a failure (US-16).
 - **AC-14.5** *Given* the AI output contains extra fields or instructions, *when* it is processed, *then* only category, priority, sentiment, confidence, and reason are used, and no other action happens.
+- **AC-14.6** *Given* a ticket was just created, *when* its AI call is still running, *then* its classification status is `Pending`; once the result is processed, it becomes `Classified`, or `Unclassified` with the cause (D-22, BR-08 rule 9).
 
 ### US-15 — Angry sentiment raises priority
 UC-24 · BR-08 rule 6
@@ -152,6 +153,8 @@ UC-24 · BR-08 rule 7
 - **AC-16.3** *Given* the customer chose a category and the AI fails or has low confidence, *when* processed, *then* the category is kept and priority and sentiment are "Unclassified" (DF-07).
 - **AC-16.4** *Given* an Unclassified ticket, *when* its assignee opens the queue, *then* it appears at the top with an "Unclassified" badge until someone sets its labels (US-24).
 - **AC-16.5** *Given* an AI failure, *when* it happens, *then* the system does not retry automatically (DF-08).
+- **AC-16.6** *Given* a ticket is still `Pending` 30 s after creation (for example after a server restart), *when* it is shown or counted, *then* it is treated as `Unclassified` (AI error), and a later AI result for it is discarded (DF-28).
+- **AC-16.7** *Given* Staff set the labels while classification is `Pending`, *when* the AI result arrives, *then* only the AI label is filled, and the final labels Staff set stay unchanged (BR-08 rule 10).
 
 ## Ticket handling (M-04, M-05)
 
@@ -159,7 +162,7 @@ UC-24 · BR-08 rule 7
 UC-10 · BR-02
 
 - **AC-17.1** *Given* I am Staff, *when* I open My queue, *then* I see only tickets assigned to me with status `New`, `In Progress`, or `Waiting for Customer` (DF-15).
-- **AC-17.2** *Given* the queue, *when* it is shown, *then* it is ordered Unclassified first, then `urgent`, `high`, `medium`, `low`, then oldest first.
+- **AC-17.2** *Given* the queue, *when* it is shown, *then* it is ordered Unclassified and `Pending` first, then `urgent`, `high`, `medium`, `low`, then oldest first.
 - **AC-17.3** *Given* the queue, *when* it is shown, *then* each row shows ticket number, title, customer name, category, priority, sentiment, status, and creation time; labels not yet corrected carry an "AI" marker.
 - **AC-17.4** *Given* I am Administrator, *when* I open All tickets, *then* I see every ticket with an assignee column, including Unassigned ones.
 - **AC-17.5** *Given* I have no open tickets, *when* I open My queue, *then* I see an empty state "No tickets assigned to you".
@@ -173,47 +176,54 @@ UC-11 · BR-02
 - **AC-18.4** *Given* no ticket matches, *when* results load, *then* I see "No tickets match your filters" and a Clear filters action.
 
 ### US-19 — View ticket details with AI labels
-UC-12 · BR-02, BR-09
+UC-12 · BR-02, BR-08, BR-09
 
 - **AC-19.1** *Given* a ticket I can act on, *when* I open it, *then* I see title, description, attachments, customer name and email, status, assignee, and the full conversation.
 - **AC-19.2** *Given* the label panel, *when* it is shown, *then* it shows the final category, priority, and sentiment, plus the original AI label, confidence, and reason.
 - **AC-19.3** *Given* an Unclassified ticket, *when* I open it, *then* the panel shows "Unclassified — needs manual triage" and whether the cause was low confidence or an AI error.
+- **AC-19.4** *Given* the ticket's classification is `Pending`, *when* I keep it open, *then* the label panel shows "AI đang phân loại…", the page re-checks every 3 s, and the labels appear as soon as they are ready; after 30 s it shows the Unclassified (AI error) state (DF-28).
 
 ### US-20 — Reply to the customer
-UC-13 · BR-06, BR-07
+UC-13 · BR-06, BR-07, BR-19
 
 - **AC-20.1** *Given* a ticket I can act on that is not `Closed`, *when* I write a reply and click Send, *then* it is added to the conversation with my name and time, and the customer can see it.
 - **AC-20.2** *Given* a `New` ticket, *when* the assignee or Administrator sends the first reply, *then* the status becomes `In Progress` and the first response time is recorded (D-10).
 - **AC-20.3** *Given* a reply, *when* I choose "Send and wait for customer", *then* the reply is sent and the status becomes `Waiting for Customer`.
 - **AC-20.4** *Given* an empty reply, *when* I look at the Send button, *then* it is disabled.
 - **AC-20.5** *Given* a draft in the reply box, *when* I have not clicked Send, *then* nothing is sent to the customer (G-07).
+- **AC-20.6** *Given* the ticket was transferred to someone else while I was writing, *when* I click Send, *then* the reply is rejected, my draft stays in the reply box so I can copy it, and I see a message with a link back to my queue (BR-19).
+- **AC-20.7** *Given* someone else changed the ticket after I opened it, *when* I choose "Send and wait for customer", *then* neither the reply nor the status change is saved, my draft stays, and I am asked to reload (BR-19).
 
 ### US-21 — Change ticket status
-UC-14 · BR-06
+UC-14 · BR-06, BR-19
 
 - **AC-21.1** *Given* a ticket in a given status, *when* I open the status control, *then* only the transitions allowed by BR-06 are offered, and any other transition sent directly is rejected.
 - **AC-21.2** *Given* I set a ticket to `Resolved`, *when* the customer opens it, *then* they see `Resolved` and can still reply (reopen) or close it.
 - **AC-21.3** *Given* a `Closed` ticket, *when* I open it, *then* no status change is offered.
+- **AC-21.4** *Given* the customer replied after I opened the ticket, *when* I set it to `Resolved` from my outdated page, *then* nothing changes and I see "Ticket vừa được cập nhật. Tải lại để xem thay đổi." (BR-19).
 
 ### US-22 — Transfer my ticket to another Staff member
-UC-15 · BR-04
+UC-15 · BR-04, BR-19
 
 - **AC-22.1** *Given* a ticket assigned to me, *when* I choose Transfer, *then* I see a list of the other active Staff members with their open-ticket counts.
 - **AC-22.2** *Given* I pick a colleague and confirm, *when* the transfer completes, *then* the assignee changes, the status stays the same, the ticket leaves my queue, and I no longer have access to it (D-09).
 - **AC-22.3** *Given* a `Closed` ticket or a locked target, *when* I try to transfer, *then* the transfer is rejected.
+- **AC-22.4** *Given* the ticket changed after I opened it (for example a new customer message), *when* I confirm a transfer, *then* nothing changes and I am asked to reload (BR-19).
 
 ### US-23 — Reassign any ticket
-UC-15 · BR-04
+UC-15 · BR-04, BR-19
 
 - **AC-23.1** *Given* any non-closed ticket, *when* I (Administrator) choose an active Staff member or myself and confirm, *then* the assignee changes and the assignment time is recorded.
 - **AC-23.2** *Given* an Unassigned ticket, *when* I assign it, *then* it appears in the new assignee's queue.
+- **AC-23.3** *Given* the ticket changed after I opened it, *when* I confirm a reassignment, *then* nothing changes and I am asked to reload (BR-19).
 
 ### US-24 — Correct AI labels and triage Unclassified tickets
-UC-16 · BR-09, BR-10
+UC-16 · BR-09, BR-10, BR-19
 
 - **AC-24.1** *Given* a ticket I can act on, *when* I change the category (active categories only), priority, or sentiment and save, *then* the final label changes and the AI label stays unchanged.
 - **AC-24.2** *Given* an Unclassified ticket, *when* I set its category and priority, *then* the "Unclassified" badge disappears and the ticket takes its normal place in the queue order.
 - **AC-24.3** *Given* I changed an AI-chosen category or the AI priority, *when* the dashboard is calculated, *then* the ticket counts as corrected (BR-10); changing only the sentiment does not count.
+- **AC-24.4** *Given* someone else corrected the labels after I opened the ticket, *when* I save my correction, *then* nothing changes and I am asked to reload, so neither correction is lost silently (BR-19).
 
 ### US-25 — Summarize a ticket with AI
 UC-17 · BR-11

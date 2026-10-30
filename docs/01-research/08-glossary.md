@@ -18,6 +18,8 @@
 | AI label | The original category, priority, and sentiment proposed by AI. It is stored and never overwritten. |
 | Final label | The label in effect after any correction by Staff or Admin. |
 | Unclassified | The fallback state when AI confidence is below the threshold or the AI call failed; a human must triage. |
+| Classification status | The state of the AI run on a ticket: `Pending`, `Classified`, or `Unclassified` (low confidence or AI error). People never change it; manual triage changes only the final labels (D-22, BR-08). |
+| Ticket version | A counter that changes whenever a ticket changes. Staff actions made from an outdated view are rejected instead of overwriting someone else's change (D-23, BR-19). |
 | Confidence | AI self-reported certainty, from 0 to 1. |
 | Label correction rate | Share of AI-labelled tickets whose final label differs from the AI label. |
 | First response time | Time from ticket creation to the first reply by Staff or Admin. |

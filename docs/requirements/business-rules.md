@@ -112,8 +112,8 @@ stateDiagram-v2
 
 ## BR-08 — AI classification
 
-- **Source:** brief (AI design 1), A-05, DF-07..DF-09
-- **Related US:** US-07, US-14, US-15, US-16
+- **Source:** brief (AI design 1), A-05, D-22, DF-07..DF-09, DF-28
+- **Related US:** US-07, US-14, US-15, US-16, US-17, US-19
 - **Related API:** TBD (Step 6), triggered by submit ticket
 - **Rule:**
   1. Runs once per ticket, after the ticket is saved, using **one** LLM call.
@@ -124,6 +124,8 @@ stateDiagram-v2
   6. If `sentiment` is `angry`, priority is raised one level (`low` → `medium` → `high` → `urgent`; `urgent` stays `urgent`).
   7. If confidence is below the threshold (default 0.6), or the call fails or times out (default 10 s), the AI-set labels become **"Unclassified"**. If the customer chose the category, only priority and sentiment become Unclassified. There is no automatic retry.
   8. Ticket creation never waits on AI and never fails because of it.
+  9. Each ticket stores a **classification status** that describes the AI run only: `Pending` until the result is processed, then `Classified`, or `Unclassified` with its cause (low confidence or AI error). People never change it: manual triage fills the final labels (BR-09) and leaves the status as it is, so BR-10 and G-05 stay correct. A ticket still `Pending` after the DF-28 limit counts as `Unclassified` (AI error), and a later AI result for it is discarded. Customers never see the status (DF-14).
+  10. AI never overwrites a final label that a person has already set. If Staff or Admin edit the labels while the status is `Pending`, a late result fills only the AI label.
 
 ## BR-09 — AI label and final label
 
@@ -132,7 +134,7 @@ stateDiagram-v2
 - **Related API:** TBD (Step 6)
 - **Rule:**
   - The **AI label** is stored once and never overwritten. It holds the category (if AI chose it), the priority after rule 6, the sentiment, the confidence, and the reason.
-  - The **final label** starts equal to the AI label and changes only when Staff or Admin correct it.
+  - The **final label** starts equal to the AI label and changes only when Staff or Admin correct it. If a person set it while classification was `Pending`, it keeps their value (BR-08 rule 10).
   - An Unclassified ticket needs a human to set its category and priority.
 
 ## BR-10 — Label correction rate
@@ -141,7 +143,7 @@ stateDiagram-v2
 - **Related US:** US-24, US-33, US-34
 - **Related API:** TBD (Step 6)
 - **Rule:**
-  - **Denominator:** tickets in the period whose AI classification succeeded (not Unclassified).
+  - **Denominator:** tickets in the period whose AI classification succeeded: classification status `Classified` (BR-08 rule 9).
   - **Numerator:** among those, tickets where *(AI chose the category **and** final category ≠ AI category)* **or** *(final priority ≠ AI priority)*.
   - **Rate** = numerator ÷ denominator.
   - Sentiment corrections are not counted. Unclassified tickets are excluded; they are measured by G-05.
@@ -227,7 +229,7 @@ stateDiagram-v2
 
 ## BR-18 — Staff on leave
 
-- **Source:** D-20, DF-26
+- **Source:** D-20, D-24, DF-26
 - **Related US:** US-13, US-22, US-23, US-36
 - **Related API:** TBD (Step 6), set on leave and end leave
 - **Rule:**
@@ -236,4 +238,19 @@ stateDiagram-v2
   - Only an `Active` Staff account can be set on leave. Setting it redistributes all their open tickets with BR-03; ending leave sets `Active`, starts the warm-up of BR-03 (D-21), and does not move tickets back.
   - A Staff member on leave is never auto-assigned and never offered as a transfer or reassign target. They can still log in and see only the tickets still assigned to them (BR-02).
   - An on-leave account can be locked; unlocking returns it to `Active`.
-  - Setting or ending leave sends no email to customers (BR-17). [Use cases and user stories](../02-usecases-userstories/README.md) · [Master traceability](../traceability/master-traceability.md)
+  - Setting or ending leave sends no email to customers (BR-17).
+  - Each leave is also kept as a history record (Staff, from, to, set by, ended by) (D-24). The account status stays the single source of truth; the record is history and the base for scheduled leave later. Locking an on-leave account closes its open leave record.
+
+## BR-19 — Concurrent changes to a ticket
+
+- **Source:** D-23
+- **Related US:** US-20, US-21, US-22, US-23, US-24
+- **Related API:** TBD (Step 6), every ticket action by Staff or Admin
+- **Rule:**
+  - Each ticket has a **version**. It changes on any new message (customer or Staff), status change, label change, assignee change (including redistribution), and the classification result. Creating or regenerating a summary does not change it.
+  - A **status change, label correction, transfer, or reassignment** carries the version the user saw. If the ticket changed since then, nothing is saved and the user sees "Ticket vừa được cập nhật. Tải lại để xem thay đổi."
+  - "Send and wait for customer" is checked as a whole: on a conflict, neither the reply nor the status change is saved, and the draft stays in the reply box.
+  - Plain replies, the customer's Close, and automatic transitions (T2, T4, T6) are not version-checked. A reply is still rejected when the ticket is `Closed` or the sender no longer has access (BR-02).
+  - **Lost access while writing:** if the ticket was transferred away, the reply is rejected, the draft stays in the box so it can be copied, and the page links back to the queue.
+  - After every successful action, the page uses the new version returned by the server.
+  - Only tickets have versions. Categories and users have a single editor, the Administrator (DF-13). [Use cases and user stories](../02-usecases-userstories/README.md) · [Master traceability](../traceability/master-traceability.md)

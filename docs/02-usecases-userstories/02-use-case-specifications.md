@@ -185,8 +185,8 @@
 ## UC-24 Classify ticket
 
 - **Actor:** System; LLM Provider · **Included by:** UC-06
-- **Main flow:** after the ticket is saved, make one LLM call → validate the JSON → apply the rules (threshold, angry raise) → store the AI label and the final label
-- **Alternative:** error, timeout, invalid output, or low confidence → "Unclassified" (BR-08)
+- **Main flow:** after the ticket is saved (classification status `Pending`), make one LLM call → validate the JSON → apply the rules (threshold, angry raise) → store the AI label and the final label → status `Classified`
+- **Alternative:** error, timeout, invalid output, or low confidence → `Unclassified` with the cause (BR-08); still `Pending` after 30 s → treated as `Unclassified` (AI error) (DF-28); a person already set the labels → only the AI label is stored
 - **Permission:** internal
 - **Result:** labelled ticket · **Stories:** US-14, US-15, US-16
 

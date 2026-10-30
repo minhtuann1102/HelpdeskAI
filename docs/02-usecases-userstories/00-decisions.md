@@ -34,13 +34,14 @@ These values make the stories testable. They apply unless the user changes them.
 | DF-11 | Passwords have at least 8 characters. Registration asks for full name, email, password (with confirmation), and an optional phone; the customer is logged in right after registering. |
 | DF-12 | Profile: full name and phone are editable; email and role are read-only. |
 | DF-13 | Admin creates **Staff** accounts only. The first Admin account is created at installation. Admin cannot lock their own account. |
-| DF-14 | Customers never see priority, sentiment, confidence, AI reason, or the AI summary. |
-| DF-15 | The Staff queue shows `New`, `In Progress`, and `Waiting for Customer` by default, ordered: Unclassified first, then `urgent` → `high` → `medium` → `low`, then oldest first. |
+| DF-14 | Customers never see priority, sentiment, confidence, AI reason, classification status, or the AI summary. |
+| DF-15 | The Staff queue shows `New`, `In Progress`, and `Waiting for Customer` by default, ordered: Unclassified and Pending (classification not finished, DF-28) first, then `urgent` → `high` → `medium` → `low`, then oldest first. |
 | DF-16 | Home page after login: Customer → My tickets; Staff → My queue; Admin → Dashboard. |
 | DF-17 | The dashboard covers the last 30 days by ticket creation date unless the user picks another range. |
 | DF-18 | Categories are never deleted in the MVP, only hidden. |
 | DF-25 | **Notification email** (D-19): one email per Staff or Admin action, sent to the customer's account email from a no-reply address. It contains the ticket number, title, what changed (new reply or new status), and a link to the ticket. It does **not** contain the reply text, and it asks the customer to reply on the website. No unsubscribe option in the MVP. |
 | DF-26 | **On leave** (D-20): only an `Active` Staff account can be set on leave. Setting it redistributes **all** their open tickets with the auto-assignment rule; ending leave sets the account back to `Active` and does not move tickets back. A Staff member on leave can still log in. An on-leave account can be locked; unlocking returns it to `Active`. A returning Staff member has 0 open tickets; the warm-up (D-21, DF-27) keeps them from receiving every new ticket. |
 | DF-27 | **Warm-up** (D-21): starts when a Staff member joins auto-assignment (Staff account created, leave ended, or Staff account unlocked) and lasts **4 hours** (about one half-day session), set in server configuration. During it, the Staff member's load for auto-assignment is the larger of their actual open tickets and the **average actual open tickets of the other active Staff**, compared without rounding. Tie-break DF-02 is unchanged. With no other active Staff, their actual count is used. It affects auto-assignment only; manual transfer and reassignment are not limited. |
+| DF-28 | **Classification pending** (D-22): Ticket Handling (SCR-21) re-reads the ticket every **3 s** while its classification is `Pending`, for at most **30 s**. A ticket still `Pending` 30 s after creation is treated as `Unclassified` (AI error) everywhere, and a later AI result for it is discarded. Both limits are set in server configuration and use the same 30 s value, so the page and the server agree. |
 
 **Related:** [Step index](README.md)

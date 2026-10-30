@@ -123,7 +123,7 @@ Rows also show the AI states *Classification pending* (#1046), *Priority raised 
 
 | State | Source | Behavior |
 |---|---|---|
-| `classification-pending` | Classification pending | "AI đang phân loại…" in the label panel; the ticket is usable; summary not created yet. |
+| `classification-pending` | Classification pending | "AI đang phân loại…" in the label panel; the ticket is usable; summary not created yet. The page re-checks every 3 s for up to 30 s (DF-28). |
 | `unclassified-low-confidence` | Unclassified (low confidence) | Badge, confidence 0,42 in grey, reason, manual triage form. |
 | `unclassified-ai-error` | Unclassified (AI error or timeout) | Badge, "AI không phản hồi… (quá 10 giây)", manual triage form ([PNG](../images/staff/21b-ticket-handling-unclassified-ai-error.png)). |
 | default | Priority raised by anger | Priority chip "Cao" with the note that it was raised from Medium. |
@@ -182,5 +182,7 @@ Rows also show the AI states *Classification pending* (#1046), *Priority raised 
 
 - **Server error** (general): same pattern as `summary-error` — a short brick notice with **Thử lại**, never technical details.
 - **Unauthorized** (session ended): redirect to SCR-01 with the `locked` or a "phiên đăng nhập đã hết" message.
+- **Conflict** (SCR-21, SCR-23): a brick notice above the reply box, "Ticket vừa được cập nhật. Tải lại để xem thay đổi." with **Tải lại**; the draft and the chosen status or labels stay as they were (BR-19).
+- **Lost access while editing** (SCR-21): a neutral notice "Ticket này đã được chuyển cho người khác." with a link back to **Hàng đợi của tôi**; the draft stays in the reply box so it can be copied (BR-19).
 
 **Related:** [Step index](README.md) · [Design system](01-design-system.md)
