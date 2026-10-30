@@ -1,6 +1,6 @@
 # Helpdesk AI
 
-Helpdesk AI helps small businesses turn scattered customer requests into tracked tickets. Every new ticket is assigned to a Staff member automatically, and AI helps at four points: it classifies new tickets (category, priority, sentiment), summarizes long tickets for Staff, polishes Staff replies before they are sent, and suggests replies grounded in the shop's own policies, citing them. AI never blocks ticket creation and never sends anything to a customer by itself. Customers get an email when Staff reply to their ticket or change its status; the conversation itself stays on the website.
+Helpdesk AI helps small businesses turn scattered customer requests into tracked tickets. Every new ticket is assigned to a Staff member automatically, and AI helps at four points: it classifies new tickets (category, priority, sentiment), summarizes long tickets for Staff, polishes Staff replies before they are sent, and suggests replies grounded in the shop's own policies, citing them. AI never blocks ticket creation and never sends anything to a customer by itself. Whenever a customer is waiting, the reply has a deadline set by the ticket's priority and counted in working hours, and the reply due soonest is at the top of the queue. Customers get an email when Staff reply to their ticket or change its status; the conversation itself stays on the website.
 
 Helpdesk AI is a **customer service** help desk (tickets come from external customers), not an internal IT service desk. Examples, wireframes, and sample data use one sample domain: **a small online shop**.
 
@@ -14,7 +14,7 @@ Requirements define what Helpdesk AI must do, who uses it, the value delivered, 
 
 ### 1.2 INVEST requirements
 
-The MVP backlog includes 29 user stories, one per use case and numbered like it (US-01 is UC-01). They cover registration and login, customer tickets, automatic assignment, AI classification, ticket handling with AI summary and rewrite, categories, users (including Staff on leave), dashboards, email notifications to customers, and policy articles that ground cited reply suggestions. Before a user story is ready for development, it is checked using the INVEST criteria.
+The MVP backlog includes 29 user stories, one per use case and numbered like it (US-01 is UC-01). They cover registration and login, customer tickets, automatic assignment, AI classification with confidence bands, ticket handling with reply deadlines, AI summary, and rewrite, categories, users (including Staff on leave), dashboards, email notifications to customers, and policy articles that ground cited reply suggestions. Before a user story is ready for development, it is checked using the INVEST criteria.
 
 | Criterion | Meaning in Helpdesk AI |
 |---|---|
@@ -40,7 +40,7 @@ US-28         Policy articles (Administrator)
 US-29         Reply suggestion from policies (Staff, Administrator)
 ```
 
-Stories are prioritized with MoSCoW: 17 Must, 12 Should, 0 Could, and 7 Won't (out of scope). The complete backlog and per-story INVEST review are maintained in [User Stories (INVEST)](docs/02-usecases-userstories/03-user-stories-invest.md), the Given/When/Then criteria in [Acceptance Criteria](docs/02-usecases-userstories/04-acceptance-criteria.md), and the priorities in [MoSCoW Prioritization](docs/02-usecases-userstories/05-moscow-prioritization.md).
+Stories are prioritized with MoSCoW: 17 Must, 12 Should, 0 Could, and 6 Won't (out of scope). The complete backlog and per-story INVEST review are maintained in [User Stories (INVEST)](docs/02-usecases-userstories/03-user-stories-invest.md), the Given/When/Then criteria in [Acceptance Criteria](docs/02-usecases-userstories/04-acceptance-criteria.md), and the priorities in [MoSCoW Prioritization](docs/02-usecases-userstories/05-moscow-prioritization.md).
 
 ### 1.3 Use cases
 
@@ -99,17 +99,17 @@ For detailed actors and the use case diagram, see [Actors and Use Cases](docs/02
 | Submit tickets, reply, close own tickets | Own tickets | No | No |
 | Receive an email when Staff reply or change the status | Own tickets | No | No |
 | View ticket queue and details | No | Assigned to me | All tickets |
-| Reply, change status, correct AI labels | No | Assigned to me | All tickets |
+| Reply, change status, correct or confirm AI labels | No | Assigned to me | All tickets |
 | AI summary, AI reply rewrite, and AI reply suggestion | No | Assigned to me | All tickets |
 | Transfer / reassign tickets | No | Transfer own | Reassign any |
-| See priority, sentiment, confidence, AI reason | No | Yes | Yes |
+| See priority, sentiment, confidence and its band, AI reason, reply deadlines | No | Yes | Yes |
 | Dashboard | No | Personal | System-wide |
 | Manage categories | No | No | Yes |
 | Manage users (create Staff, lock/unlock) | No | No | Yes |
 | Manage policy articles | No | No | Yes |
 | Set Staff on leave or back | No | No (not even themselves) | Yes |
 
-New tickets are auto-assigned to the active Staff member with the fewest open tickets; Staff on leave or locked are skipped, and for the first 4 hours after a Staff account is created, comes back from leave, or is unlocked, that Staff member gets a fair share of new tickets instead of all of them. The backend must enforce role and assignment rules; hiding frontend controls serves UI/UX only. See [Business rules](docs/requirements/business-rules.md).
+New tickets are auto-assigned to the active Staff member with the fewest open tickets; Staff on leave or locked are skipped, and for the first 4 hours after a Staff account is created, comes back from leave, or is unlocked, that Staff member gets a fair share of new tickets instead of all of them. The queue puts Unclassified tickets first, then the reply due soonest; a deadline pauses while the ticket waits for the customer and never restarts when the ticket is transferred or its priority changes. The backend must enforce role and assignment rules; hiding frontend controls serves UI/UX only. See [Business rules](docs/requirements/business-rules.md).
 
 ## 2. Information Architecture, Screen Hierarchy, and UI/UX
 
@@ -143,9 +143,9 @@ flowchart TB
 
     subgraph workspace["Ticket workspace (Staff: own tickets · Admin: all)"]
         direction TB
-        queue["<b>SCR-20 Ticket Queue</b><br/>• Tickets by urgency<br/>• AI labels, Unclassified badge<br/>• Search and filters"]
-        handling["<b>SCR-21 Ticket Handling</b><br/>• Conversation<br/>• AI label panel + edit<br/>• AI summary<br/>• Reply box + AI rewrite<br/>• AI reply suggestion with citations<br/>• Status, transfer"]
-        dashboard["<b>SCR-22 Dashboard</b><br/>• Tickets by status, category, sentiment<br/>• Avg first response time<br/>• AI label correction rate"]
+        queue["<b>SCR-20 Ticket Queue</b><br/>• Tickets by reply deadline<br/>• Sắp trễ, Trễ hạn marks<br/>• AI labels, Unclassified badge<br/>• Search and filters"]
+        handling["<b>SCR-21 Ticket Handling</b><br/>• Conversation, reply deadline<br/>• AI label panel + edit / confirm<br/>• AI summary<br/>• Reply box + AI rewrite<br/>• AI reply suggestion with citations<br/>• Status, transfer"]
+        dashboard["<b>SCR-22 Dashboard</b><br/>• Tickets by status, category, sentiment<br/>• Response time, replies on time<br/>• AI correction rate by confidence"]
         queue --- handling
     end
 
@@ -202,6 +202,10 @@ Fallback to "Unclassified" when AI fails, so Staff triage manually:
 
 ![Unclassified after an AI error](docs/images/staff/21b-ticket-handling-unclassified-ai-error.png)
 
+Labels in the confidence band "Vừa" are marked "AI chưa chắc" until Staff confirm or correct them:
+
+![Uncertain AI labels](docs/images/staff/21g-ticket-handling-labels-uncertain.png)
+
 Reply rewrite shown beside the draft; nothing is sent until Staff click Send:
 
 ![Reply rewrite result](docs/images/staff/21c-ticket-handling-rewrite-result.png)
@@ -226,7 +230,7 @@ Step 5 defines the persistence contract. The HTTP contract (4.2) follows in Step
 
 ### 4.1 Database diagrams
 
-The PostgreSQL model (assumed here, confirmed in Step 7) keeps accounts, tickets with both their AI label and their final label, a log of AI calls, customer email notifications, and the internal policy articles with their revisions. Nothing is deleted: users are locked, categories and articles hidden, tickets closed.
+The PostgreSQL model (assumed here, confirmed in Step 7) keeps accounts, tickets with both their AI label and their final label, a response clock for each reply a customer waited for, a log of AI calls, customer email notifications, and the internal policy articles with their revisions. Nothing is deleted: users are locked, categories and articles hidden, tickets closed.
 
 ```mermaid
 erDiagram
@@ -237,6 +241,7 @@ erDiagram
     tickets ||--o{ ticket_messages : has
     app_users ||--o{ ticket_messages : writes
     tickets ||--o{ ticket_attachments : has
+    tickets ||--o{ response_clocks : "waits for a reply in"
     tickets ||--o| ticket_summaries : "is summarized in"
     tickets ||--o{ ai_requests : "is sent to AI in"
     tickets ||--o{ email_notifications : "notifies by"
@@ -282,6 +287,12 @@ erDiagram
         bigint id PK
         bigint ticket_id FK
         varchar content_type
+    }
+    response_clocks {
+        bigint id PK
+        bigint ticket_id FK
+        timestamptz started_at
+        clock_outcome outcome
     }
     ticket_summaries {
         bigint ticket_id PK, FK
