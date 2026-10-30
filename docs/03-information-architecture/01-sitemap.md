@@ -36,9 +36,9 @@ flowchart TB
 
     subgraph workspace["Ticket workspace (Staff: own tickets · Admin: all)"]
         direction TB
-        queue["<b>SCR-20 Ticket Queue</b><br/>• Tickets by urgency<br/>• AI labels, Unclassified badge<br/>• Search and filters"]
-        handling["<b>SCR-21 Ticket Handling</b><br/>• Conversation<br/>• AI label panel + edit<br/>• AI summary<br/>• Reply box + AI rewrite<br/>• AI reply suggestion with citations<br/>• Status, transfer"]
-        dashboard["<b>SCR-22 Dashboard</b><br/>• Tickets by status, category, sentiment<br/>• Avg first response time<br/>• AI label correction rate"]
+        queue["<b>SCR-20 Ticket Queue</b><br/>• Tickets by reply deadline<br/>• Sắp trễ, Trễ hạn marks<br/>• AI labels, Unclassified badge<br/>• Search and filters"]
+        handling["<b>SCR-21 Ticket Handling</b><br/>• Conversation, reply deadline<br/>• AI label panel + edit / confirm<br/>• AI summary<br/>• Reply box + AI rewrite<br/>• AI reply suggestion with citations<br/>• Status, transfer"]
+        dashboard["<b>SCR-22 Dashboard</b><br/>• Tickets by status, category, sentiment<br/>• Response time, replies on time<br/>• AI correction rate by confidence"]
         queue --- handling
     end
 

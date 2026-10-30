@@ -60,15 +60,17 @@ The four AI features meet here: labels from classification, Summarize, Suggest r
 
 ```mermaid
 flowchart TD
-    start(["Staff logs in"]) --> queue["SCR-20 My queue<br/>Unclassified first, then urgent → low"]
+    start(["Staff logs in"]) --> queue["SCR-20 My queue<br/>Unclassified first, then the reply due soonest"]
     queue --> open["Open a ticket<br/>SCR-21 Ticket Handling"]
     open --> unclassified{"Unclassified?"}
     unclassified -->|"Yes"| triage["Set category and priority<br/>manual triage"]
     unclassified -->|"No"| labelsOk{"AI labels correct?"}
-    labelsOk -->|"No"| correct["Correct the labels<br/>AI label kept for the metric"]
+    labelsOk -->|"No"| correct["Correct the labels<br/>AI label kept for the metric<br/>new priority: deadline recalculated"]
+    labelsOk -->|"Yes, marked<br/>AI chưa chắc"| confirm["Xác nhận nhãn<br/>not counted as a correction"]
     labelsOk -->|"Yes"| needSummary{"Long thread or<br/>just transferred?"}
     triage --> needSummary
     correct --> needSummary
+    confirm --> needSummary
 
     needSummary -->|"Yes"| summarize["Click Summarize"]:::ai
     needSummary -->|"No"| policyQ{"Question about<br/>a shop policy?"}
@@ -94,8 +96,8 @@ flowchart TD
     compare --> sendChoice
     keepDraft --> sendChoice
 
-    sendChoice -->|"Send"| sent["Reply sent<br/>first reply: New → In Progress"]
-    sendChoice -->|"Send and wait"| waiting["Reply sent<br/>Waiting for Customer"]
+    sendChoice -->|"Send"| sent["Reply sent, deadline met or late<br/>first reply: New → In Progress"]
+    sendChoice -->|"Send and wait"| waiting["Reply sent, deadline met or late<br/>Waiting for Customer"]
     sent --> outcome{"Issue solved?"}
     outcome -->|"Yes"| resolved["Set Resolved"]
     outcome -->|"Needs a colleague"| transfer["SCR-23 Transfer<br/>ticket leaves my queue"]

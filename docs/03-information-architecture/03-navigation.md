@@ -19,6 +19,6 @@
 - **After submitting a ticket:** go to SCR-12 for that ticket, with a confirmation message.
 - **After a transfer:** the Staff member returns to SCR-20, because they no longer have access to the ticket (D-09).
 - **After login:** go to the role's home page; **after logout or session end:** go to SCR-01.
-- There are no in-app or push notifications (A-03); the queue badge and the list order show new work. Customers get an email when Staff reply or change the status, and its link opens SCR-12 (BR-17).
+- There are no in-app or push notifications (A-03); the queue badge and the list order show new work, and the "Sắp trễ" and "Trễ hạn" marks with the "Trễ hạn (n)" filter show replies that need attention first (D-35). Customers get an email when Staff reply or change the status, and its link opens SCR-12 (BR-17).
 
 **Related:** [Step index](README.md)

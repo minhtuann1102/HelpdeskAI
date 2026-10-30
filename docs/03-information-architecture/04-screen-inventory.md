@@ -14,10 +14,10 @@
 | `SCR-11` | Submit Ticket | Page | Customer | Title, description, optional category ("Not sure"), attachments (≤ 5 × 10 MB) | US-06 |
 | `SCR-12` | Ticket Detail | Page | Customer | Status, category, description, attachments, conversation, reply box, Close ticket; no AI data | US-07, US-08, US-09 |
 | `SCR-13` | Close ticket confirmation | Modal on SCR-12 | Customer | Ticket number, warning that a closed ticket cannot be reopened | US-09 |
-| `SCR-20` | Ticket Queue | Page | Staff (own), Administrator (all) | Ticket table ordered by urgency, priority and sentiment chips, AI marker, Unclassified badge, search, filters (Administrator: assignee, Unassigned) | US-10, US-11 |
-| `SCR-21` | Ticket Handling | Page | Staff (own), Administrator (all) | Header (customer, status control, assignee, Transfer); conversation; **AI label panel** (final vs AI label, confidence, reason, edit); **AI summary panel**; reply box with **Rewrite**, **Gợi ý trả lời** (cited suggestion), Send, Send and wait | US-12, US-13, US-14, US-16, US-17, US-18, US-29 |
+| `SCR-20` | Ticket Queue | Page | Staff (own), Administrator (all) | Ticket table: Unclassified and Pending first, then the reply due soonest; reply deadline (time left, "Sắp trễ", "Trễ hạn", "Tạm dừng") and last update in each row; priority and sentiment chips, AI marker ("AI chưa chắc" in band Vừa), Unclassified badge; "Trễ hạn (n)" filter, sort by "Lâu chưa cập nhật", search, filters (Administrator: assignee, Unassigned) | US-10, US-11 |
+| `SCR-21` | Ticket Handling | Page | Staff (own), Administrator (all) | Header (customer, status control, reply deadline, assignee, Transfer); conversation; **AI label panel** (final vs AI label, confidence with its band, reason, edit, **Xác nhận nhãn**); **AI summary panel**; reply box with **Rewrite**, **Gợi ý trả lời** (cited suggestion), Send, Send and wait | US-12, US-13, US-14, US-16, US-17, US-18, US-29 |
 | `SCR-23` | Transfer / reassign | Modal on SCR-21 | Staff (transfer own), Administrator (reassign any) | Active Staff list with open-ticket counts; Administrator can also choose self | US-15 |
-| `SCR-22` | Dashboard | Page | Staff (personal), Administrator (system-wide) | Date range; tickets by status, category, sentiment; average first response time; label correction rate | US-19 |
+| `SCR-22` | Dashboard | Page | Staff (personal), Administrator (system-wide) | Date range; tickets by status, category, sentiment; first response time in working hours (average, 90th percentile); replies on time overall and by priority; overdue now; label correction rate, also by confidence band | US-19 |
 | `SCR-30` | Categories | Page | Administrator | Category list (name, description, active/hidden), Add, Edit, Hide/Show | US-20 |
 | `SCR-32` | Category form | Modal on SCR-30 | Administrator | Name, description (marked "used by AI") | US-20 |
 | `SCR-36` | Policies | Page | Administrator | Policy article list (title, excerpt, last reviewed, active/hidden, "Cần xem lại" when overdue), Add, Edit, Mark reviewed, Hide/Show | US-28 |
@@ -41,12 +41,12 @@
 | US-07 | `SCR-10` list and filter own tickets → `SCR-12` read the conversation |
 | US-08 | `SCR-12` reply box → Send |
 | US-09 | `SCR-12` Close → `SCR-13` confirm |
-| US-10, US-11 | `SCR-20` queue, search, and filters |
-| US-12 | `SCR-21` ticket content and AI label panel |
+| US-10, US-11 | `SCR-20` queue, reply deadlines, "Trễ hạn (n)", sort, search, and filters |
+| US-12 | `SCR-21` ticket content, reply deadline, and AI label panel |
 | US-13 | `SCR-21` reply box → Send / Send and wait |
 | US-14 | `SCR-21` status control |
 | US-15 | `SCR-21` Transfer → `SCR-23` |
-| US-16 | `SCR-21` AI label panel → Edit labels |
+| US-16 | `SCR-21` AI label panel → Edit labels, or Xác nhận nhãn |
 | US-17 | `SCR-21` AI summary panel → Summarize / Regenerate |
 | US-18 | `SCR-21` reply box → Rewrite → compare → Use / Discard |
 | US-19 | `SCR-22` dashboard (scope by role) |
