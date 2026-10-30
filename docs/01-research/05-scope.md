@@ -30,6 +30,8 @@
 - AI sending replies automatically.
 - Chatbots or autonomous AI that act on tickets.
 
+How these could be added after the MVP, step by step: [Future work](09-future-work.md).
+
 ## Assumptions (apply unless changed)
 
 | ID | Assumption |
