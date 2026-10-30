@@ -31,6 +31,8 @@ AI is used **only where language understanding is needed**. Deterministic polici
 | A suggestion must cite at least one of the articles it was given; otherwise there is no suggestion. | Validation rule (BR-21) |
 | Hidden articles and articles past their review date are never given to AI. | Rule (BR-20) |
 | Auto-assignment of new tickets. | Rule (fewest open tickets, D-07; warm-up after joining, D-21) |
+| Reply deadlines from the priority, counted in working hours, and the queue order by time left. | Rule (BR-22, D-35) |
+| Confidence band and the "AI chưa chắc" marker. | Rule applied to the AI confidence (BR-23, D-36) |
 
 ## Costs of using AI, and how they are handled
 

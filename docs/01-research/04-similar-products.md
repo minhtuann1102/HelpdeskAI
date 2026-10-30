@@ -11,10 +11,11 @@
 | Positioning | Market leader for mid-size and large support teams. | Popular with small and mid-size teams. | Part of the wider Zoho business suite; price-competitive. |
 | Ticketing | Full ticketing, customer portal, omnichannel (email, chat, voice, social, messaging). | Full ticketing, portal, omnichannel. | Full ticketing, portal, omnichannel. |
 | Assignment | Rule-based routing, including omnichannel routing by capacity. | Round-robin and load-based assignment. | Round-robin and load-based assignment. |
+| Queue order and deadlines | Deadlines (SLAs) per priority; routing can order tickets by time left before the deadline, so a low-priority ticket rises as its deadline nears. | SLA policies per priority for the first response, every response, and resolution; reminders before the deadline and an "overdue" tag. | SLA rules with escalations when a ticket misses one. |
 | AI features | Zendesk AI: intelligent triage (intent, sentiment, language), generative tools to expand or change the tone of replies, ticket summaries. | Freddy AI: summaries, rephrasing and tone improvement of replies, field suggestions (type, priority, group). | Zia: sentiment analysis, auto-tagging, reply assistance, summaries. |
 | Typical limits for our target | Broad and configuration-heavy for a 3-person team. Advanced AI is a paid add-on or limited to higher plans. Per-seat pricing in USD. | Advanced AI is a paid add-on or limited to higher plans. Many features to configure. | Many modules to set up. The best value comes from adopting the wider Zoho suite. |
 
-Sources: the products' official websites (zendesk.com, freshworks.com/freshdesk, zoho.com/desk). Product features and plans change often, so recheck before citing externally.
+Sources: the products' official websites (zendesk.com, freshworks.com/freshdesk, zoho.com/desk); for queue order, Zendesk's announcement of routing by time to SLA breach and Freshdesk's help pages on SLA policies. Product features and plans change often, so recheck before citing externally.
 
 ## Key learnings
 
@@ -22,6 +23,7 @@ Sources: the products' official websites (zendesk.com, freshworks.com/freshdesk,
 2. **Auto-assignment (round-robin or load-based) is standard.** Decision D-04 follows the same pattern.
 3. Mature products are **omnichannel and broad**. That breadth is their strength and also their cost: setup effort and price per seat.
 4. ML triage that **learns from historical tickets** needs data a new small business does not have yet.
+5. **Deadlines keep low-priority tickets from waiting forever.** Mature products give each priority a deadline and order work by the time left, not by priority alone. Helpdesk AI does the same for replies (D-35) and leaves escalation out.
 
 ## How Helpdesk AI differs
 
