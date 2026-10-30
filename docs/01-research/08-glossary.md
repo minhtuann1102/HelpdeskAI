@@ -7,6 +7,7 @@
 | Term | Meaning |
 |---|---|
 | Ticket | One customer request, with title, description, attachments, labels, status, assignee, and message history. |
+| User | Abstract actor on the use case diagrams: anyone with an account. Customer and Staff inherit its use cases, and Administrator inherits those of Staff (D-39). |
 | Customer | A registered end user who submits and follows their own tickets. |
 | Staff | A support employee who handles the tickets assigned to them (role `STAFF`). |
 | Admin | An administrator with every Staff permission plus user, category, and system-dashboard management (role `ADMIN`). |

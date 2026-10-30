@@ -48,6 +48,7 @@ Stories are prioritized with MoSCoW: 17 Must, 12 Should, 0 Could, and 6 Won't (o
 flowchart TB
     subgraph roles["Actors"]
         direction LR
+        user["<span style='font-size:40px'>👤</span><br/><b>User</b>"]
         customer["<span style='font-size:40px'>👤</span><br/><b>Customer</b>"]
         staff["<span style='font-size:40px'>👤</span><br/><b>Staff</b>"]
         admin["<span style='font-size:40px'>👤</span><br/><b>Administrator</b>"]
@@ -55,15 +56,20 @@ flowchart TB
 
     subgraph system["Helpdesk AI — System Boundary"]
         direction LR
-        customerCases["<b>Customer</b><br/><br/>UC-01 Log in · UC-02 Log out<br/>UC-03 Update Profile · UC-04 Change Password<br/>UC-05 Register<br/>UC-06 Submit Ticket<br/>UC-07 View Own Tickets<br/>UC-08 Reply to Own Ticket<br/>UC-09 Close Own Ticket"]
-        staffCases["<b>Staff</b> (tickets assigned to me)<br/><br/>UC-01 Log in · UC-02 Log out<br/>UC-03 Update Profile · UC-04 Change Password<br/>UC-10 View Ticket Queue · UC-11 Search and Filter<br/>UC-12 View Ticket Details · UC-13 Reply to Customer<br/>UC-14 Change Status · UC-15 Transfer Ticket<br/>UC-16 Correct AI Labels<br/>UC-17 Summarize Ticket · UC-18 Rewrite Reply · UC-29 Suggest Reply<br/>UC-19 View Personal Dashboard"]
-        adminCases["<b>Administrator</b> (all tickets)<br/><br/>UC-01 Log in · UC-02 Log out<br/>UC-03 Update Profile · UC-04 Change Password<br/>UC-10 View Ticket Queue · UC-11 Search and Filter<br/>UC-12 View Ticket Details · UC-13 Reply to Customer<br/>UC-14 Change Status · UC-15 Reassign Any Ticket<br/>UC-16 Correct AI Labels<br/>UC-17 Summarize Ticket · UC-18 Rewrite Reply · UC-29 Suggest Reply<br/>UC-19 View System-wide Dashboard<br/>UC-20 Manage Categories<br/>UC-21 View User List · UC-22 Create Staff Account<br/>UC-23 Lock or Unlock Account<br/>UC-27 Set Staff On Leave<br/>UC-28 Manage Policy Articles"]
+        userCases["<b>User</b> (any account)<br/><br/>UC-01 Log in · UC-02 Log out<br/>UC-03 Update Profile · UC-04 Change Password"]
+        customerCases["<b>Customer</b><br/><br/>UC-05 Register<br/>UC-06 Submit Ticket<br/>UC-07 View Own Tickets<br/>UC-08 Reply to Own Ticket<br/>UC-09 Close Own Ticket"]
+        staffCases["<b>Staff</b> (tickets assigned to me)<br/><br/>UC-10 View Ticket Queue · UC-11 Search and Filter<br/>UC-12 View Ticket Details · UC-13 Reply to Customer<br/>UC-14 Change Status · UC-15 Transfer Ticket<br/>UC-16 Correct AI Labels<br/>UC-17 Summarize Ticket · UC-18 Rewrite Reply · UC-29 Suggest Reply<br/>UC-19 View Personal Dashboard"]
+        adminCases["<b>Administrator</b><br/>Staff use cases on all tickets, plus:<br/><br/>UC-20 Manage Categories<br/>UC-21 View User List · UC-22 Create Staff Account<br/>UC-23 Lock or Unlock Account<br/>UC-27 Set Staff On Leave<br/>UC-28 Manage Policy Articles"]
         systemCases["<b>System</b> (automatic)<br/><br/>UC-24 Classify Ticket<br/>UC-25 Auto-assign Ticket<br/>UC-26 Notify Customer by Email"]
     end
 
     llm(["LLM Provider"])
     email(["Email Service"])
 
+    customer ==>|"«generalize»"| user
+    staff ==>|"«generalize»"| user
+    admin ==>|"«generalize»"| staff
+    user --> userCases
     customer --> customerCases
     staff --> staffCases
     admin --> adminCases
@@ -79,16 +85,16 @@ flowchart TB
     classDef primary fill:#1168bd,color:#fff,stroke:#0b4f9e
     classDef standard fill:#3a7bd5,color:#fff,stroke:#245fa8
     classDef ai fill:#7b3fbf,color:#fff,stroke:#5a2d8c
-    class customer,staff,admin actor
+    class user,customer,staff,admin actor
     class llm,email external
     class adminCases,staffCases primary
-    class customerCases standard
+    class userCases,customerCases standard
     class systemCases ai
     style roles fill:#fff,stroke:#bbb,stroke-dasharray:5 5
     style system fill:#f8fbff,stroke:#1168bd,stroke-dasharray:5 5
 ```
 
-For detailed actors and the use case diagram, see [Actors and Use Cases](docs/02-usecases-userstories/01-use-cases.md); for business flows, see [Use Case Specifications](docs/02-usecases-userstories/02-use-case-specifications.md).
+Thick arrows show actor generalization: Administrator inherits the use cases of Staff, and Staff and Customer inherit those of User. An Administrator is not a kind of Staff in the rules or the data (D-39). For detailed actors and the use case diagram, see [Actors and Use Cases](docs/02-usecases-userstories/01-use-cases.md); for business flows, see [Use Case Specifications](docs/02-usecases-userstories/02-use-case-specifications.md).
 
 ### 1.4 Roles and permissions
 

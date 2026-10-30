@@ -8,6 +8,7 @@
 
 | Role | Display name in UI | Description |
 |---|---|---|
+| — | User (not shown) | Abstract actor: anyone with an account. It groups the use cases all roles share and is not a role of its own (D-39). |
 | `CUSTOMER` | Customer | External customer of the shop. Registers, submits and tracks own tickets. |
 | `STAFF` | Staff | Support employee. Handles the tickets assigned to them. |
 | `ADMIN` | Administrator | Everything Staff can do, on **all** tickets, plus administration (D-03). |
@@ -50,13 +51,16 @@ Menus and buttons are **not displayed** when the user lacks permission. Unauthor
 
 ## Use case diagram
 
-Every use case is a separate node, grouped by module inside the system boundary. UC-24, UC-25, and UC-26 have no direct actor; they are triggered by other use cases (see [Included and extending use cases](#included-and-extending-use-cases)).
+Every use case is a separate node, grouped by module inside the system boundary. UC-24, UC-25, and UC-26 have no direct actor; they are triggered by other use cases (see [Included and extending use cases](#included-and-extending-use-cases)). Thick arrows marked «generalize» point from a child actor to the parent whose use cases it inherits (D-39).
 
 ```mermaid
 flowchart LR
     subgraph left["Actors"]
         direction TB
+        user["<span style='font-size:40px'>👤</span><br/><b>User</b>"]
         customer["<span style='font-size:40px'>👤</span><br/><b>Customer</b>"]
+        staff["<span style='font-size:40px'>👤</span><br/><b>Staff</b>"]
+        admin["<span style='font-size:40px'>👤</span><br/><b>Administrator</b>"]
     end
 
     subgraph system["Helpdesk AI — System Boundary"]
@@ -107,28 +111,30 @@ flowchart LR
         end
     end
 
-    subgraph right["Actors"]
-        direction TB
-        staff["<span style='font-size:40px'>👤</span><br/><b>Staff</b>"]
-        admin["<span style='font-size:40px'>👤</span><br/><b>Administrator</b>"]
-    end
+    customer ==>|"«generalize»"| user
+    staff ==>|"«generalize»"| user
+    admin ==>|"«generalize»"| staff
 
-    customer --> uc01 & uc02 & uc03 & uc04 & uc05 & uc06 & uc07 & uc08 & uc09
-    staff --> uc01 & uc02 & uc03 & uc04 & uc10 & uc11 & uc12 & uc13 & uc14 & uc15 & uc16 & uc17 & uc18 & uc29 & uc19
-    admin --> uc01 & uc02 & uc03 & uc04 & uc10 & uc11 & uc12 & uc13 & uc14 & uc15 & uc16 & uc17 & uc18 & uc19 & uc20 & uc21 & uc22 & uc23 & uc27 & uc28 & uc29
+    user --> uc01 & uc02 & uc03 & uc04
+    customer --> uc05 & uc06 & uc07 & uc08 & uc09
+    staff --> uc10 & uc11 & uc12 & uc13 & uc14 & uc15 & uc16 & uc17 & uc18 & uc29 & uc19
+    admin --> uc20 & uc21 & uc22 & uc23 & uc27 & uc28
 
     classDef actor fill:none,stroke:none,color:#111
     classDef usecase fill:#1168bd,color:#fff,stroke:#0b4f9e
     classDef ai fill:#7b3fbf,color:#fff,stroke:#5a2d8c
-    class customer,staff,admin actor
+    class user,customer,staff,admin actor
     class uc01,uc02,uc03,uc04,uc05,uc06,uc07,uc08,uc09,uc10,uc11,uc12,uc13,uc14,uc15,uc16,uc19,uc20,uc21,uc22,uc23,uc25,uc26,uc27,uc28 usecase
     class uc17,uc18,uc24,uc29 ai
     style left fill:#fff,stroke:#bbb,stroke-dasharray:5 5
-    style right fill:#fff,stroke:#bbb,stroke-dasharray:5 5
     style system fill:#f8fbff,stroke:#1168bd,stroke-dasharray:5 5
 ```
 
 Purple nodes use the LLM Provider.
+
+**What the generalization means.** It says only which use cases an actor can start. Customer and Staff inherit UC-01..UC-04 from User; Administrator inherits the use cases of Staff, and through them those of User, with a wider scope shown in the [role × use case matrix](#role--use-case-matrix). UC-05 Register stays with Customer because a visitor has no account yet.
+
+An Administrator is **not** a kind of Staff in the rules or the data: an Administrator is never auto-assigned (DF-03), never on leave (BR-18), and not listed as a transfer target (BR-04). All accounts share one table with a `role` column (D-29).
 
 ### Included and extending use cases
 
@@ -176,9 +182,10 @@ Administrator can perform UC-10..UC-19 and UC-29 on **all** tickets; Staff only 
 
 | Actor | Use cases |
 |---|---|
-| Customer | UC-01 Log in · UC-02 Log out · UC-03 Update profile · UC-04 Change password · UC-05 Register · UC-06 Submit ticket · UC-07 View own tickets · UC-08 Reply to own ticket · UC-09 Close own ticket |
-| Staff | UC-01..UC-04 · UC-10 View ticket queue · UC-11 Search and filter · UC-12 View ticket details · UC-13 Reply to customer · UC-14 Change status · UC-15 Transfer ticket · UC-16 Correct AI labels · UC-17 Summarize ticket · UC-18 Rewrite reply · UC-29 Suggest reply from policies · UC-19 View personal dashboard |
-| Administrator | UC-01..UC-04 · UC-10..UC-19 and UC-29 on all tickets (UC-15 = reassign any ticket, UC-19 = system-wide dashboard) · UC-20 Manage categories · UC-21 View user list · UC-22 Create Staff account · UC-23 Lock or unlock account · UC-27 Set Staff on leave or back · UC-28 Manage policy articles |
+| User (abstract) | UC-01 Log in · UC-02 Log out · UC-03 Update profile · UC-04 Change password |
+| Customer | Inherits User · UC-05 Register · UC-06 Submit ticket · UC-07 View own tickets · UC-08 Reply to own ticket · UC-09 Close own ticket |
+| Staff | Inherits User · UC-10 View ticket queue · UC-11 Search and filter · UC-12 View ticket details · UC-13 Reply to customer · UC-14 Change status · UC-15 Transfer ticket · UC-16 Correct AI labels · UC-17 Summarize ticket · UC-18 Rewrite reply · UC-29 Suggest reply from policies · UC-19 View personal dashboard |
+| Administrator | Inherits Staff: UC-10..UC-19 and UC-29 on all tickets (UC-15 = reassign any ticket, UC-19 = system-wide dashboard) · UC-20 Manage categories · UC-21 View user list · UC-22 Create Staff account · UC-23 Lock or unlock account · UC-27 Set Staff on leave or back · UC-28 Manage policy articles |
 | System | UC-24 Classify ticket (with LLM Provider) · UC-25 Auto-assign ticket · UC-26 Notify customer by email (with Email Service) |
 
 **Related:** [Step index](README.md)
