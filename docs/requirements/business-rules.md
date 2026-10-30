@@ -19,7 +19,7 @@ Only rules confirmed by the project documentation are catalogued here. Values ma
 - **Related US:** US-01, US-07, US-10, US-11, US-12
 - **Related API:** TBD (Step 6)
 - **Rule:**
-  - A Customer sees only their own tickets and never sees priority, sentiment, confidence, AI reason, the summary, reply suggestions, or policy articles.
+  - A Customer sees only their own tickets and never sees priority, sentiment, confidence or its band, AI reason, the summary, reply suggestions, policy articles, or reply deadlines.
   - A Staff member sees and acts only on tickets **currently assigned to them**. After a transfer, the previous assignee loses access.
   - Admin sees and acts on all tickets, including Unassigned ones.
   - The server enforces these rules on every request.
@@ -45,7 +45,7 @@ Only rules confirmed by the project documentation are catalogued here. Values ma
 - **Rule:**
   - Staff may transfer a non-closed ticket assigned to them to another **active Staff** member, chosen from a list of active Staff with their open-ticket counts.
   - Admin may reassign any non-closed ticket (including Unassigned) to any active Staff member or to themselves.
-  - A transfer does not change the ticket status.
+  - A transfer does not change the ticket status or its reply deadline (BR-22).
   - "Active Staff" means status `Active`; Staff on leave or locked are not in the list (BR-18).
 
 ## BR-05 — Locked accounts
@@ -98,6 +98,8 @@ stateDiagram-v2
 | T6 | `Resolved` | `In Progress` | Customer replies (automatic reopen, D-11) or manual | System, assignee, Admin |
 | T7 | Any except `Closed` | `Closed` | Manual | Customer (own), assignee, Admin |
 
+Each transition can also pause, resume, or end the response clock (BR-22).
+
 ## BR-07 — Replies
 
 - **Source:** brief, D-10
@@ -107,6 +109,7 @@ stateDiagram-v2
   - A Customer can reply to their own ticket unless it is `Closed`.
   - Staff and Admin can reply to tickets they can act on, unless `Closed`.
   - The **first reply by the assignee or Admin** sets the first response time and triggers T2.
+  - A reply by the assignee or Admin ends the running response clock; a customer message starts one when none is open (BR-22).
   - Any new message marks an existing summary as outdated (BR-11).
   - A reply by Staff or Admin sends the customer a notification email (BR-17).
 
@@ -126,6 +129,7 @@ stateDiagram-v2
   8. Ticket creation never waits on AI and never fails because of it.
   9. Each ticket stores a **classification status** that describes the AI run only: `Pending` until the result is processed, then `Classified`, or `Unclassified` with its cause (low confidence or AI error). People never change it: manual triage fills the final labels (BR-09) and leaves the status as it is, so BR-10 and G-05 stay correct. A ticket still `Pending` after the DF-28 limit counts as `Unclassified` (AI error), and a later AI result for it is discarded. Customers never see the status (DF-14).
   10. AI never overwrites a final label that a person has already set. If Staff or Admin edit the labels while the status is `Pending`, a late result fills only the AI label.
+  11. The confidence of a `Classified` result is shown as a band (BR-23). The priority it sets also sets the reply deadline (BR-22).
 
 ## BR-09 — AI label and final label
 
@@ -135,6 +139,7 @@ stateDiagram-v2
 - **Rule:**
   - The **AI label** is stored once and never overwritten. It holds the category (if AI chose it), the priority after rule 6, the sentiment, the confidence, and the reason.
   - The **final label** starts equal to the AI label and changes only when Staff or Admin correct it. If a person set it while classification was `Pending`, it keeps their value (BR-08 rule 10).
+  - Staff or Admin can also **confirm** the final label without changing it. Correcting or confirming records who set the labels and when; from then on the labels are theirs (BR-23).
   - An Unclassified ticket needs a human to set its category and priority.
 
 ## BR-10 — Label correction rate
@@ -147,6 +152,7 @@ stateDiagram-v2
   - **Numerator:** among those, tickets where *(AI chose the category **and** final category ≠ AI category)* **or** *(final priority ≠ AI priority)*.
   - **Rate** = numerator ÷ denominator.
   - Sentiment corrections are not counted. Unclassified tickets are excluded; they are measured by G-05.
+  - Confirming the labels without changes is not a correction. The dashboard also shows the rate for each confidence band (BR-23).
 
 ## BR-11 — AI summary
 
@@ -204,14 +210,16 @@ stateDiagram-v2
 
 ## BR-16 — Dashboard metrics
 
-- **Source:** brief (dashboard), D-08, DF-17
+- **Source:** brief (dashboard), D-08, D-35, D-36, DF-17
 - **Related US:** US-19
 - **Related API:** TBD (Step 6)
 - **Rule:**
   - **Range:** the last 30 days by creation date, unless the user picks another range.
   - **Counts:** tickets by status, by final category, and by final sentiment, with Unclassified as its own group.
-  - **Average first response time:** the mean of (first reply by the assignee or Admin − creation time) over tickets in the range that have a reply. Tickets still waiting for a first reply are shown as a separate count.
-  - **Label correction rate:** see BR-10.
+  - **First response time:** (first reply by the assignee or Admin − creation time), counted in working hours (DF-32), over tickets in the range that have a reply: the average (G-03) and the 90th percentile. Tickets still waiting for a first reply are shown as a separate count.
+  - **Replies on time (G-10):** over the response clocks that ended in the range: on time ÷ (on time + late), overall and for each priority, with the counts. Cancelled clocks are left out (BR-22).
+  - **Overdue now:** the number of running clocks past their deadline, linked to the queue filtered to them.
+  - **Label correction rate:** see BR-10, also by confidence band (BR-23).
   - **Scope:** Admin sees all tickets. Staff see only the tickets currently assigned to them.
 
 ## BR-17 — Customer email notifications
@@ -222,7 +230,7 @@ stateDiagram-v2
 - **Rule:**
   - The customer of a ticket gets an email when Staff or Admin **reply** to it or **change its status** (any transition in BR-06 made by them).
   - One action sends **at most one email**. A reply that also changes the status ("Send and wait for customer", or the first reply that triggers T2) sends one email.
-  - No email for the customer's own actions, automatic transitions caused by them (T4, T6), transfers, reassignments, or label corrections.
+  - No email for the customer's own actions, automatic transitions caused by them (T4, T6), transfers, reassignments, label corrections or confirmations, or a reply becoming due soon or overdue (BR-22).
   - No email when the customer account is locked.
   - Content follows DF-25: ticket number, title, what changed, and a link to the ticket. The reply text is not included.
   - Sending happens after the action is saved. A failed send is logged and **never blocks or undoes** the reply or status change.
@@ -247,8 +255,8 @@ stateDiagram-v2
 - **Related US:** US-13, US-14, US-15, US-16
 - **Related API:** TBD (Step 6), every ticket action by Staff or Admin
 - **Rule:**
-  - Each ticket has a **version**. It changes on any new message (customer or Staff), status change, label change, assignee change (including redistribution), and the classification result. Creating or regenerating a summary, or creating a reply suggestion, does not change it.
-  - A **status change, label correction, transfer, or reassignment** carries the version the user saw. If the ticket changed since then, nothing is saved and the user sees "Ticket vừa được cập nhật. Tải lại để xem thay đổi."
+  - Each ticket has a **version**. It changes on any new message (customer or Staff), status change, label change or confirmation, assignee change (including redistribution), and the classification result. Creating or regenerating a summary, or creating a reply suggestion, does not change it. Time passing never changes it: whether a reply is due soon or overdue is worked out when the ticket is read (BR-22).
+  - A **status change, label correction or confirmation, transfer, or reassignment** carries the version the user saw. If the ticket changed since then, nothing is saved and the user sees "Ticket vừa được cập nhật. Tải lại để xem thay đổi."
   - "Send and wait for customer" is checked as a whole: on a conflict, neither the reply nor the status change is saved, and the draft stays in the reply box.
   - Plain replies, the customer's Close, and automatic transitions (T2, T4, T6) are not version-checked. A reply is still rejected when the ticket is `Closed` or the sender no longer has access (BR-02).
   - **Lost access while writing:** if the ticket was transferred away, the reply is rejected, the draft stays in the box so it can be copied, and the page links back to the queue.
@@ -286,5 +294,36 @@ stateDiagram-v2
   6. The suggestion is shown next to the draft with its citations. "Dùng bản này" puts it in the reply box; **nothing is sent without an explicit Send click.** A later Rewrite follows BR-12 and keeps the facts already in the draft.
   7. The timeout is 20 s. An error leaves the draft unchanged; there is no automatic retry. If a cited article got a new revision while AI was writing (D-26), the result is discarded the same way with the message "Chính sách vừa được cập nhật. Bấm Gợi ý trả lời lại để dùng nội dung mới.", and Retry uses the new text.
   8. Each suggestion is logged for G-09: time, user, ticket, outcome, the suggested text, each cited article with its revision and quoted passage, and whether it was accepted. It does not change the ticket version (BR-19), and customers never see it (DF-14).
+
+## BR-22 — Reply deadlines (SLA)
+
+- **Source:** D-35, DF-15, DF-31..DF-33
+- **Related US:** US-10, US-12, US-13, US-14, US-15, US-16, US-19, US-24
+- **Related API:** TBD (Step 6), triggered by submit ticket, reply (customer, Staff, Admin), change status, correct or confirm labels, and the classification result
+- **Rule:**
+  1. **Response clock.** A ticket has at most one open clock. It starts when the ticket is created (first response) or when the customer writes while no clock is open (next response). Further customer messages do not restart it.
+  2. **Counting.** The clock counts working time (DF-32), and only while the ticket is `New` or `In Progress`. Setting `Waiting for Customer` or `Resolved` while it is open pauses it and keeps the time already used; when the ticket returns to `In Progress` (customer reply or manual), it resumes. It never restarts from zero.
+  3. **Deadline.** The reply is due when the counted time reaches the target of the ticket's current final priority (DF-31). A ticket without a priority (`Pending` or Unclassified) uses the `high` target. When the priority changes, the deadline is recalculated from when the clock started, never from now.
+  4. **End.** A reply by the assignee or Admin ends the clock: **on time** before the deadline, **late** after it. Closing the ticket also ends it: late if the deadline had passed, otherwise **cancelled**, which is left out of the on-time share (G-10).
+  5. **Marks** (DF-33). A running clock shows the time left; "Sắp trễ" when at most a quarter of the target is left; "Trễ hạn" after the deadline. A paused clock shows "Tạm dừng".
+  6. **Queue order** (DF-15). Unclassified and `Pending` tickets first, oldest first. Then tickets with a running clock, soonest deadline first, so overdue ones lead; ties go to the higher priority, then the older ticket. Then the other open tickets: `In Progress` before `Waiting for Customer`, least recently updated first.
+  7. **No running clock.** When the last message is from Staff, no clock runs. Each queue row shows when the ticket last changed, and the queue can be sorted by it ("Lâu chưa cập nhật"), so such a ticket still surfaces.
+  8. **Not affected.** Transfer, reassignment, and redistribution (lock, leave) never change a clock. The clock of an Unassigned ticket keeps running.
+  9. **No escalation.** A reply that becomes due soon or overdue sends no email (BR-17), reassigns nothing, and is never shown to the customer (BR-02).
+  10. **Current settings.** The deadline of a running clock always follows the current targets and working hours, so a change applies at once. An ended clock keeps the deadline and result it ended with.
+
+## BR-23 — Confidence bands
+
+- **Source:** D-36, DF-34
+- **Related US:** US-10, US-12, US-16, US-19
+- **Related API:** TBD (Step 6)
+- **Rule:**
+  - The confidence of a `Classified` ticket falls in a **band**: "Cao" from 0.85, "Vừa" from 0.60 to below 0.85 (DF-34). Below 0.60 the ticket is Unclassified (BR-08 rule 7), as before.
+  - The label panel shows the band next to the value. Customers never see it (DF-14).
+  - **"AI chưa chắc":** AI labels in band "Vừa" carry this marker in the queue until a person sets the labels, by correcting any of them or by confirming them unchanged with "Xác nhận nhãn".
+  - Once a person has set the labels, every label is theirs: the chips turn solid and lose the "AI" marker, and the panel still shows the original AI label (BR-09).
+  - A confirmation records who confirmed and when, but changes no value, so it is never a correction (BR-10). Like a correction, it is version-checked (BR-19).
+  - **Correction rate by band** (dashboard, BR-16): for the `Classified` tickets in the range, the number of tickets in each band, how many were corrected (BR-10), and the rate. A band with fewer than 20 tickets shows "Chưa đủ dữ liệu" instead of a rate (DF-34).
+  - Below the threshold only the confidence and reason are stored, not the labels AI guessed (AC-24.10), so this table can show whether the 0.6 threshold should be raised, never whether it could be lowered.
 
 **Related:** [Use cases and user stories](../02-usecases-userstories/README.md) · [Master traceability](../traceability/master-traceability.md)

@@ -8,7 +8,7 @@ Step 2 defines who uses **Helpdesk AI** and what they can do: use cases by actor
 
 | File | Content |
 |---|---|
-| [00-decisions.md](00-decisions.md) | Decisions D-07..D-12; defaults DF-01..DF-18, DF-25..DF-29; story merge map (D-27) |
+| [00-decisions.md](00-decisions.md) | Decisions D-07..D-12; defaults DF-01..DF-18, DF-25..DF-29, DF-31..DF-34; story merge map (D-27) |
 | [01-use-cases.md](01-use-cases.md) | Actors and roles, role × use case matrix, use case diagram, use cases by actor |
 | [02-use-case-specifications.md](02-use-case-specifications.md) | UC-01..UC-29: actor, preconditions, main flow, alternatives, permission, result |
 | [03-user-stories-invest.md](03-user-stories-invest.md) | INVEST checklist, product backlog US-01..US-29 (one per use case, same number), per-story INVEST review |

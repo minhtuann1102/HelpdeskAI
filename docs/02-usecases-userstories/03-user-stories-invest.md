@@ -13,7 +13,7 @@ Each requirement is small enough to implement and test independently. Cross-cutt
 | Independent | Each story produces a demonstrable outcome and names only unavoidable prerequisites (login, ticket creation, categories). |
 | Negotiable | Layout and implementation details may change while the stated outcome and permissions stay fixed. |
 | Valuable | Every story names the user benefit. System behaviours (US-24, US-25) are written for the role that benefits from them. |
-| Estimable | Inputs, limits, roles, and failure cases are explicit (DF-01..DF-18, DF-25..DF-29), and every story has a size. |
+| Estimable | Inputs, limits, roles, and failure cases are explicit (DF-01..DF-18, DF-25..DF-29, DF-31..DF-34), and every story has a size. |
 | Small | Each story targets one use case. Sizes: **S** = a simple screen or rule; **M** = a screen with several rules; **L** = AI integration or cross-cutting logic. |
 | Testable | Every story has Given/When/Then acceptance criteria in [Acceptance criteria](04-acceptance-criteria.md); a larger story groups its criteria by part. |
 
@@ -30,16 +30,16 @@ Each requirement is small enough to implement and test independently. Cross-cutt
 | US-07 | As a Customer, I want to see a list of my tickets and each ticket's full conversation, so that I can follow their status and know what has been answered. | Transparency | US-06 | Must | M |
 | US-08 | As a Customer, I want to add follow-up replies to my ticket, so that I can answer questions or add information. | Complete information | US-07 | Must | S |
 | US-09 | As a Customer, I want to close my ticket when I no longer need help, so that Staff stop working on it. | No wasted effort | US-07 | Should | S |
-| US-10 | As Staff, I want to see the tickets assigned to me ordered by urgency, so that I handle the most important ones first; as Administrator, I want the same view over all tickets. | Focus on urgent work | US-25 | Must | M |
+| US-10 | As Staff, I want to see the tickets assigned to me with the reply that is due soonest on top, and replies that are due soon or overdue marked, so that I handle the most urgent ones first and no customer waits past the deadline; as Administrator, I want the same view over all tickets. | Focus on urgent work, nobody forgotten | US-25 | Must | L |
 | US-11 | As Staff, I want to search and filter tickets, so that I can find a specific ticket quickly. | Speed | US-10 | Should | M |
-| US-12 | As Staff, I want to see the whole ticket with the AI labels and the reason behind them, so that I understand the case and can judge whether the AI was right. | Context, AI transparency | US-10 | Must | S |
+| US-12 | As Staff, I want to see the whole ticket with the AI labels, how sure the AI was, the reason behind them, and when my reply is due, so that I understand the case and can judge whether the AI was right. | Context, AI transparency | US-10 | Must | S |
 | US-13 | As Staff, I want to reply to the customer from the ticket, so that the whole conversation stays in one place. | Single history | US-12 | Must | M |
 | US-14 | As Staff, I want to change a ticket's status, so that the customer and I both know where it stands. | Shared status | US-12 | Must | M |
 | US-15 | As Staff, I want to transfer a ticket to a colleague, and as Administrator, I want to assign or reassign any ticket, including Unassigned ones, so that every ticket is handled by the right, available person. | Flexible workload | US-12 | Should | M |
-| US-16 | As Staff, I want to correct the category, priority, or sentiment, so that wrong AI labels do not mislead the queue or the reports. | Accurate data | US-12, US-24 | Must | S |
+| US-16 | As Staff, I want to correct the category, priority, or sentiment, or confirm them when they are right, so that wrong AI labels do not mislead the queue, the reply deadlines, or the reports. | Accurate data | US-12, US-24 | Must | S |
 | US-17 | As Staff, I want a short AI summary of a long ticket, so that I can catch up in seconds, especially after a transfer. | Faster catch-up | US-12 | Must | M |
 | US-18 | As Staff, I want AI to polish my draft reply, so that customers get polite and clear answers without me spending time on wording. | Consistent reply quality | US-13 | Must | M |
-| US-19 | As Administrator, I want a dashboard of ticket volume, response time, and AI quality, and as Staff, I want the same metrics for my own tickets, so that support is managed with data and I can track my own workload. | Data-driven management | US-13, US-16, US-24 | Should | L |
+| US-19 | As Administrator, I want a dashboard of ticket volume, response time, replies on time, and AI quality, and as Staff, I want the same metrics for my own tickets, so that support is managed with data and I can track my own workload. | Data-driven management | US-13, US-16, US-24 | Should | L |
 | US-20 | As Administrator, I want to add, edit, and hide categories with a description, so that customers can choose them and AI classifies tickets into the categories in use, without losing old tickets. | Configurable triage | US-01 | Must | M |
 | US-21 | As Administrator, I want to see all user accounts, so that I can manage access. | Access overview | US-01 | Should | S |
 | US-22 | As Administrator, I want to create Staff accounts, so that new support employees can start handling tickets. | Onboarding | US-01 | Must | S |
@@ -63,11 +63,11 @@ Each requirement is small enough to implement and test independently. Cross-cutt
 | US-05 | PASS | PASS | PASS | PASS | PASS | PASS | Foundation story. |
 | US-06 | PASS | PASS | PASS | PASS | PASS | PASS | Works even when AI is down (AC-06.4). Attachments are a *Should* part with explicit limits (DF-10). |
 | US-07..US-09 | PASS | PASS | PASS | PASS | PASS | PASS | Status rules come from BR-06. |
-| US-10..US-14 | PASS | PASS | PASS | PASS | PASS | PASS | Visibility follows D-09. |
+| US-10..US-14 | PASS | PASS | PASS | PASS | PASS | PASS | Visibility follows D-09. The reply deadline parts (D-35, BR-22) and the confidence band parts (D-36, BR-23) are *Should* parts with their own criteria; without them the queue keeps the priority order of AC-10.2. US-10 is L because the response clock is cross-cutting logic. |
 | US-15 | PASS | PASS | PASS | PASS | PASS | PASS | Staff transfer and Administrator reassignment have separate criteria because permissions differ. |
-| US-16 | PASS | PASS | PASS | PASS | PASS | PASS | Correction counting is defined by BR-10. |
+| US-16 | PASS | PASS | PASS | PASS | PASS | PASS | Correction counting is defined by BR-10; a confirmation is not a correction (BR-23). |
 | US-17, US-18 | PASS | PASS | PASS | PASS | PASS | PASS | Rewrite quality is checked with a fixed test set (AC-18.2). |
-| US-19 | PASS | PASS | PASS | PASS | PASS | PASS | Metric definitions in BR-10 and BR-16. The personal view reuses the same metrics with a filter. |
+| US-19 | PASS | PASS | PASS | PASS | PASS | PASS | Metric definitions in BR-10, BR-16, BR-22, and BR-23. The personal view reuses the same metrics with a filter. |
 | US-20 | PASS | PASS | PASS | PASS | PASS | PASS | Administration only. Hide or show is a *Should* part (AC-20.7–AC-20.9). |
 | US-21..US-23 | PASS | PASS | PASS | PASS | PASS | PASS | Administration only. |
 | US-24 | PASS | PASS | PASS | PASS | PASS | PASS | Largest story (L); testable with a mocked LLM. The angry rule and the fallback keep their own criteria (AC-24.7–AC-24.16), so each is still tested on its own. |
@@ -84,7 +84,8 @@ Each requirement is small enough to implement and test independently. Cross-cutt
 - AI never blocks ticket creation and never sends a reply (BR-08, BR-12, BR-21).
 - A reply suggestion states facts only from the policy articles it cites (BR-21).
 - AI output is validated before it is used (BR-08).
-- Customers never see internal AI data (DF-14).
+- Customers never see internal AI data, confidence bands, or reply deadlines (DF-14).
+- Reply deadlines count working hours only and never restart because of a status change, a transfer, or a new priority (BR-22).
 - Attachments are validated on the server and never sent to the LLM (BR-14).
 - A notification email never blocks or undoes the action that triggered it (BR-17).
 - Ticket changes made from an outdated view are rejected, never silently overwritten (BR-19).

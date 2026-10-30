@@ -75,7 +75,7 @@ UC-07 · BR-02
 **Ticket details**
 
 - **AC-07.4** *Given* my ticket, *when* I open it, *then* I see the title, description, attachments, status, category, and every message in time order with author and time.
-- **AC-07.5** *Given* my ticket, *when* it is shown, *then* priority, sentiment, confidence, AI reason, classification status, and summary are not shown (DF-14).
+- **AC-07.5** *Given* my ticket, *when* it is shown, *then* priority, sentiment, confidence and its band, AI reason, classification status, summary, and reply deadlines are not shown (DF-14).
 - **AC-07.6** *Given* another customer's ticket number, *when* I try to open it, *then* access is denied.
 
 ## US-08 — Reply to my ticket
@@ -94,13 +94,26 @@ UC-09 · BR-06
 - **AC-09.2** *Given* a `Closed` ticket, *when* anyone tries to reply or change its status, *then* the action is rejected.
 
 ## US-10 — View my ticket queue
-UC-10 · BR-02
+UC-10 · BR-02, BR-22, BR-23
 
 - **AC-10.1** *Given* I am Staff, *when* I open My queue, *then* I see only tickets assigned to me with status `New`, `In Progress`, or `Waiting for Customer` (DF-15).
-- **AC-10.2** *Given* the queue, *when* it is shown, *then* it is ordered Unclassified and `Pending` first, then `urgent`, `high`, `medium`, `low`, then oldest first.
-- **AC-10.3** *Given* the queue, *when* it is shown, *then* each row shows ticket number, title, customer name, category, priority, sentiment, status, and creation time; labels not yet corrected carry an "AI" marker.
+- **AC-10.2** *Given* the queue, *when* it is shown, *then* it is ordered Unclassified and `Pending` first, then `urgent`, `high`, `medium`, `low`, then oldest first. With reply deadlines, AC-10.7 replaces the order after the Unclassified and `Pending` tickets.
+- **AC-10.3** *Given* the queue, *when* it is shown, *then* each row shows ticket number, title, customer name, category, priority, sentiment, status, and creation time; labels that no person has set yet carry an "AI" marker (BR-23).
 - **AC-10.4** *Given* I am Administrator, *when* I open All tickets, *then* I see every ticket with an assignee column, including Unassigned ones.
 - **AC-10.5** *Given* I have no open tickets, *when* I open My queue, *then* I see an empty state "No tickets assigned to you".
+
+**Reply deadlines** · BR-22 · *Should*
+
+- **AC-10.6** *Given* a customer is waiting for a reply (the ticket is new, or the customer wrote after the last Staff or Administrator reply), *when* the queue is shown, *then* the row shows the time left in working hours, for example "còn 1 giờ 20 phút"; "Sắp trễ" when at most a quarter of the target is left; "Trễ hạn · 1 giờ 10 phút" after the deadline; and "Tạm dừng" while the clock is paused (DF-31..DF-33).
+- **AC-10.7** *Given* the queue, *when* it is shown, *then* after the Unclassified and `Pending` tickets come the tickets with a running clock, soonest deadline first, so overdue ones lead; then the other open tickets, `In Progress` before `Waiting for Customer`, least recently updated first (DF-15).
+- **AC-10.8** *Given* a `low` ticket due in 20 minutes and an `urgent` ticket due in 50 minutes, *when* the queue is shown, *then* the `low` ticket is above the `urgent` one, and both rows show their time left.
+- **AC-10.9** *Given* some tickets in my queue are overdue, *when* I open it, *then* the toolbar shows "Trễ hạn (n)", and choosing it shows only those tickets.
+- **AC-10.10** *Given* the queue, *when* it is shown, *then* each row also shows when the ticket last changed ("cập nhật 2 ngày trước"), and I can sort by "Lâu chưa cập nhật", least recently updated first, so a ticket whose last message is from Staff still surfaces.
+- **AC-10.11** *Given* a reply becomes due soon or overdue, *when* that happens, *then* nobody gets an email or another alert, and the ticket is not reassigned (BR-22 rule 9).
+
+**Uncertain AI labels** · BR-23 · *Should*
+
+- **AC-10.12** *Given* AI labels in the confidence band "Vừa" that no person has set, *when* the queue is shown, *then* the row's AI marker reads "AI chưa chắc"; it disappears once a person corrects or confirms the labels (AC-16.6).
 
 ## US-11 — Search and filter tickets
 UC-11 · BR-02
@@ -111,15 +124,20 @@ UC-11 · BR-02
 - **AC-11.4** *Given* no ticket matches, *when* results load, *then* I see "No tickets match your filters" and a Clear filters action.
 
 ## US-12 — View ticket details with AI labels
-UC-12 · BR-02, BR-08, BR-09
+UC-12 · BR-02, BR-08, BR-09, BR-22, BR-23
 
 - **AC-12.1** *Given* a ticket I can act on, *when* I open it, *then* I see title, description, attachments, customer name and email, status, assignee, and the full conversation.
 - **AC-12.2** *Given* the label panel, *when* it is shown, *then* it shows the final category, priority, and sentiment, plus the original AI label, confidence, and reason.
 - **AC-12.3** *Given* an Unclassified ticket, *when* I open it, *then* the panel shows "Unclassified — needs manual triage" and whether the cause was low confidence or an AI error.
 - **AC-12.4** *Given* the ticket's classification is `Pending`, *when* I keep it open, *then* the label panel shows "AI đang phân loại…", the page re-checks every 3 s, and the labels appear as soon as they are ready; after 30 s it shows the Unclassified (AI error) state (DF-28).
 
+**Reply deadline and confidence band** · BR-22, BR-23 · *Should*
+
+- **AC-12.5** *Given* a customer is waiting for a reply, *when* I open the ticket, *then* the header shows the deadline and the time left, for example "Phản hồi trước 14:30 · còn 40 phút", or "Trễ hạn" after it; a paused clock shows "Tạm dừng" with the time that will be left when it resumes.
+- **AC-12.6** *Given* the label panel of a `Classified` ticket, *when* it is shown, *then* the confidence carries its band next to the value: "Cao" from 0.85, "Vừa" from 0.60 (DF-34).
+
 ## US-13 — Reply to the customer
-UC-13 · BR-06, BR-07, BR-19
+UC-13 · BR-06, BR-07, BR-19, BR-22
 
 - **AC-13.1** *Given* a ticket I can act on that is not `Closed`, *when* I write a reply and click Send, *then* it is added to the conversation with my name and time, and the customer can see it.
 - **AC-13.2** *Given* a `New` ticket, *when* the assignee or Administrator sends the first reply, *then* the status becomes `In Progress` and the first response time is recorded (D-10).
@@ -129,16 +147,25 @@ UC-13 · BR-06, BR-07, BR-19
 - **AC-13.6** *Given* the ticket was transferred to someone else while I was writing, *when* I click Send, *then* the reply is rejected, my draft stays in the reply box so I can copy it, and I see a message with a link back to my queue (BR-19).
 - **AC-13.7** *Given* someone else changed the ticket after I opened it, *when* I choose "Send and wait for customer", *then* neither the reply nor the status change is saved, my draft stays, and I am asked to reload (BR-19).
 
+**Reply deadline** · BR-22 · *Should*
+
+- **AC-13.8** *Given* a customer is waiting for a reply, *when* the assignee or Administrator sends one (Send or "Send and wait for customer"), *then* the clock ends, on time before the deadline and late after it, and the customer's next message starts a new clock.
+
 ## US-14 — Change ticket status
-UC-14 · BR-06, BR-19
+UC-14 · BR-06, BR-19, BR-22
 
 - **AC-14.1** *Given* a ticket in a given status, *when* I open the status control, *then* only the transitions allowed by BR-06 are offered, and any other transition sent directly is rejected.
 - **AC-14.2** *Given* I set a ticket to `Resolved`, *when* the customer opens it, *then* they see `Resolved` and can still reply (reopen) or close it.
 - **AC-14.3** *Given* a `Closed` ticket, *when* I open it, *then* no status change is offered.
 - **AC-14.4** *Given* the customer replied after I opened the ticket, *when* I set it to `Resolved` from my outdated page, *then* nothing changes and I see "Ticket vừa được cập nhật. Tải lại để xem thay đổi." (BR-19).
 
+**Reply deadline** · BR-22 · *Should*
+
+- **AC-14.5** *Given* a running clock, *when* I set the ticket to `Waiting for Customer` or `Resolved` without replying, *then* the clock pauses and keeps the time already used; when the ticket returns to `In Progress`, by a customer reply or by hand, the clock resumes and never restarts from zero.
+- **AC-14.6** *Given* a running or paused clock, *when* the ticket is `Closed`, *then* the clock ends: late if the deadline had passed, otherwise cancelled and left out of the on-time share (G-10).
+
 ## US-15 — Transfer or reassign a ticket
-UC-15 · BR-04, BR-19
+UC-15 · BR-04, BR-19, BR-22
 
 - **AC-15.1** *Given* a ticket assigned to me, *when* I choose Transfer, *then* I see a list of the other active Staff members with their open-ticket counts.
 - **AC-15.2** *Given* I pick a colleague and confirm, *when* the transfer completes, *then* the assignee changes, the status stays the same, the ticket leaves my queue, and I no longer have access to it (D-09).
@@ -151,13 +178,22 @@ UC-15 · BR-04, BR-19
 - **AC-15.6** *Given* an Unassigned ticket, *when* I assign it, *then* it appears in the new assignee's queue.
 - **AC-15.7** *Given* the ticket changed after I opened it, *when* I confirm a reassignment, *then* nothing changes and I am asked to reload (BR-19).
 
+**Reply deadline** · BR-22
+
+- **AC-15.8** *Given* a ticket with a running clock, *when* it is transferred, reassigned, or redistributed because a Staff member is locked or set on leave, *then* its deadline does not change; the clock of an Unassigned ticket keeps running.
+
 ## US-16 — Correct AI labels and triage Unclassified tickets
-UC-16 · BR-09, BR-10, BR-19
+UC-16 · BR-09, BR-10, BR-19, BR-22, BR-23
 
 - **AC-16.1** *Given* a ticket I can act on, *when* I change the category (active categories only), priority, or sentiment and save, *then* the final label changes and the AI label stays unchanged.
 - **AC-16.2** *Given* an Unclassified ticket, *when* I set its category and priority, *then* the "Unclassified" badge disappears and the ticket takes its normal place in the queue order.
 - **AC-16.3** *Given* I changed an AI-chosen category or the AI priority, *when* the dashboard is calculated, *then* the ticket counts as corrected (BR-10); changing only the sentiment does not count.
-- **AC-16.4** *Given* someone else corrected the labels after I opened the ticket, *when* I save my correction, *then* nothing changes and I am asked to reload, so neither correction is lost silently (BR-19).
+- **AC-16.4** *Given* someone else corrected the labels after I opened the ticket, *when* I save my correction or confirmation, *then* nothing changes and I am asked to reload, so neither change is lost silently (BR-19).
+
+**Reply deadline and confirmation** · BR-22, BR-23 · *Should*
+
+- **AC-16.5** *Given* a running clock, *when* I change the priority and save, *then* the deadline is recalculated from when the clock started with the target of the new priority, never from now (DF-31).
+- **AC-16.6** *Given* AI labels that are right, *when* I choose "Xác nhận nhãn" and save without changes, *then* "AI chưa chắc" and the "AI" markers disappear, the panel shows who confirmed and when, and the ticket does not count as corrected (BR-10, BR-23).
 
 ## US-17 — Summarize a ticket with AI
 UC-17 · BR-11
@@ -178,13 +214,13 @@ UC-18 · BR-12
 - **AC-18.5** *Given* the AI errors or does not answer within 20 s, *when* I click Rewrite, *then* I see an error and my draft is unchanged.
 
 ## US-19 — View the dashboard
-UC-19 · BR-10, BR-16
+UC-19 · BR-10, BR-16, BR-22, BR-23
 
 **System-wide dashboard** (Administrator)
 
 - **AC-19.1** *Given* I open the dashboard, *when* it loads, *then* it covers the last 30 days by creation date, and I can choose another range.
 - **AC-19.2** *Given* tickets in the range, *when* it loads, *then* I see counts by status, by category, and by sentiment, with Unclassified as its own group.
-- **AC-19.3** *Given* tickets in the range, *when* it loads, *then* I see the average first response time over tickets that have a reply, plus the count of tickets still waiting for a first reply.
+- **AC-19.3** *Given* tickets in the range, *when* it loads, *then* I see the first response time in working hours (DF-32), its average and its 90th percentile, over tickets that have a reply, plus the count of tickets still waiting for a first reply.
 - **AC-19.4** *Given* tickets in the range, *when* it loads, *then* I see the label correction rate (BR-10) with its numerator and denominator.
 - **AC-19.5** *Given* no tickets in the range, *when* it loads, *then* I see zeros and an empty state, not an error.
 
@@ -192,6 +228,12 @@ UC-19 · BR-10, BR-16
 
 - **AC-19.6** *Given* I am Staff, *when* I open the dashboard, *then* every metric is calculated only from tickets currently assigned to me.
 - **AC-19.7** *Given* I am Staff, *when* I use the dashboard, *then* I cannot see system-wide numbers or other Staff members' numbers.
+
+**Replies on time and AI confidence** · BR-16, BR-22, BR-23
+
+- **AC-19.8** *Given* response clocks that ended in the range, *when* it loads, *then* I see the share of replies on time, on time ÷ (on time + late), overall and for each priority, with the counts; clocks cancelled because the ticket was closed before the deadline are left out (G-10).
+- **AC-19.9** *Given* replies that are overdue right now, *when* it loads, *then* I see how many there are, and choosing the number opens the queue filtered to them (AC-10.9).
+- **AC-19.10** *Given* `Classified` tickets in the range, *when* it loads, *then* I see for each confidence band the number of tickets, how many were corrected (BR-10), and the rate; a band with fewer than 20 tickets shows "Chưa đủ dữ liệu" instead of a rate (DF-34).
 
 ## US-20 — Manage categories
 UC-20 · BR-13
@@ -236,7 +278,7 @@ UC-23 · BR-05
 - **AC-23.4** *Given* my own Administrator account, *when* I look for Lock, *then* it is not available.
 
 ## US-24 — AI classification of new tickets
-UC-24 · BR-08, BR-09
+UC-24 · BR-08, BR-09, BR-22
 
 US-24 and US-25 have **no endpoint of their own**. They run when a ticket is submitted (US-06); US-25 also runs when a Staff account is locked (US-23) or a ticket is reopened (US-08). In the Step 6 cross-check they are traced to those endpoints.
 
@@ -263,6 +305,10 @@ US-24 and US-25 have **no endpoint of their own**. They run when a ticket is sub
 - **AC-24.15** *Given* a ticket is still `Pending` 30 s after creation (for example after a server restart), *when* it is shown or counted, *then* it is treated as `Unclassified` (AI error), and a later AI result for it is discarded (DF-28).
 - **AC-24.16** *Given* Staff set the labels while classification is `Pending`, *when* the AI result arrives, *then* only the AI label is filled, and the final labels Staff set stay unchanged (BR-08 rule 10).
 
+**Reply deadline** · BR-22 · *Should*
+
+- **AC-24.17** *Given* a new ticket, *when* it is created, *then* its first-response clock starts at creation and uses the `high` target while the classification is `Pending` or Unclassified; when AI or a person sets the priority, the deadline is recalculated from creation (DF-31).
+
 ## US-25 — Auto-assign new tickets
 UC-25 · BR-03
 
@@ -281,7 +327,7 @@ UC-26 · BR-17
 - **AC-26.1** *Given* Staff or the Administrator send a reply on my ticket, *when* the reply is saved, *then* I get one email at my account email with the ticket number, title, "new reply", and a link to the ticket, but not the reply text (DF-25).
 - **AC-26.2** *Given* Staff or the Administrator change my ticket's status without replying (for example to `Resolved`), *when* the change is saved, *then* I get one email that names the new status, using the customer wording (DF-22).
 - **AC-26.3** *Given* one action both adds a reply and changes the status ("Send and wait for customer", or the first reply that moves `New` to `In Progress`), *when* it is saved, *then* I get exactly one email.
-- **AC-26.4** *Given* I reply to or close my own ticket, or Staff transfer it or correct its labels, *when* the action is saved, *then* no email is sent.
+- **AC-26.4** *Given* I reply to or close my own ticket, or Staff transfer it or correct or confirm its labels, or a reply to me becomes due soon or overdue, *when* that happens, *then* no email is sent.
 - **AC-26.5** *Given* the Email Service fails or times out, *when* Staff send a reply or change the status, *then* the action is saved and shown as usual, and the failure is logged.
 - **AC-26.6** *Given* my account is locked, *when* Staff act on my ticket, *then* no email is sent.
 

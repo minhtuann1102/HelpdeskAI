@@ -52,7 +52,7 @@
 - **Main flow:** open the form → enter title, description, optional category, optional attachments → submit → system saves the ticket as `New` → system runs UC-25 and UC-24 → confirmation and ticket detail
 - **Alternative:** invalid input → field errors, nothing saved; AI fails → ticket saved, labels "Unclassified"; no active Staff → ticket Unassigned
 - **Permission:** `CUSTOMER`
-- **Result:** the ticket exists, with an assignee when possible, and labels · **Stories:** US-06, US-24, US-25
+- **Result:** the ticket exists, with an assignee when possible, labels, and a running first-response clock (BR-22) · **Stories:** US-06, US-24, US-25
 
 ## UC-07 View own tickets
 
@@ -79,9 +79,10 @@
 ## UC-10 View ticket queue
 
 - **Actor:** Staff, Administrator
-- **Main flow:** open the queue → tickets ordered by urgency (DF-15) → open one
+- **Main flow:** open the queue → Unclassified and Pending tickets on top, then the reply due soonest (DF-15, BR-22) → open one
+- **Alternative:** "Trễ hạn (n)" shows only overdue replies; sort by "Lâu chưa cập nhật" to find tickets nobody touched for a while
 - **Permission:** Staff: assigned to me; Administrator: all tickets
-- **Result:** the most urgent work is on top · **Stories:** US-10
+- **Result:** the most urgent work is on top, and replies due soon or overdue are marked · **Stories:** US-10
 
 ## UC-11 Search and filter tickets
 
@@ -93,7 +94,7 @@
 ## UC-12 View ticket details
 
 - **Actor:** Staff, Administrator
-- **Main flow:** open a ticket → see content, attachments, conversation, final labels, AI label, confidence, and reason
+- **Main flow:** open a ticket → see content, attachments, conversation, final labels, AI label, confidence with its band, and reason, and when the reply is due (BR-22, BR-23)
 - **Permission:** Staff: assigned to me; Administrator: all tickets
 - **Result:** full context of the case · **Stories:** US-12
 
@@ -103,7 +104,7 @@
 - **Main flow:** write a reply → Send (or "Send and wait for customer") → reply joins the conversation; the first reply moves `New` to `In Progress` (D-10) → system runs UC-26
 - **Alternative:** ticket `Closed` → no reply possible
 - **Permission:** Staff: assigned to me; Administrator: all tickets
-- **Result:** the customer sees the reply and gets one email (BR-17) · **Stories:** US-13, US-26
+- **Result:** the customer sees the reply and gets one email (BR-17); the reply ends the response clock, on time or late (BR-22) · **Stories:** US-13, US-26
 
 ## UC-14 Change ticket status
 
@@ -111,7 +112,7 @@
 - **Main flow:** choose an allowed next status (BR-06) → save → system runs UC-26
 - **Alternative:** disallowed transition → rejected
 - **Permission:** Staff: assigned to me; Administrator: all tickets
-- **Result:** new status visible to the customer, who gets one email (BR-17) · **Stories:** US-14, US-26
+- **Result:** new status visible to the customer, who gets one email (BR-17); an open response clock pauses, resumes, or ends with the status (BR-22) · **Stories:** US-14, US-26
 
 ## UC-15 Transfer or reassign ticket
 
@@ -124,9 +125,9 @@
 ## UC-16 Correct AI labels
 
 - **Actor:** Staff, Administrator
-- **Main flow:** change category, priority, or sentiment → save → the final label changes; the AI label is kept
+- **Main flow:** change category, priority, or sentiment, or choose "Xác nhận nhãn" to keep them → save → the final label is now set by a person; the AI label is kept
 - **Permission:** Staff: assigned to me; Administrator: all tickets
-- **Result:** correct labels; counted for the correction rate (BR-10) · **Stories:** US-16
+- **Result:** correct labels; a change counts for the correction rate, a confirmation does not (BR-10, BR-23); a new priority recalculates the reply deadline (BR-22) · **Stories:** US-16
 
 ## UC-17 Summarize ticket
 
@@ -149,7 +150,7 @@
 - **Actor:** Staff (personal), Administrator (system-wide)
 - **Main flow:** open the dashboard → choose a date range → see the metrics (BR-16)
 - **Permission:** Staff: own tickets; Administrator: all tickets
-- **Result:** volume, response time, and AI quality figures · **Stories:** US-19
+- **Result:** volume, response time, replies on time, and AI quality figures (BR-16) · **Stories:** US-19
 
 ## UC-20 Manage categories
 
@@ -185,7 +186,7 @@
 ## UC-24 Classify ticket
 
 - **Actor:** System; LLM Provider · **Included by:** UC-06
-- **Main flow:** after the ticket is saved (classification status `Pending`), make one LLM call → validate the JSON → apply the rules (threshold, angry raise) → store the AI label and the final label → status `Classified`
+- **Main flow:** after the ticket is saved (classification status `Pending`), make one LLM call → validate the JSON → apply the rules (threshold, angry raise) → store the AI label and the final label → status `Classified`; the reply deadline now follows the priority (BR-22)
 - **Alternative:** error, timeout, invalid output, or low confidence → `Unclassified` with the cause (BR-08); still `Pending` after 30 s → treated as `Unclassified` (AI error) (DF-28); a person already set the labels → only the AI label is stored
 - **Permission:** internal
 - **Result:** labelled ticket · **Stories:** US-24
