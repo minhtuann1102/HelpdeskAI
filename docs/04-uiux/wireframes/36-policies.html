@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCR-36 Policies — Helpdesk AI wireframe</title>
+  <link rel="stylesheet" href="assets/wireframe.css">
+</head>
+<body data-default-role="admin">
+
+<div class="wf-bar" role="note" aria-label="Wireframe controls">
+  <strong>Wireframe: SCR-36 Policies (Admin)</strong>
+  <ul class="wf-states" aria-label="State">
+    <li><a href="36-policies.html">default</a></li>
+    <li><a href="36-policies.html?state=edit">SCR-37 edit</a></li>
+    <li><a href="36-policies.html?state=form-error">SCR-37 add with errors</a></li>
+    <li><a href="36-policies.html?state=hide-confirm">hide-confirm</a></li>
+    <li><a href="36-policies.html?state=empty">empty</a></li>
+  </ul>
+  <span>Sample data: "Lá Cọ Home" is a fictional shop</span>
+</div>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark"><svg class="i"><use href="#i-ticket"></use></svg></span>
+      <span><span class="brand-name">Helpdesk AI</span><span class="brand-shop">Lá Cọ Home</span></span>
+    </div>
+    <nav aria-label="Điều hướng chính">
+      <ul class="nav">
+        <li><a href="20-ticket-queue.html?role=admin"><svg class="i"><use href="#i-inbox"></use></svg>Tất cả ticket</a></li>
+        <li><a href="22-dashboard.html"><svg class="i"><use href="#i-chart"></use></svg>Tổng quan</a></li>
+        <li><a href="30-categories.html"><svg class="i"><use href="#i-tag"></use></svg>Danh mục</a></li>
+        <li><a href="36-policies.html" aria-current="page"><svg class="i"><use href="#i-file"></use></svg>Chính sách</a></li>
+        <li><a href="31-users.html"><svg class="i"><use href="#i-users"></use></svg>Người dùng</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-foot">
+      <span class="avatar">TL</span>
+      <span class="who">Phạm Thanh Lam<small>Quản trị viên</small></span>
+      <button class="icon-btn" type="button" aria-label="Đăng xuất"><svg class="i"><use href="#i-logout"></use></svg></button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><span aria-current="page">Chính sách</span></nav>
+      <a href="40-profile.html?role=admin" aria-label="Hồ sơ"><span class="avatar avatar-admin">TL</span></a>
+    </header>
+
+    <main class="page">
+      <div class="page-head">
+        <div>
+          <h1>Chính sách của shop</h1>
+          <p>AI chỉ gợi ý trả lời từ những chính sách đang dùng và đã được xem lại trong 180 ngày. Khách không thấy trang này.</p>
+        </div>
+        <div class="row">
+          <span class="callout" aria-hidden="true">1</span>
+          <button class="btn btn-primary" type="button"><svg class="i i-sm"><use href="#i-plus"></use></svg>Thêm chính sách</button>
+        </div>
+      </div>
+
+      <div class="notice notice-pencil" data-hide="empty">
+        <span class="ai-mark">AI</span>
+        <span>Khi gợi ý trả lời, AI <b>trích nguyên văn</b> đoạn chính sách nó dựa vào. Mỗi chính sách nói về một việc và ghi rõ số ngày, số tiền, điều kiện thì gợi ý chính xác hơn.</span>
+      </div>
+
+      <div class="toolbar" data-hide="empty">
+        <div class="search">
+          <svg class="i i-sm"><use href="#i-search"></use></svg>
+          <input class="input" type="search" placeholder="Tìm theo tiêu đề hoặc nội dung" aria-label="Tìm chính sách">
+        </div>
+        <select class="select" aria-label="Trạng thái"><option>Mọi trạng thái</option><option>Đang dùng</option><option>Cần xem lại</option><option>Đã ẩn</option></select>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table" data-hide="empty">
+          <thead>
+            <tr><th>Chính sách</th><th>Xem lại lần cuối</th><th>Trạng thái</th><th></th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="t-title"><b>Đổi trả khi giao sai hàng</b><span class="excerpt">Giao sai mẫu, màu hoặc kích thước: đổi miễn phí trong 7 ngày kể từ khi nhận hàng. Shop chịu phí vận chuyển hai chiều.</span></div></td>
+              <td class="muted">12/10/2026</td>
+              <td><span class="chip chip-ok">Đang dùng</span></td>
+              <td><div class="row" style="justify-content:flex-end"><button class="btn btn-sm" type="button"><svg class="i i-sm"><use href="#i-pencil"></use></svg>Sửa</button><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-eyeoff"></use></svg>Ẩn</button></div></td>
+            </tr>
+            <tr>
+              <td><div class="t-title"><b>Quy trình đổi hàng</b><span class="excerpt">Shop gửi hàng mới trước. Shipper thu hồi hàng cũ khi giao hàng mới; khách giữ nguyên tem mã dưới đáy sản phẩm.</span></div></td>
+              <td class="muted">12/10/2026</td>
+              <td><span class="chip chip-ok">Đang dùng</span></td>
+              <td><div class="row" style="justify-content:flex-end"><button class="btn btn-sm" type="button"><svg class="i i-sm"><use href="#i-pencil"></use></svg>Sửa</button><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-eyeoff"></use></svg>Ẩn</button></div></td>
+            </tr>
+            <tr>
+              <td><div class="t-title"><b>Thời gian giao hàng</b><span class="excerpt">Nội thành TP.HCM: 1–2 ngày làm việc. Tỉnh khác: 3–5 ngày làm việc. Không giao vào Chủ nhật và ngày lễ.</span></div></td>
+              <td class="muted">02/09/2026</td>
+              <td><span class="chip chip-ok">Đang dùng</span></td>
+              <td><div class="row" style="justify-content:flex-end"><button class="btn btn-sm" type="button"><svg class="i i-sm"><use href="#i-pencil"></use></svg>Sửa</button><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-eyeoff"></use></svg>Ẩn</button></div></td>
+            </tr>
+            <tr>
+              <td><div class="t-title"><b>Bảo hành đồ mây tre</b><span class="excerpt">Bảo hành 6 tháng cho lỗi đan, bung nan, gãy khung khi dùng bình thường. Không bảo hành khi sản phẩm để ngoài mưa nắng.</span></div></td>
+              <td class="muted">20/08/2026</td>
+              <td><span class="chip chip-ok">Đang dùng</span></td>
+              <td><div class="row" style="justify-content:flex-end"><button class="btn btn-sm" type="button"><svg class="i i-sm"><use href="#i-pencil"></use></svg>Sửa</button><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-eyeoff"></use></svg>Ẩn</button></div></td>
+            </tr>
+            <tr class="row-attention">
+              <td><div class="t-title"><b>Hoàn tiền khi hủy đơn</b><span class="excerpt">Hủy trước khi shop giao cho đơn vị vận chuyển: hoàn 100% trong 3–5 ngày làm việc qua phương thức đã thanh toán.</span></div></td>
+              <td>15/03/2026<span class="xs muted" style="display:block">229 ngày trước</span></td>
+              <td><span class="chip chip-review"><svg class="i i-sm"><use href="#i-clock"></use></svg>Cần xem lại</span> <span class="callout" aria-hidden="true">2</span></td>
+              <td><div class="row" style="justify-content:flex-end;flex-wrap:nowrap"><button class="btn btn-sm" type="button"><svg class="i i-sm"><use href="#i-check"></use></svg>Đánh dấu đã xem lại</button><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-pencil"></use></svg>Sửa</button><button class="btn btn-quiet btn-sm" type="button"><svg class="i i-sm"><use href="#i-eyeoff"></use></svg>Ẩn</button></div></td>
+            </tr>
+            <tr>
+              <td><div class="t-title" style="opacity:.6"><b>Ưu đãi sinh nhật shop 2025</b><span class="excerpt">Giảm 15% cho mọi đơn từ 1/11 đến 10/11/2025, không áp dụng cùng mã giảm giá khác.</span></div></td>
+              <td class="muted">05/11/2025</td>
+              <td><span class="chip chip-plain">Đã ẩn</span></td>
+              <td><div class="row" style="justify-content:flex-end"><button class="btn btn-sm" type="button"><svg class="i i-sm"><use href="#i-eye"></use></svg>Hiện lại</button></div></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="empty" data-show="empty">
+          <span class="empty-icon"><svg class="i"><use href="#i-file"></use></svg></span>
+          <h2>Chưa có chính sách nào</h2>
+          <p>Nút "Gợi ý trả lời" của nhân viên chỉ bật khi có ít nhất một chính sách đang dùng. Bắt đầu với chính sách khách hay hỏi nhất, ví dụ đổi trả hoặc thời gian giao hàng.</p>
+          <button class="btn btn-primary" type="button"><svg class="i i-sm"><use href="#i-plus"></use></svg>Thêm chính sách</button>
+        </div>
+
+        <div class="table-foot" data-hide="empty"><span>5 chính sách đang dùng, 1 cần xem lại, 1 đã ẩn</span><span>Chính sách không xóa được, chỉ ẩn.</span></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- SCR-37 Policy article form: edit an overdue article -->
+<div class="scrim" data-show="edit">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="edit-title">
+    <div class="modal-head">
+      <div class="stack" style="gap:4px">
+        <h2 id="edit-title">Sửa chính sách</h2>
+        <p class="small muted">Xem lại lần cuối 15/03/2026. Lưu thay đổi cũng tính là đã xem lại hôm nay.</p>
+      </div>
+      <button class="icon-btn" type="button" aria-label="Đóng"><svg class="i"><use href="#i-x"></use></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label for="p-title">Tiêu đề</label>
+        <input id="p-title" class="input" value="Hoàn tiền khi hủy đơn">
+      </div>
+      <div class="field">
+        <label for="p-body">Nội dung</label>
+        <textarea id="p-body" class="textarea" rows="6">Hủy trước khi shop giao cho đơn vị vận chuyển: hoàn 100% trong 3–5 ngày làm việc qua phương thức đã thanh toán.
+Hủy sau khi đã giao cho đơn vị vận chuyển: khách trả phí vận chuyển hai chiều, phần còn lại hoàn trong 5–7 ngày làm việc sau khi shop nhận lại hàng.</textarea>
+        <span class="hint">AI trích nguyên văn nội dung này khi gợi ý trả lời. Ghi rõ số ngày, số tiền và điều kiện; tối đa 5.000 ký tự.</span>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-quiet" type="button">Hủy</button>
+      <button class="btn btn-primary" type="button"><svg class="i i-sm"><use href="#i-check"></use></svg>Lưu thay đổi</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCR-37 Policy article form: add with errors -->
+<div class="scrim" data-show="form-error">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="add-title">
+    <div class="modal-head">
+      <h2 id="add-title">Thêm chính sách</h2>
+      <button class="icon-btn" type="button" aria-label="Đóng"><svg class="i"><use href="#i-x"></use></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="field field-error">
+        <label for="a-title">Tiêu đề</label>
+        <input id="a-title" class="input" value="thời gian giao hàng" aria-invalid="true">
+        <span class="error-text">Đã có chính sách "Thời gian giao hàng". Hãy sửa chính sách đó thay vì tạo bản thứ hai.</span>
+      </div>
+      <div class="field field-error">
+        <label for="a-body">Nội dung</label>
+        <textarea id="a-body" class="textarea" rows="6" aria-invalid="true"></textarea>
+        <span class="error-text">Cần có nội dung, vì AI chỉ trích dẫn được những gì được viết ở đây.</span>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-quiet" type="button">Hủy</button>
+      <button class="btn btn-primary" type="button"><svg class="i i-sm"><use href="#i-plus"></use></svg>Thêm chính sách</button>
+    </div>
+  </div>
+</div>
+
+<!-- Hide confirmation -->
+<div class="scrim" data-show="hide-confirm">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="hide-title">
+    <div class="modal-head">
+      <div class="stack" style="gap:4px">
+        <h2 id="hide-title">Ẩn chính sách "Thời gian giao hàng"?</h2>
+        <p class="small muted">AI sẽ không dùng chính sách này để gợi ý trả lời nữa. Nội dung vẫn được giữ, bạn có thể hiện lại bất cứ lúc nào.</p>
+      </div>
+      <button class="icon-btn" type="button" aria-label="Đóng"><svg class="i"><use href="#i-x"></use></svg></button>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-quiet" type="button">Hủy</button>
+      <button class="btn btn-primary" type="button"><svg class="i i-sm"><use href="#i-eyeoff"></use></svg>Ẩn chính sách</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/icons.js"></script>
+<script src="assets/states.js"></script>
+</body>
+</html>

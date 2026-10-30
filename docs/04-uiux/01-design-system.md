@@ -60,7 +60,7 @@ Spacing steps: 4, 8, 12, 16, 20, 28, 40 px. Radius follows hierarchy: surfaces 1
 | Sidebar (Staff, Admin) | Pine, icon + label, count badge, active item with a light bar; user and Log out at the bottom (D-14). |
 | Portal top bar (Customer) | Shop name, "Yêu cầu của tôi", primary "Gửi yêu cầu mới", avatar (D-14). |
 | Buttons | Primary (pine), secondary (outline), quiet (text), danger (brick). |
-| **AI buttons** | Dashed violet outline with the white-on-violet **AI** mark: "Viết lại bằng AI", "Tóm tắt", "Tóm tắt lại". Solid violet only for accepting an AI result ("Dùng bản này"). |
+| **AI buttons** | Dashed violet outline with the white-on-violet **AI** mark: "Gợi ý trả lời", "Viết lại bằng AI", "Tóm tắt", "Tóm tắt lại". Solid violet only for accepting an AI result ("Dùng bản này"). |
 | **AI label chip** | Dashed violet border, violet wash, small "AI" suffix. Corrected label: solid neutral chip. |
 | Unclassified chip | Dashed grey, "Chưa phân loại". |
 | Priority meter | 1–4 bars plus the word; `urgent` bars are brick. Never color alone. |
@@ -68,6 +68,8 @@ Spacing steps: 4, 8, 12, 16, 20, 28, 40 px. Radius follows hierarchy: surfaces 1
 | Account status chip | "Hoạt động" (leaf), "Đang nghỉ" (neutral sage with a clock icon; amber stays reserved for ticket progress), "Đã khóa" (brick). |
 | Confidence bar | Violet fill with the value (`0,86`); grey fill when below the threshold. |
 | Pencil note | Dashed violet left rule for AI-written text (reason, summary). |
+| **Citation** | A small violet numbered marker inside a suggestion, and below it a quoted policy passage with a solid graphite left rule: the source is ink because a person wrote it (D-25). |
+| Review chip | Dashed grey "Cần xem lại" with a clock icon, like Unclassified: both wait for a person. |
 | Message bubbles | Customer left on white; Staff right on pine-soft (the customer's own messages are on the right in the portal). |
 | Composer | Card with header, borderless textarea, footer toolbar: AI rewrite left, Send / Send and wait right. |
 | Tables | Light header, 12 px rows, attention rows (Unclassified) with a left rule. |

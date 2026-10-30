@@ -120,6 +120,8 @@ Rows also show the AI states *Classification pending* (#1046), *Priority raised 
 | 4 | **Viết lại bằng AI** in the composer; result shown beside the draft (AC-26.1, AC-26.3). |
 | 5 | Nothing is sent until **Gửi** or **Gửi và chờ khách** (AC-20.3, AC-20.5). |
 | 6 | Transfer (Staff) or reassign (Admin) opens SCR-23. |
+| 7 | **Gợi ý trả lời**: a reply grounded in the shop's policies, shown beside the draft like a rewrite (AC-40.1, AC-40.2). Disabled when no active, reviewed article exists (AC-41.4). |
+| 8 | Cited passages are quoted in ink (a person wrote them); the suggestion itself stays pencil, with numbered markers that point to each source (BR-21). |
 
 | State | Source | Behavior |
 |---|---|---|
@@ -134,6 +136,10 @@ Rows also show the AI states *Classification pending* (#1046), *Priority raised 
 | `rewrite-loading` | Rewrite loading | Draft read-only; Rewrite and Send disabled. |
 | `rewrite-result` | Rewrite result | Draft and rewrite side by side; **Dùng bản này** / **Bỏ qua**; "Chưa gửi gì cho khách" ([PNG](../images/staff/21c-ticket-handling-rewrite-result.png)). |
 | `rewrite-error` | Rewrite error or timeout | Inline error; draft unchanged and still sendable. |
+| `suggest-loading` | Suggestion loading | "Đang soạn gợi ý…"; draft read-only; Rewrite and Send disabled. |
+| `suggest-result` | Suggestion result | Draft and suggestion side by side, the two cited passages below, **Dùng bản này** / **Bỏ qua**. The customer asked about Friday, but no policy promises a date, so the suggestion does not (AC-40.3) ([PNG](../images/staff/21f-ticket-handling-suggest-result.png)). |
+| `suggest-no-match` | No relevant policy | Neutral notice "Không tìm thấy chính sách phù hợp…"; draft unchanged (AC-41.1). |
+| `suggest-error` | Suggestion error or timeout | Inline error; draft unchanged and still sendable (AC-40.4). |
 | `transfer` | BR-04 | SCR-23 lists active Staff with open-ticket counts; Admin can choose themselves ([PNG](../images/staff/21e-transfer-ticket.png)). |
 
 ### SCR-22 Dashboard — [`22-dashboard.html`](wireframes/22-dashboard.html) · roles `admin`, `staff` · [PNG admin](../images/admin/22-dashboard.png), [PNG staff](../images/staff/22-dashboard.png)
@@ -162,6 +168,22 @@ Rows also show the AI states *Classification pending* (#1046), *Priority raised 
 | `edit` | — | SCR-32 edit form ([PNG](../images/admin/30b-edit-category.png)). |
 | `form-error` | Validation error | Duplicate name (ignoring case) and missing description (AC-27.2, AC-27.3). |
 | `hide-confirm` | Destructive confirmation | Names the category and the effect on customers, AI, and old tickets. |
+
+### SCR-36 Policies and SCR-37 — [`36-policies.html`](wireframes/36-policies.html) · [PNG](../images/admin/36-policies.png)
+
+The page says up front that customers never see it and that AI uses only active articles reviewed within 180 days (BR-20).
+
+| # | Note |
+|---|---|
+| 1 | Add an article: title and body; AI quotes the body word for word (AC-37.1). |
+| 2 | Overdue for review: dashed "Cần xem lại" chip, attention rule, and **Đánh dấu đã xem lại**; suggestions skip it until reviewed (AC-38.2, AC-38.3). |
+
+| State | Source | Behavior |
+|---|---|---|
+| `edit` | — | SCR-37 for the overdue article; saving also counts as reviewed today ([PNG](../images/admin/36b-edit-policy.png)). |
+| `form-error` | Validation error | Duplicate title (ignoring case) and missing body (AC-37.2, AC-37.3). |
+| `hide-confirm` | Destructive confirmation | Names the article and says AI stops using it; the text is kept (AC-39.1). |
+| `empty` | Empty | "Chưa có chính sách nào" explains that Staff's **Gợi ý trả lời** stays off until an article exists, with **Thêm chính sách**. |
 
 ### SCR-31 Users, SCR-33, SCR-34 and SCR-35 — [`31-users.html`](wireframes/31-users.html) · [PNG](../images/admin/31-users.png)
 

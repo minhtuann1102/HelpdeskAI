@@ -26,6 +26,10 @@
     <li><a href="21-ticket-handling.html?state=rewrite-loading">rewrite-loading</a></li>
     <li><a href="21-ticket-handling.html?state=rewrite-result">rewrite-result</a></li>
     <li><a href="21-ticket-handling.html?state=rewrite-error">rewrite-error</a></li>
+    <li><a href="21-ticket-handling.html?state=suggest-loading">suggest-loading</a></li>
+    <li><a href="21-ticket-handling.html?state=suggest-result">suggest-result</a></li>
+    <li><a href="21-ticket-handling.html?state=suggest-no-match">suggest-no-match</a></li>
+    <li><a href="21-ticket-handling.html?state=suggest-error">suggest-error</a></li>
     <li><a href="21-ticket-handling.html?state=transfer">SCR-23 transfer</a></li>
   </ul>
   <span>Sample data: "Lá Cọ Home" is a fictional shop</span>
@@ -46,6 +50,7 @@
         <li><a href="20-ticket-queue.html?role=admin" aria-current="page"><svg class="i"><use href="#i-inbox"></use></svg>Tất cả ticket</a></li>
         <li><a href="22-dashboard.html?role=admin"><svg class="i"><use href="#i-chart"></use></svg>Tổng quan</a></li>
         <li><a href="30-categories.html"><svg class="i"><use href="#i-tag"></use></svg>Danh mục</a></li>
+        <li><a href="36-policies.html"><svg class="i"><use href="#i-file"></use></svg>Chính sách</a></li>
         <li><a href="31-users.html"><svg class="i"><use href="#i-users"></use></svg>Người dùng</a></li>
       </ul>
     </nav>
@@ -145,8 +150,8 @@
             </div>
           </article>
 
-          <!-- Composer: normal and rewrite-error -->
-          <form class="composer" data-hide="rewrite-loading rewrite-result" aria-label="Trả lời khách">
+          <!-- Composer: normal, rewrite-error, suggest-no-match, suggest-error -->
+          <form class="composer" data-hide="rewrite-loading rewrite-result suggest-loading suggest-result" aria-label="Trả lời khách">
             <div class="composer-head">
               <label for="reply"><b>Trả lời Nguyễn Thị Hoa</b></label>
               <span class="hint">Khách chỉ nhận được khi bạn bấm Gửi</span>
@@ -155,9 +160,19 @@
               <svg class="i"><use href="#i-alert"></use></svg>
               <span>Không viết lại được vì AI không phản hồi trong 20 giây. Bản nháp vẫn giữ nguyên, bạn có thể gửi ngay hoặc thử lại.</span>
             </div>
+            <div class="notice notice-neutral" data-show="suggest-no-match" role="status" style="margin:var(--s3) var(--s4) 0">
+              <svg class="i"><use href="#i-file"></use></svg>
+              <span>Không tìm thấy chính sách phù hợp với ticket này, nên AI không gợi ý. Bạn tự viết câu trả lời; nếu khách hay hỏi việc này, nhờ quản trị viên thêm chính sách.</span>
+            </div>
+            <div class="notice notice-error" data-show="suggest-error" role="alert" style="margin:var(--s3) var(--s4) 0">
+              <svg class="i"><use href="#i-alert"></use></svg>
+              <span>Không tạo được gợi ý vì AI không phản hồi trong 20 giây. Bản nháp vẫn giữ nguyên, bạn có thể gửi ngay hoặc thử lại.</span>
+            </div>
             <textarea id="reply" class="textarea">da kiem tra, ben em giao nham mau. em gui lai gio mau tu nhien cho chi, gio cu chi giu lai shipper lay sau</textarea>
             <div class="composer-foot">
               <div class="row">
+                <button class="btn btn-ai" type="button"><span class="ai-mark">AI</span>Gợi ý trả lời</button>
+                <span class="callout" aria-hidden="true">7</span>
                 <button class="btn btn-ai" type="button"><span class="ai-mark">AI</span>Viết lại bằng AI</button>
                 <span class="callout" aria-hidden="true">4</span>
               </div>
@@ -177,7 +192,10 @@
             </div>
             <textarea id="reply-busy" class="textarea" readonly>da kiem tra, ben em giao nham mau. em gui lai gio mau tu nhien cho chi, gio cu chi giu lai shipper lay sau</textarea>
             <div class="composer-foot">
-              <button class="btn btn-ai" type="button" disabled><span class="spinner" aria-hidden="true"></span>Đang viết lại…</button>
+              <div class="row">
+                <button class="btn btn-ai" type="button" disabled><span class="ai-mark">AI</span>Gợi ý trả lời</button>
+                <button class="btn btn-ai" type="button" disabled><span class="spinner" aria-hidden="true"></span>Đang viết lại…</button>
+              </div>
               <div class="row">
                 <button class="btn" type="button" disabled>Gửi và chờ khách</button>
                 <button class="btn btn-primary" type="button" disabled><svg class="i i-sm"><use href="#i-send"></use></svg>Gửi</button>
@@ -205,6 +223,61 @@
               <span class="hint">AI giữ nguyên ý của bạn, không thêm hứa hẹn, ngày giờ hay số tiền mới.</span>
               <div class="row">
                 <span class="callout" aria-hidden="true">4</span>
+                <button class="btn btn-quiet" type="button">Bỏ qua</button>
+                <button class="btn btn-ai-solid" type="button"><svg class="i i-sm"><use href="#i-check"></use></svg>Dùng bản này</button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Composer: suggest-loading -->
+          <form class="composer" data-show="suggest-loading" aria-label="Trả lời khách" aria-busy="true">
+            <div class="composer-head">
+              <label for="reply-suggest"><b>Trả lời Nguyễn Thị Hoa</b></label>
+              <span class="hint">AI đang tìm chính sách và soạn gợi ý, tối đa 20 giây</span>
+            </div>
+            <textarea id="reply-suggest" class="textarea" readonly>da kiem tra, ben em giao nham mau. em gui lai gio mau tu nhien cho chi, gio cu chi giu lai shipper lay sau</textarea>
+            <div class="composer-foot">
+              <div class="row">
+                <button class="btn btn-ai" type="button" disabled><span class="spinner" aria-hidden="true"></span>Đang soạn gợi ý…</button>
+                <button class="btn btn-ai" type="button" disabled><span class="ai-mark">AI</span>Viết lại bằng AI</button>
+              </div>
+              <div class="row">
+                <button class="btn" type="button" disabled>Gửi và chờ khách</button>
+                <button class="btn btn-primary" type="button" disabled><svg class="i i-sm"><use href="#i-send"></use></svg>Gửi</button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Composer: suggest-result -->
+          <form class="composer" data-show="suggest-result" aria-label="So sánh gợi ý trả lời">
+            <div class="composer-head">
+              <b>Trả lời Nguyễn Thị Hoa</b>
+              <span class="hint">Chưa gửi gì cho khách</span>
+            </div>
+            <div class="compare">
+              <div class="compare-col">
+                <h3><svg class="i i-sm"><use href="#i-pen"></use></svg>Bản nháp của bạn</h3>
+                <p>da kiem tra, ben em giao nham mau. em gui lai gio mau tu nhien cho chi, gio cu chi giu lai shipper lay sau</p>
+              </div>
+              <div class="compare-col is-ai">
+                <h3><span class="ai-mark">AI</span>Gợi ý từ chính sách</h3>
+                <p>Chào chị Hoa, em xin lỗi vì shop giao nhầm màu. Đơn giao sai màu được đổi miễn phí trong 7 ngày kể từ khi nhận, shop chịu phí vận chuyển hai chiều <span class="cite" aria-label="Nguồn 1">1</span>. Em sẽ gửi giỏ mây màu tự nhiên cho chị trước; khi giao giỏ mới, shipper sẽ thu lại giỏ màu nâu, chị giữ nguyên tem mã dưới đáy giúp em <span class="cite" aria-label="Nguồn 2">2</span>. Em sẽ báo chị mã vận đơn ngay khi gửi hàng.</p>
+              </div>
+            </div>
+            <div class="sources-title">Đoạn chính sách AI đã trích <span class="callout" aria-hidden="true">8</span></div>
+            <div class="sources">
+              <div class="source">
+                <span class="source-head"><span class="cite">1</span><b>Đổi trả khi giao sai hàng</b>xem lại 12/10/2026</span>
+                <q>Giao sai mẫu, màu hoặc kích thước: đổi miễn phí trong 7 ngày kể từ khi nhận hàng. Shop chịu phí vận chuyển hai chiều.</q>
+              </div>
+              <div class="source">
+                <span class="source-head"><span class="cite">2</span><b>Quy trình đổi hàng</b>xem lại 12/10/2026</span>
+                <q>Shop gửi hàng mới trước. Shipper thu hồi hàng cũ khi giao hàng mới; khách giữ nguyên tem mã dưới đáy sản phẩm.</q>
+              </div>
+            </div>
+            <div class="composer-foot">
+              <span class="hint" style="flex:1 1 320px">Gợi ý chỉ dùng thông tin trong 2 đoạn trên. Khách hỏi "thứ 6 nhận được không", nhưng chính sách không cam kết ngày giao nên AI không hứa.</span>
+              <div class="row">
                 <button class="btn btn-quiet" type="button">Bỏ qua</button>
                 <button class="btn btn-ai-solid" type="button"><svg class="i i-sm"><use href="#i-check"></use></svg>Dùng bản này</button>
               </div>

@@ -10,7 +10,7 @@
 |---|---|---|
 | Customer | Top bar | Logo → My Tickets · **Submit a ticket** (primary button) · Account menu (Profile, Log out) |
 | Staff | Left sidebar + top bar | **My queue** (badge: number of open tickets) · Dashboard · Account menu in top bar (Profile, Log out) |
-| Administrator | Left sidebar + top bar | **All tickets** (badge: number of Unassigned tickets) · Dashboard · Categories · Users · Policies · Account menu in top bar (Profile, Log out) |
+| Administrator | Left sidebar + top bar | **All tickets** (badge: number of Unassigned tickets) · Dashboard · Categories · Policies · Users · Account menu in top bar (Profile, Log out) |
 
 ## Local and contextual navigation
 

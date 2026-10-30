@@ -448,3 +448,15 @@ body[data-role="customer"] .page { width: 100%; max-width: 1040px; margin: 0 aut
   .auth-side { padding: var(--s5); }
   .slip { display: none; }
 }
+
+/* ---------- Policy articles and reply suggestions (D-25) ---------- */
+/* AI text stays pencil; the cited policy passage is ink, because a person wrote it. */
+.cite { display: inline-grid; place-items: center; min-width: 17px; height: 17px; margin: 0 1px; padding: 0 4px; border: 1px solid var(--pencil); border-radius: 4px; background: var(--paper); color: var(--pencil); font-size: 10px; font-weight: 700; line-height: 1; vertical-align: 2px; }
+.sources { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--s4); padding: 0 var(--s4) var(--s4); }
+.sources-title { padding: 0 var(--s4) var(--s2); color: var(--moss); font-size: var(--fs-xs); font-weight: 600; }
+.source { display: grid; gap: 6px; align-content: start; padding: 2px 0 2px var(--s3); border-left: 2px solid var(--graphite); font-size: var(--fs-sm); line-height: 1.6; }
+.source-head { display: flex; align-items: center; gap: var(--s2); color: var(--moss); font-size: var(--fs-xs); }
+.source-head b { color: var(--graphite); font-weight: 600; }
+.source q { color: var(--graphite); }
+.chip-review { border-style: dashed; border-color: var(--moss); background: var(--sage); color: var(--moss); }
+.t-title .excerpt { display: -webkit-box; max-width: 68ch; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; }
